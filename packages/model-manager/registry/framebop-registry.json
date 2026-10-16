@@ -1,0 +1,598 @@
+{
+  "schemaVersion": 1,
+  "registryVersion": "2026.10.16",
+  "publishedAt": "2026-10-16",
+  "models": [
+    {
+      "id": "kokoro-82m",
+      "name": "Kokoro 82M · PyTorch",
+      "description": "Small, natural-sounding text-to-speech model with 54 voices across eight languages. This is the original PyTorch release with one voice (af_heart). The Kokoro engine runs it through a Python with the kokoro package, without network access. English voices only in this version.",
+      "source": "huggingface",
+      "repoId": "hexgrad/Kokoro-82M",
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "family": "Kokoro",
+      "task": "audio",
+      "variant": "v1.0",
+      "quantization": null,
+      "format": "pytorch",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 2351,
+          "sha256": null,
+          "gitBlobId": "14a726edd3718279eac426630879ff743955b16a"
+        },
+        {
+          "path": "kokoro-v1_0.pth",
+          "sizeBytes": 327212226,
+          "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+          "gitBlobId": null
+        },
+        {
+          "path": "voices/af_heart.pt",
+          "sizeBytes": 523425,
+          "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "kokoro-pytorch",
+        "name": "Kokoro (PyTorch, kokoro package)"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "The publisher does not state hardware requirements for this format."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive. Allows commercial use, modification and redistribution, provided the licence and notices are kept."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/hexgrad/Kokoro-82M",
+      "verifiedOn": "2026-10-14",
+      "provider": "hexgrad",
+      "group": "kokoro-82m",
+      "categories": ["text-to-speech"],
+      "platforms": null,
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "natural-pace",
+          "kind": "balanced",
+          "label": "Natural pace",
+          "description": "Kokoro's own speed.",
+          "adapterId": "kokoro",
+          "task": "audio_generation",
+          "parameters": {
+            "voice": "af_heart",
+            "speed": 1
+          },
+          "size": null,
+          "verified": true,
+          "note": "Used for the narration checked during development."
+        },
+        {
+          "id": "slower-narration",
+          "kind": "custom",
+          "label": "Slower narration",
+          "description": "A tenth slower, for dense or technical text.",
+          "adapterId": "kokoro",
+          "task": "audio_generation",
+          "parameters": {
+            "voice": "af_heart",
+            "speed": 0.9
+          },
+          "size": null,
+          "verified": false,
+          "note": "Not compared against the natural pace yet."
+        }
+      ],
+      "inferenceTests": [
+        {
+          "date": "2026-10-14",
+          "os": "macos",
+          "arch": "arm64",
+          "hardware": "Apple M4 Pro, 24 GB unified memory",
+          "adapterId": "kokoro",
+          "result": "works",
+          "detail": "Three English narrations with the af_heart voice, 2.9 to 5.1 seconds of speech each, about 4 seconds per run including loading the model, on the CPU."
+        }
+      ]
+    },
+    {
+      "id": "kokoro-82m-onnx-q8",
+      "name": "Kokoro 82M · ONNX 8-bit",
+      "description": "Small, fast text-to-speech model with 54 voices across eight languages. This variant is the 8-bit quantized ONNX export with one voice (af_heart). No engine in this version runs the ONNX release; the Kokoro engine uses the PyTorch release.",
+      "source": "huggingface",
+      "repoId": "onnx-community/Kokoro-82M-v1.0-ONNX",
+      "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+      "family": "Kokoro",
+      "task": "audio",
+      "variant": "v1.0 quantized",
+      "quantization": "8-bit",
+      "format": "onnx",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 44,
+          "sha256": null,
+          "gitBlobId": "790faf216e7e3f490e71e8bc80df79ed8941101c"
+        },
+        {
+          "path": "tokenizer.json",
+          "sizeBytes": 3497,
+          "sha256": null,
+          "gitBlobId": "4280f55fc1c32211bc9bb4d55545759a00054ecd"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sizeBytes": 113,
+          "sha256": null,
+          "gitBlobId": "5c81e9a3a06db9139900d6ee5b60e8bb701ccb0b"
+        },
+        {
+          "path": "onnx/model_quantized.onnx",
+          "sizeBytes": 92361116,
+          "sha256": "fbae9257e1e05ffc727e951ef9b9c98418e6d79f1c9b6b13bd59f5c9028a1478",
+          "gitBlobId": null
+        },
+        {
+          "path": "voices/af_heart.bin",
+          "sizeBytes": 522240,
+          "sha256": "d583ccff3cdca2f7fae535cb998ac07e9fcb90f09737b9a41fa2734ec44a8f0b",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "onnxruntime",
+        "name": "ONNX Runtime"
+      },
+      "hardware": {
+        "accelerators": ["cpu"],
+        "minimumMemoryBytes": null,
+        "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX",
+        "notes": [
+          "The model card shows it running on the CPU through ONNX Runtime. No memory requirement is published."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive. Allows commercial use, modification and redistribution, provided the licence and notices are kept."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX",
+      "verifiedOn": "2026-10-14",
+      "provider": "onnx-community",
+      "group": "kokoro-82m",
+      "categories": ["text-to-speech"],
+      "platforms": null,
+      "presets": [],
+      "inferenceTests": [],
+      "origin": "registry"
+    },
+    {
+      "id": "ltx-2.3-22b-distilled-1.1",
+      "name": "LTX-2.3 22B Distilled 1.1",
+      "description": "Lightricks' 22-billion-parameter video model, distilled for fewer sampling steps; generates video from text or from a still image. This is the original full-precision release. The Draw Things app uses its own converted copy, which this does not replace, and no engine in Framebop Studio loads this file directly.",
+      "source": "huggingface",
+      "repoId": "Lightricks/LTX-2.3",
+      "revision": "3c6a4e66e5d0a684231950b9c74dd4ded7b6fadc",
+      "family": "LTX-2",
+      "task": "image_to_video",
+      "variant": "22B distilled 1.1",
+      "quantization": null,
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "ltx-2.3-22b-distilled-1.1.safetensors",
+          "sizeBytes": 46149345334,
+          "sha256": "b33b7fe4bbfe084f484be4aaf90b0f1d95dca20d403ac4c0e037eb8c4f0af7cc",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "ltx-pipelines",
+        "name": "LTX-2 reference pipeline (Python)"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "No hardware requirement for this file is published on its model page, so compatibility cannot be judged."
+        ]
+      },
+      "license": {
+        "id": "other",
+        "name": "LTX-2 Community License Agreement (January 5, 2026)",
+        "url": "https://github.com/Lightricks/LTX-2/blob/main/LICENSE-2",
+        "summary": "Custom licence. Entities with annual revenue of US$10 million or more must obtain a separate paid commercial licence from Lightricks. Read the full text before use."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/Lightricks/LTX-2.3",
+      "verifiedOn": "2026-10-14",
+      "provider": "Lightricks",
+      "group": "ltx-2.3-22b",
+      "categories": ["text-to-video", "image-to-video"],
+      "platforms": null,
+      "presets": [],
+      "inferenceTests": [],
+      "origin": "registry"
+    },
+    {
+      "id": "qwen3-4b-q4km",
+      "name": "Qwen3 4B (Q4_K_M)",
+      "description": "A multilingual language model (over 100 languages), quantized to about 2.5 GB. Runs locally with llama.cpp; Framebop uses it to write script drafts.",
+      "source": "huggingface",
+      "repoId": "Qwen/Qwen3-4B-GGUF",
+      "revision": "bc640142c66e1fdd12af0bd68f40445458f3869b",
+      "family": "Qwen3",
+      "task": "text",
+      "variant": "4B",
+      "quantization": "Q4_K_M",
+      "format": "gguf",
+      "files": [
+        {
+          "path": "Qwen3-4B-Q4_K_M.gguf",
+          "sizeBytes": 2497280256,
+          "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "llama.cpp",
+        "name": "llama.cpp"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": ["The publisher states no hardware requirements."]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/blob/main/LICENSE",
+        "summary": "Permissive: use, modification and redistribution, including commercial, with notice."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/Qwen/Qwen3-4B-GGUF",
+      "verifiedOn": "2026-10-16",
+      "provider": "Qwen",
+      "group": "qwen3-4b",
+      "categories": ["text-generation"],
+      "platforms": null,
+      "presets": [],
+      "inferenceTests": [
+        {
+          "date": "2026-10-16",
+          "os": "macos",
+          "arch": "arm64",
+          "hardware": "Apple M4 Pro, 24 GB unified memory",
+          "adapterId": "llama.cpp",
+          "result": "works",
+          "detail": "llama.cpp b11361 (Metal), reasoning switched off with /no_think: a 104-word Turkish script draft in three scenes in 5.9 s including loading. Qwen2.5 1.5B wrote incoherent Turkish for the same request."
+        }
+      ],
+      "llm": {
+        "chatTemplate": "chatml",
+        "contextTokens": 8192
+      }
+    },
+    {
+      "id": "qwen2.5-1.5b-instruct-q4km",
+      "name": "Qwen2.5 1.5B Instruct (Q4_K_M)",
+      "description": "A small instruction-tuned language model, quantized to about 1.1 GB. Runs locally with llama.cpp for Video DNA analysis.",
+      "source": "huggingface",
+      "repoId": "Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "revision": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+      "family": "Qwen2.5",
+      "task": "text",
+      "variant": "1.5B Instruct",
+      "quantization": "Q4_K_M",
+      "format": "gguf",
+      "files": [
+        {
+          "path": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+          "sizeBytes": 1117320736,
+          "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "llama.cpp",
+        "name": "llama.cpp"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": ["The publisher states no hardware requirements."]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/blob/main/LICENSE",
+        "summary": "Permissive: use, modification and redistribution, including commercial, with notice."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "verifiedOn": "2026-10-15",
+      "provider": "Qwen",
+      "group": "qwen2.5-1.5b-instruct",
+      "categories": ["text-generation"],
+      "platforms": null,
+      "presets": [],
+      "inferenceTests": [
+        {
+          "date": "2026-10-15",
+          "os": "macos",
+          "arch": "arm64",
+          "hardware": "Apple M4 Pro, 24 GB unified memory",
+          "adapterId": "llama.cpp",
+          "result": "works",
+          "detail": "llama.cpp build 11641 (Metal), 8,192-token context: a JSON test answered in 4.5 s including loading; all six Video DNA analyses ran in 20 to 21 s; peak resident memory of the server 1.7 GB."
+        }
+      ],
+      "llm": {
+        "chatTemplate": "chatml",
+        "contextTokens": 8192
+      }
+    },
+    {
+      "id": "sd-1.5-q8-gguf",
+      "name": "Stable Diffusion 1.5 · Q8_0 GGUF",
+      "description": "The original Stable Diffusion 1.5 (pruned, EMA weights), converted to GGUF and quantized to 8 bits by second-state for stable-diffusion.cpp. Small and well understood: the model Framebop's own image engine is first checked with. 512 × 512 pictures.",
+      "source": "huggingface",
+      "repoId": "second-state/stable-diffusion-v1-5-GGUF",
+      "revision": "031b5f5df991f511b3f5fa8fed6d99048ababb69",
+      "family": "Stable Diffusion 1.5",
+      "task": "image",
+      "variant": "pruned-emaonly",
+      "quantization": "Q8_0",
+      "format": "gguf",
+      "files": [
+        {
+          "path": "stable-diffusion-v1-5-pruned-emaonly-Q8_0.gguf",
+          "sizeBytes": 1763578176,
+          "sha256": "d0555243938c62faeefb4ac93f6c7a053ad373a4290c5256bce229aeb193bf94",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "stable-diffusion.cpp",
+        "name": "stable-diffusion.cpp (installed by Framebop)"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": ["The publisher states no hardware requirements."]
+      },
+      "license": {
+        "id": "creativeml-openrail-m",
+        "name": "CreativeML Open RAIL-M",
+        "url": "https://huggingface.co/spaces/CompVis/stable-diffusion-license",
+        "summary": "Allows commercial use and redistribution, with use-based restrictions that also bind anything made from the model. Read the licence before publishing."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/second-state/stable-diffusion-v1-5-GGUF",
+      "verifiedOn": "2026-10-16",
+      "provider": "second-state",
+      "group": "stable-diffusion-1.5",
+      "categories": ["text-to-image"],
+      "platforms": null,
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "sd15-512",
+          "kind": "balanced",
+          "label": "512 × 512, 20 steps",
+          "description": "Its native size, Euler ancestral, guidance 7.",
+          "adapterId": "stable-diffusion-cpp",
+          "task": "image_generation",
+          "parameters": {
+            "steps": 20,
+            "cfgScale": 7,
+            "sampler": "euler_a"
+          },
+          "size": {
+            "width": 512,
+            "height": 512
+          },
+          "verified": true,
+          "note": "Used for the first picture made by Framebop's own image engine."
+        }
+      ],
+      "inferenceTests": [
+        {
+          "date": "2026-10-16",
+          "os": "macos",
+          "arch": "arm64",
+          "hardware": "Apple M4 Pro, 24 GB unified memory",
+          "adapterId": "stable-diffusion-cpp",
+          "result": "works",
+          "detail": "One 512 × 512 picture, 20 steps, Euler ancestral, guidance 7, through stable-diffusion.cpp master-929-3f8527a: 86 seconds including about 20 seconds of loading; the runtime reported its Metal backend."
+        },
+        {
+          "date": "2026-10-16",
+          "os": "macos",
+          "arch": "arm64",
+          "hardware": "Apple M4 Pro, 24 GB unified memory",
+          "adapterId": "stable-diffusion-cpp",
+          "result": "works",
+          "detail": "The same picture with flash attention in the diffusion model (--diffusion-fa): 24 seconds in total (20.5 s sampling, 3.3 s decoding), 2.4 GB peak memory; SSIM 0.999 against the run without it."
+        }
+      ]
+    },
+    {
+      "id": "wan2.2-ti2v-5b-q4km",
+      "name": "Wan 2.2 TI2V 5B (Q4_K_M)",
+      "description": "Alibaba's Wan 2.2 video model with 5 billion parameters, which makes clips from a still picture or from text alone. This is QuantStack's GGUF conversion, quantized to 4 bits, with the model's own VAE. Framebop's clip engine runs it with stable-diffusion.cpp; the umt5-xxl text encoder it reads prompts with is installed with it. Clips of up to five seconds at 24 frames a second, 832 × 480.",
+      "source": "huggingface",
+      "repoId": "QuantStack/Wan2.2-TI2V-5B-GGUF",
+      "revision": "57437632ddd08bdcbd1508c866aa22e126ed51d2",
+      "family": "Wan 2.2",
+      "task": "image_to_video",
+      "variant": "TI2V 5B",
+      "quantization": "Q4_K_M",
+      "format": "gguf",
+      "files": [
+        {
+          "path": "Wan2.2-TI2V-5B-Q4_K_M.gguf",
+          "sizeBytes": 3433116000,
+          "sha256": "95b19697b7f98e65b0a543640e9ca7b4dfec32e2a6e3731e8e10708be52655e2",
+          "gitBlobId": null
+        },
+        {
+          "path": "VAE/Wan2.2_VAE.safetensors",
+          "sizeBytes": 1409400960,
+          "sha256": "e40321bd36b9709991dae2530eb4ac303dd168276980d3e9bc4b6e2b75fed156",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "stable-diffusion.cpp",
+        "name": "stable-diffusion.cpp (installed by Framebop)"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "The publisher of this conversion states no hardware requirements."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive: use, modification and redistribution, including commercial, with notice."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/QuantStack/Wan2.2-TI2V-5B-GGUF",
+      "verifiedOn": "2026-10-16",
+      "provider": "QuantStack",
+      "group": "wan2.2-ti2v-5b",
+      "categories": ["image-to-video", "text-to-video"],
+      "platforms": null,
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "wan22-5b-480p",
+          "kind": "balanced",
+          "label": "832 × 480, 20 steps",
+          "description": "The settings Wan 2.2 TI2V 5B's authors use, at 480p: guidance 5, flow shift 5, 24 frames a second.",
+          "adapterId": "stable-diffusion-cpp-video",
+          "task": "video_generation",
+          "parameters": {
+            "steps": 20,
+            "cfgScale": 5,
+            "flowShift": 5,
+            "fps": 24
+          },
+          "size": {
+            "width": 832,
+            "height": 480
+          },
+          "verified": false,
+          "note": "Sampling worked on an M4 Pro (about 40 s a step); decoding the frames did not finish in 55 minutes."
+        }
+      ],
+      "inferenceTests": [],
+      "parts": [
+        {
+          "role": "diffusion-model",
+          "file": "Wan2.2-TI2V-5B-Q4_K_M.gguf"
+        },
+        {
+          "role": "vae",
+          "file": "VAE/Wan2.2_VAE.safetensors"
+        },
+        {
+          "role": "t5xxl",
+          "model": "umt5-xxl-encoder-q4km"
+        }
+      ]
+    },
+    {
+      "id": "umt5-xxl-encoder-q4km",
+      "name": "umt5-xxl text encoder (Q4_K_M)",
+      "description": "Google's multilingual umt5-xxl encoder, which turns a prompt into what Wan video models read. city96's GGUF conversion, quantized to 4 bits. It makes nothing on its own: Framebop's clip engine needs it next to Wan 2.2 TI2V 5B.",
+      "source": "huggingface",
+      "repoId": "city96/umt5-xxl-encoder-gguf",
+      "revision": "b535255bee98c2b0a59ea7c0ae2dcd0c6657b3b7",
+      "family": "UMT5",
+      "task": "other",
+      "variant": "xxl encoder",
+      "quantization": "Q4_K_M",
+      "format": "gguf",
+      "files": [
+        {
+          "path": "umt5-xxl-encoder-Q4_K_M.gguf",
+          "sizeBytes": 3655145312,
+          "sha256": "17cf97a5bbbc60a646d6105b832b6f657ce904a8a1ad970e4b59df0c67584a40",
+          "gitBlobId": null
+        }
+      ],
+      "runtime": {
+        "id": "stable-diffusion.cpp",
+        "name": "stable-diffusion.cpp (installed by Framebop)"
+      },
+      "hardware": {
+        "accelerators": null,
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": ["The publisher states no hardware requirements."]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive: use, modification and redistribution, including commercial, with notice."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/city96/umt5-xxl-encoder-gguf",
+      "verifiedOn": "2026-10-16",
+      "provider": "city96",
+      "group": "umt5-xxl-encoder",
+      "categories": ["other"],
+      "platforms": null,
+      "origin": "registry",
+      "presets": [],
+      "inferenceTests": []
+    }
+  ]
+}

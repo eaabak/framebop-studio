@@ -1,0 +1,20 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+
+# Rust / Tauri
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
+# Node runtime copied in by scripts/prepare-sidecar.mjs (large, machine-specific)
+apps/desktop/src-tauri/binaries/
+
+# Local development library used by `pnpm dev:web`
+.dev-data/
+
+*.log
+.env
+.env.*
+
+# Development-only tools downloaded on request (llama.cpp builds)
+.dev-tools/

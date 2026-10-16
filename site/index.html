@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Framebop Studio: animated videos with AI on your own computer</title>
+    <meta
+      name="description"
+      content="Framebop Studio is a free, open-source app for making animated videos with AI that runs on your own computer. No account, no subscription, no cloud."
+    />
+    <link rel="canonical" href="https://framebop.com/" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      content="#fffaf2"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#141211"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Framebop Studio" />
+    <meta property="og:url" content="https://framebop.com/" />
+    <meta
+      property="og:title"
+      content="Framebop Studio: animated videos with AI on your own computer"
+    />
+    <meta
+      property="og:description"
+      content="Free and open source. From an idea to a finished MP4, with AI that runs on your Mac. No account, no subscription, no cloud."
+    />
+    <meta property="og:image" content="https://framebop.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="The Framebop Studio icon, an orange tile with a TV-headed character, next to the line: Make animated videos with AI that runs on your own computer."
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="tr_TR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Framebop Studio: animated videos with AI on your own computer"
+    />
+    <meta
+      name="twitter:description"
+      content="Free and open source. From an idea to a finished MP4, with AI that runs on your Mac. No account, no subscription, no cloud."
+    />
+    <meta name="twitter:image" content="https://framebop.com/og-image.jpg" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js" defer></script>
+    <script src="showcase.js" defer></script>
+    <script src="player.js" defer></script>
+    <script src="gallery.js" defer></script>
+    <script src="main.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Framebop Studio",
+        "url": "https://framebop.com/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "macOS",
+        "softwareVersion": "0.1.0 alpha",
+        "isAccessibleForFree": true,
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "description": "A free, open-source app for making animated videos with AI that runs on your own computer."
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a
+          class="brand"
+          href="#top"
+          aria-label="Framebop Studio, home"
+          data-i18n-attr="aria-label:brand.home"
+        >
+          <img src="favicon.svg" width="34" height="34" alt="" />
+          <span class="wordmark" aria-hidden="true" lang="en"
+            ><span>Frame</span><span class="bop">bop</span
+            ><span class="studio">Studio</span></span
+          >
+        </a>
+        <nav
+          class="nav"
+          aria-label="Sections"
+          data-i18n-attr="aria-label:nav.label"
+        >
+          <a href="#how" data-i18n="nav.how">How it works</a>
+          <a href="#features" data-i18n="nav.features">Features</a>
+          <a href="/videos" data-i18n="nav.showcase">Videos</a>
+          <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        </nav>
+        <div class="header-actions">
+          <div
+            class="lang-switch"
+            role="group"
+            aria-label="Language"
+            data-i18n-attr="aria-label:lang.label"
+          >
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              lang="en"
+              title="English"
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              data-lang="tr"
+              aria-pressed="false"
+              lang="tr"
+              title="Türkçe"
+            >
+              TR
+            </button>
+          </div>
+          <a
+            class="icon-button"
+            href="https://github.com/eaabak/framebop-studio"
+            data-repo=""
+            aria-label="Framebop Studio on GitHub"
+            data-i18n-attr="aria-label:github.label"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="icons.svg#i-github" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="wrap hero-grid">
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-halo"></div>
+            <svg
+              class="hero-icon"
+              viewBox="57 67 908 889"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <defs>
+                <linearGradient
+                  id="hi-bg"
+                  gradientUnits="userSpaceOnUse"
+                  x1="772.11255"
+                  y1="978.99426"
+                  x2="341.0184"
+                  y2="207.53557"
+                >
+                  <stop offset="0" stop-color="#E21807" />
+                  <stop offset="1" stop-color="#FE7916" />
+                </linearGradient>
+                <linearGradient
+                  id="hi-glow"
+                  gradientUnits="userSpaceOnUse"
+                  x1="57"
+                  y1="67"
+                  x2="256"
+                  y2="437"
+                >
+                  <stop offset="0" stop-color="#FEBF3C" />
+                  <stop offset="0.19" stop-color="#FEBF3C" />
+                  <stop offset="0.72" stop-color="#FB810F" stop-opacity="0.9" />
+                  <stop offset="1" stop-color="#FB7F0E" stop-opacity="0" />
+                </linearGradient>
+                <radialGradient
+                  id="hi-shade"
+                  gradientUnits="userSpaceOnUse"
+                  cx="800"
+                  cy="350"
+                  r="165"
+                  gradientTransform="translate(800 350) scale(1 0.75) translate(-800 -350)"
+                >
+                  <stop offset="0" stop-color="#A81E06" stop-opacity="0.38" />
+                  <stop offset="1" stop-color="#A81E06" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient
+                  id="hi-body"
+                  gradientUnits="userSpaceOnUse"
+                  x1="656.74255"
+                  y1="821.23755"
+                  x2="388.66458"
+                  y2="289.58301"
+                >
+                  <stop offset="0" stop-color="#FE590A" />
+                  <stop offset="1" stop-color="#FDA624" />
+                </linearGradient>
+                <radialGradient
+                  id="hi-sheen"
+                  gradientUnits="userSpaceOnUse"
+                  cx="330"
+                  cy="290"
+                  r="300"
+                  gradientTransform="translate(330 290) scale(1 0.5) translate(-330 -290)"
+                >
+                  <stop offset="0" stop-color="#FECD6B" stop-opacity="0.95" />
+                  <stop offset="0.5" stop-color="#FEC35A" stop-opacity="0.6" />
+                  <stop offset="1" stop-color="#FDAB29" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient
+                  id="hi-rim"
+                  gradientUnits="userSpaceOnUse"
+                  x1="316"
+                  y1="0"
+                  x2="590"
+                  y2="0"
+                >
+                  <stop offset="0" stop-color="#FDF3D4" />
+                  <stop offset="0.6" stop-color="#FDEBC0" stop-opacity="0.85" />
+                  <stop offset="1" stop-color="#FDD48C" stop-opacity="0" />
+                </linearGradient>
+                <linearGradient
+                  id="hi-tip"
+                  gradientUnits="userSpaceOnUse"
+                  x1="729.03064"
+                  y1="264.29254"
+                  x2="744.95898"
+                  y2="198.80112"
+                >
+                  <stop offset="0" stop-color="#FEAB2A" stop-opacity="0" />
+                  <stop offset="0.55" stop-color="#FEC255" stop-opacity="0.8" />
+                  <stop offset="1" stop-color="#FECD6D" />
+                </linearGradient>
+                <linearGradient
+                  id="hi-leaf"
+                  gradientUnits="userSpaceOnUse"
+                  x1="788.27319"
+                  y1="378.95947"
+                  x2="825.38971"
+                  y2="268.8606"
+                >
+                  <stop offset="0" stop-color="#FD7704" />
+                  <stop offset="1" stop-color="#FEBB3C" />
+                </linearGradient>
+                <clipPath id="hi-screen">
+                  <path
+                    d="M448.984 454.211C461.44 453.56 473.923 453.655 486.367 454.498C527.353 457.4 636.083 473.118 667.076 494.51C692.998 512.402 699.175 550.691 704.311 579.71C706.091 589.894 707.641 600.117 708.96 610.371C711.165 626.869 715.347 651.338 705.122 665.499C695.33 679.061 675.477 681.752 660.21 684.453C649.146 686.411 637.754 687.953 626.621 689.783C581.763 698.019 535.066 703.904 489.859 710.001C448.989 715.514 424.666 698.511 411.535 659.762C397.628 618.724 390.083 575.415 386 532.244C381.473 481.297 397.698 457.829 448.984 454.211Z"
+                  />
+                </clipPath>
+              </defs>
+              <path
+                fill="url(#hi-bg)"
+                d="M59.4108 441.426C58.9241 436.236 59.2139 422.407 59.2729 416.981C59.4098 404.181 59.4727 391.379 59.4617 378.578C59.4111 331.945 57.3952 282.705 62.0262 236.126C62.6472 229.879 64.4548 224.235 65.886 218.232C78.398 165.756 115.81 119.124 162.379 93.2493C185.412 80.3496 210.842 72.3029 237.103 69.6051C265.778 66.5791 297.916 68.7538 326.728 68.3401C411.275 67.7615 495.825 67.7294 580.373 68.2439L724.548 68.0867C731.234 68.1073 766.539 67.5611 771.396 68.9427C811.892 69.6974 851.534 84.6497 883.637 109.299C901.97 123.376 917.486 139.673 931.086 158.5C935.758 164.967 939.095 174.31 943.116 181.293C964.026 220.07 964.55 263.165 964.122 306.106C963.853 333.137 964.802 360.897 964.147 388C963.518 414.04 964.118 439.866 964.053 465.971L963.686 658.5C963.612 678.388 964.169 698.319 963.575 718.253C963.266 728.631 964.558 739.552 964.181 749.999C963.532 765.552 962.013 786.132 958.354 801.103C948.973 840.4 928.235 876.067 898.723 903.659C893.203 908.922 887.22 912.825 881.315 917.336C859.349 934.117 830.019 946.712 802.747 951.471C775.354 956.252 740.951 954.983 712.422 955.027L579.486 954.875L341.417 954.978C311.237 954.881 280.841 955.051 250.9 954.673C161.844 953.55 84.3936 887.695 64.5775 801.645C57.7671 772.071 59.5064 745.064 59.4368 715.236L59.285 625.38L59.3391 515.707C59.2466 492.697 58.7 469.531 59.0778 446.516C59.105 444.863 59.2361 443.071 59.4108 441.426Z"
+              />
+              <path
+                fill="url(#hi-glow)"
+                d="M59.4108 441.426C58.9241 436.236 59.2139 422.407 59.2729 416.981C59.4098 404.181 59.4727 391.379 59.4617 378.578C59.4111 331.945 57.3952 282.705 62.0262 236.126C62.6472 229.879 64.4548 224.235 65.886 218.232C78.398 165.756 115.81 119.124 162.379 93.2493C185.412 80.3496 210.842 72.3029 237.103 69.6051C265.778 66.5791 297.916 68.7538 326.728 68.3401C411.275 67.7615 495.825 67.7294 580.373 68.2439L724.548 68.0867C731.234 68.1073 766.539 67.5611 771.396 68.9427C811.892 69.6974 851.534 84.6497 883.637 109.299C901.97 123.376 917.486 139.673 931.086 158.5C935.758 164.967 939.095 174.31 943.116 181.293C964.026 220.07 964.55 263.165 964.122 306.106C963.853 333.137 964.802 360.897 964.147 388C963.518 414.04 964.118 439.866 964.053 465.971L963.686 658.5C963.612 678.388 964.169 698.319 963.575 718.253C963.266 728.631 964.558 739.552 964.181 749.999C963.532 765.552 962.013 786.132 958.354 801.103C948.973 840.4 928.235 876.067 898.723 903.659C893.203 908.922 887.22 912.825 881.315 917.336C859.349 934.117 830.019 946.712 802.747 951.471C775.354 956.252 740.951 954.983 712.422 955.027L579.486 954.875L341.417 954.978C311.237 954.881 280.841 955.051 250.9 954.673C161.844 953.55 84.3936 887.695 64.5775 801.645C57.7671 772.071 59.5064 745.064 59.4368 715.236L59.285 625.38L59.3391 515.707C59.2466 492.697 58.7 469.531 59.0778 446.516C59.105 444.863 59.2361 443.071 59.4108 441.426Z"
+              />
+              <path
+                fill="url(#hi-shade)"
+                d="M59.4108 441.426C58.9241 436.236 59.2139 422.407 59.2729 416.981C59.4098 404.181 59.4727 391.379 59.4617 378.578C59.4111 331.945 57.3952 282.705 62.0262 236.126C62.6472 229.879 64.4548 224.235 65.886 218.232C78.398 165.756 115.81 119.124 162.379 93.2493C185.412 80.3496 210.842 72.3029 237.103 69.6051C265.778 66.5791 297.916 68.7538 326.728 68.3401C411.275 67.7615 495.825 67.7294 580.373 68.2439L724.548 68.0867C731.234 68.1073 766.539 67.5611 771.396 68.9427C811.892 69.6974 851.534 84.6497 883.637 109.299C901.97 123.376 917.486 139.673 931.086 158.5C935.758 164.967 939.095 174.31 943.116 181.293C964.026 220.07 964.55 263.165 964.122 306.106C963.853 333.137 964.802 360.897 964.147 388C963.518 414.04 964.118 439.866 964.053 465.971L963.686 658.5C963.612 678.388 964.169 698.319 963.575 718.253C963.266 728.631 964.558 739.552 964.181 749.999C963.532 765.552 962.013 786.132 958.354 801.103C948.973 840.4 928.235 876.067 898.723 903.659C893.203 908.922 887.22 912.825 881.315 917.336C859.349 934.117 830.019 946.712 802.747 951.471C775.354 956.252 740.951 954.983 712.422 955.027L579.486 954.875L341.417 954.978C311.237 954.881 280.841 955.051 250.9 954.673C161.844 953.55 84.3936 887.695 64.5775 801.645C57.7671 772.071 59.5064 745.064 59.4368 715.236L59.285 625.38L59.3391 515.707C59.2466 492.697 58.7 469.531 59.0778 446.516C59.105 444.863 59.2361 443.071 59.4108 441.426Z"
+              />
+              <path
+                fill="url(#hi-body)"
+                d="M676.549 260.205C684.917 239.252 705.191 211.699 726.269 203.093C767.718 186.169 794.751 227.275 778.023 264.198C775.533 269.695 766.069 286.006 761.304 289.596C747.614 306.578 712.568 336.894 715.24 360.451C715.828 365.634 717.877 369.8 722.026 372.986C727.22 376.974 733.649 379.09 738.953 382.928C746.14 388.128 753.093 393.45 759.09 400.033C775.483 418.028 782.311 443.45 785.876 466.979C789.969 493.983 792.163 521.53 795.126 548.691C797.152 566.718 799.025 584.762 800.747 602.821C807.535 671.329 812.401 744.428 740.02 780.621C716.228 792.518 692.232 800.692 666.666 807.92C595.406 828.03 521.703 842.194 448.302 851.657C392.892 858.801 331.073 860.74 283.859 825.864C248.674 799.873 233.637 758.098 221.406 717.877C205.36 663.256 193.59 607.468 186.203 551.02C180.346 508.755 177.173 464.633 180.895 422.056C181.174 418.867 182.657 405.735 183.846 403.183C186.829 379.074 200.594 346.575 215.477 327.537C241.614 294.104 274.605 276.577 316.088 270.836C322.22 270.079 328.979 269.468 335.143 269.454C376.564 268.171 421.199 277.846 461.11 288.037C484.309 293.883 507.319 300.457 530.106 307.749C543.619 311.116 565.263 318.637 578.522 323.398C581.96 324.141 599.66 330.352 603.372 331.788C620.461 338.399 640.545 344.961 657.08 352.314C657.196 327.092 664.208 282.53 676.549 260.205Z"
+              />
+              <path
+                fill="url(#hi-sheen)"
+                d="M676.549 260.205C684.917 239.252 705.191 211.699 726.269 203.093C767.718 186.169 794.751 227.275 778.023 264.198C775.533 269.695 766.069 286.006 761.304 289.596C747.614 306.578 712.568 336.894 715.24 360.451C715.828 365.634 717.877 369.8 722.026 372.986C727.22 376.974 733.649 379.09 738.953 382.928C746.14 388.128 753.093 393.45 759.09 400.033C775.483 418.028 782.311 443.45 785.876 466.979C789.969 493.983 792.163 521.53 795.126 548.691C797.152 566.718 799.025 584.762 800.747 602.821C807.535 671.329 812.401 744.428 740.02 780.621C716.228 792.518 692.232 800.692 666.666 807.92C595.406 828.03 521.703 842.194 448.302 851.657C392.892 858.801 331.073 860.74 283.859 825.864C248.674 799.873 233.637 758.098 221.406 717.877C205.36 663.256 193.59 607.468 186.203 551.02C180.346 508.755 177.173 464.633 180.895 422.056C181.174 418.867 182.657 405.735 183.846 403.183C186.829 379.074 200.594 346.575 215.477 327.537C241.614 294.104 274.605 276.577 316.088 270.836C322.22 270.079 328.979 269.468 335.143 269.454C376.564 268.171 421.199 277.846 461.11 288.037C484.309 293.883 507.319 300.457 530.106 307.749C543.619 311.116 565.263 318.637 578.522 323.398C581.96 324.141 599.66 330.352 603.372 331.788C620.461 338.399 640.545 344.961 657.08 352.314C657.196 327.092 664.208 282.53 676.549 260.205Z"
+              />
+              <path
+                fill="url(#hi-rim)"
+                d="M335.143 269.454C376.564 268.171 421.199 277.846 461.11 288.037C484.309 293.883 507.319 300.457 530.106 307.749C543.619 311.116 565.263 318.637 578.522 323.398C581.239 325.778 582.445 324.738 584.688 326.515L584.272 327.666C578.394 325.186 574.418 324.789 568.611 323.189C562.498 321.505 554.446 319.173 548.528 316.935C543.44 316.029 536.174 313.177 530.946 311.708C463.967 292.899 394.57 271.634 324.319 273.526C319.484 275.151 319.025 273.638 316.088 270.836C322.22 270.079 328.979 269.468 335.143 269.454Z"
+              />
+              <path
+                fill="url(#hi-tip)"
+                d="M676.549 260.205C684.917 239.252 705.191 211.699 726.269 203.093C767.718 186.169 794.751 227.275 778.023 264.198C775.533 269.695 766.069 286.006 761.304 289.596C760.221 287.899 770.782 278.583 770.783 274.192C761.328 264.268 752.009 266.627 740.445 263.911C728.316 261.061 716.551 257.659 704.227 255.328C699.929 254.515 690.769 246.926 685.825 246.056C682.844 247.53 679.098 256.392 677.31 259.882L676.549 260.205Z"
+              />
+              <path
+                fill="#FBF3E4"
+                d="M395.073 379.288C405.885 378.333 420.97 379.078 431.78 380.402C492.212 387.674 551.842 401.556 610.715 416.796C637.973 423.852 666.301 431.577 692.494 442.015C698.167 444.276 703.495 447.39 708.638 450.696C727.536 462.996 740.225 484.209 743.469 506.911C750.913 559.002 761.172 613.736 760.533 666.432C760.431 674.804 755.34 688.083 750.743 694.767C731.272 723.083 684.666 728.857 653.387 734.939C591.944 747.849 527.414 757.956 465.06 766.114C441.337 769.217 415.188 765.3 396.384 749.37C387.807 742.066 380.615 733.278 375.151 723.426C345.459 670.912 326.537 558.272 320.468 497.093C318.144 466.129 315.554 430.665 337.163 405.319C351.929 387.998 373.104 381.019 395.073 379.288Z"
+              />
+              <path
+                fill="#212021"
+                d="M448.984 454.211C461.44 453.56 473.923 453.655 486.367 454.498C527.353 457.4 636.083 473.118 667.076 494.51C692.998 512.402 699.175 550.691 704.311 579.71C706.091 589.894 707.641 600.117 708.96 610.371C711.165 626.869 715.347 651.338 705.122 665.499C695.33 679.061 675.477 681.752 660.21 684.453C649.146 686.411 637.754 687.953 626.621 689.783C581.763 698.019 535.066 703.904 489.859 710.001C448.989 715.514 424.666 698.511 411.535 659.762C397.628 618.724 390.083 575.415 386 532.244C381.473 481.297 397.698 457.829 448.984 454.211Z"
+              />
+              <g clip-path="url(#hi-screen)">
+                <g class="logo-eyes">
+                  <path
+                    class="logo-eye"
+                    fill="#FBF3E4"
+                    d="M470.37 547.089C493.857 544.785 505.179 571.17 509.638 589.998C514.336 609.839 520.366 654.27 492.621 660.425C472.132 661.939 460.538 640.274 455.521 623.402C449.009 601.502 441.323 555.746 470.37 547.089Z"
+                  />
+                  <path
+                    class="logo-eye"
+                    fill="#FBF3E4"
+                    d="M598.557 537.116C619.767 535.364 631.793 560.395 635.903 577.615C640.813 598.186 646.941 639.836 618.611 646.485C594.445 647.797 584.132 619.988 579.956 600.692C575.707 581.062 571.403 542.258 598.557 537.116Z"
+                  />
+                </g>
+              </g>
+              <g class="logo-sprout">
+                <path
+                  fill="url(#hi-leaf)"
+                  d="M829.716 273.564C839.222 273.249 851.352 274.617 859.097 280.692C863.818 282.856 868.966 288.313 871.797 292.598C881.647 307.344 876.567 328.576 862.31 338.876C830.212 362.064 787.172 347.526 751.124 358.082C746.454 359.45 738.812 361.929 734.292 362.385C728.005 355.804 729.863 353.195 733.821 345.913C740.887 332.781 749.828 320.749 760.363 310.194C777.367 293.203 804.978 273.561 829.716 273.564Z"
+                />
+                <path
+                  fill="#FECD73"
+                  d="M829.716 273.564C839.222 273.249 851.352 274.617 859.097 280.692C855.244 280.843 852.966 276.231 847.434 278.159C844.581 279.153 840.934 275.87 838.248 273.93C834.476 274.107 833.455 274.487 829.716 273.564Z"
+                />
+              </g>
+            </svg>
+            <div class="float-card fc-script">
+              <span class="fc-label" data-i18n="art.script">Script</span>
+              <span class="fc-lines"
+                ><span></span><span></span><span></span
+              ></span>
+            </div>
+            <div class="float-card fc-voice">
+              <span class="fc-label" data-i18n="art.voice">Voice</span>
+              <span class="fc-wave"
+                ><span></span><span></span><span></span><span></span
+                ><span></span><span></span><span></span
+              ></span>
+            </div>
+            <div class="float-card fc-video">
+              <span class="fc-play"></span>
+              <span class="fc-bar"><span></span></span>
+              <span class="fc-label">MP4 · 1080p</span>
+            </div>
+          </div>
+
+          <div class="hero-copy">
+            <p class="badge">
+              <span class="badge-dot"></span
+              ><span data-i18n="hero.badge">Free and open source · Alpha</span>
+            </p>
+            <h1 id="hero-title" data-i18n="hero.title">
+              Make animated videos with AI that runs on your own computer.
+            </h1>
+            <p class="lede" data-i18n="hero.lede">
+              From an idea to a finished MP4: script, scenes, pictures, voice
+              and render, in one app.
+            </p>
+            <ul class="no-list">
+              <li data-i18n="hero.noAccount">No account</li>
+              <li data-i18n="hero.noSubscription">No subscription</li>
+              <li data-i18n="hero.noCloud">No cloud</li>
+            </ul>
+            <div class="cta-row">
+              <a
+                class="button button-primary"
+                href="https://github.com/eaabak/framebop-studio"
+                data-repo=""
+              >
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-github" />
+                </svg>
+                <span data-i18n="cta.github">View on GitHub</span>
+              </a>
+              <span class="button button-soon">
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-apple" />
+                </svg>
+                <span data-i18n="cta.download">Download for Mac</span>
+                <span class="soon-pill" data-i18n="cta.soon">Coming soon</span>
+              </span>
+            </div>
+            <p class="cta-note" data-i18n="cta.note">
+              There is no installer yet. Today you can
+              <a
+                href="https://github.com/eaabak/framebop-studio/blob/main/README.md#quick-start"
+                data-repo="blob/main/README.md#quick-start"
+                >build it from source</a
+              >
+              on a Mac with Apple silicon.
+            </p>
+          </div>
+        </div>
+
+        <div class="wrap">
+          <ol
+            class="pipeline"
+            aria-label="From idea to finished video"
+            data-i18n-attr="aria-label:pipe.label"
+          >
+            <li data-i18n="pipe.idea">Idea</li>
+            <li data-i18n="pipe.script">Script</li>
+            <li data-i18n="pipe.scenes">Scenes</li>
+            <li data-i18n="pipe.pictures">Pictures</li>
+            <li data-i18n="pipe.animation">Animation</li>
+            <li data-i18n="pipe.narration">Narration</li>
+            <li data-i18n="pipe.timeline">Timeline</li>
+            <li class="pipe-end" data-i18n="pipe.mp4">Final MP4</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="how" aria-labelledby="how-title">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow" data-i18n="how.eyebrow">How it works</p>
+            <h2 id="how-title" data-i18n="how.title">
+              Three steps, from idea to video.
+            </h2>
+            <p class="section-lede" data-i18n="how.lede">
+              Script, Scenes, Video. Each AI part gets ready with one button,
+              and you see the download size first.
+            </p>
+          </div>
+          <ol class="steps">
+            <li class="step reveal">
+              <div class="step-art art-script" aria-hidden="true">
+                <span class="paper"
+                  ><span></span><span></span><span></span><span></span
+                ></span>
+                <span class="art-chip" data-i18n="how.chip">AI draft</span>
+              </div>
+              <p class="step-num" aria-hidden="true">1</p>
+              <h3 data-i18n="how.s1.title">Script</h3>
+              <p data-i18n="how.s1.text">
+                Write or paste your story, or let AI draft one in your project's
+                language. Nothing goes into your script until you choose it.
+              </p>
+            </li>
+            <li class="step reveal">
+              <div class="step-art art-scenes" aria-hidden="true">
+                <span class="frame"
+                  ><span class="sun"></span><span class="hill"></span
+                  ><b>1</b></span
+                >
+                <span class="frame is-active"
+                  ><span class="sun"></span><span class="hill"></span
+                  ><b>2</b></span
+                >
+                <span class="frame"
+                  ><span class="sun"></span><span class="hill"></span
+                  ><b>3</b></span
+                >
+              </div>
+              <p class="step-num" aria-hidden="true">2</p>
+              <h3 data-i18n="how.s2.title">Scenes</h3>
+              <p data-i18n="how.s2.text">
+                Split the script into scenes. Each one gets a picture, made with
+                AI or your own, and a voice that reads it aloud. Drag to
+                reorder; edits save on their own.
+              </p>
+            </li>
+            <li class="step reveal">
+              <div class="step-art art-video" aria-hidden="true">
+                <span class="screen"><span class="play"></span></span>
+                <span class="progress"><span></span></span>
+              </div>
+              <p class="step-num" aria-hidden="true">3</p>
+              <h3 data-i18n="how.s3.title">Video</h3>
+              <p data-i18n="how.s3.text">
+                Render a finished MP4 in 1080p or 720p, with slow camera moves,
+                text, captions and music. Every file is checked before it is
+                listed.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section
+        class="section section-soft"
+        id="features"
+        aria-labelledby="features-title"
+      >
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow" data-i18n="features.eyebrow">Features</p>
+            <h2 id="features-title" data-i18n="features.title">
+              Real AI engines, on your own machine.
+            </h2>
+            <p class="section-lede" data-i18n="features.lede">
+              Framebop installs its own engines once you say yes, each pinned to
+              an exact version. You can start without any AI model at all.
+            </p>
+          </div>
+
+          <ul class="cards">
+            <li class="card reveal">
+              <span class="card-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-picture" /></svg
+              ></span>
+              <h3 data-i18n="f.pictures.title">Pictures</h3>
+              <p data-i18n="f.pictures.text">
+                <strong>Make with AI</strong> draws a picture for a scene with
+                Framebop's own <span class="nowrap">stable-diffusion.cpp</span>:
+                about 24 seconds for a 512 × 512 picture on an Apple M4 Pro,
+                with Stable Diffusion 1.5. Add larger, newer models, or upload
+                your own picture.
+              </p>
+              <p class="card-tag">
+                <span class="nowrap">stable-diffusion.cpp</span>
+              </p>
+            </li>
+            <li class="card reveal">
+              <span class="card-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-voice" /></svg
+              ></span>
+              <h3 data-i18n="f.voice.title">Voice</h3>
+              <p data-i18n="f.voice.text">
+                <strong>Read with AI</strong> narrates each scene with the
+                sherpa-onnx voice engine, with a voice for every interface
+                language: Kokoro for English, Piper for Turkish, German, Spanish
+                and Brazilian Portuguese. A scene is never cut short of its
+                narration.
+              </p>
+              <p class="lang-chips" aria-hidden="true">
+                <span>EN</span><span>TR</span><span>DE</span><span>ES</span
+                ><span>PT-BR</span>
+              </p>
+              <p class="card-tag">sherpa-onnx</p>
+            </li>
+            <li class="card reveal">
+              <span class="card-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-pen" /></svg
+              ></span>
+              <h3 data-i18n="f.script.title">Script drafts</h3>
+              <p data-i18n="f.script.text">
+                <strong>Write with AI</strong> sets up llama.cpp and Qwen3 4B
+                (2.5 GB) with one consent and drafts a script in your project's
+                language. The draft goes into your script only when you choose.
+              </p>
+              <p class="card-tag">llama.cpp · Qwen3 4B</p>
+            </li>
+            <li class="card reveal">
+              <span class="card-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-render" /></svg
+              ></span>
+              <h3 data-i18n="f.render.title">Render and check</h3>
+              <p data-i18n="f.render.text">
+                Remotion renders the final video in 1080p or 720p (H.264 with
+                AAC sound). FFmpeg then checks every file: length, frame rate,
+                codecs, that every frame decodes and that each narration can be
+                heard where it was placed. The same edit always gives the same
+                file, byte for byte.
+              </p>
+              <p class="card-tag">Remotion + FFmpeg</p>
+            </li>
+            <li class="card reveal">
+              <span class="card-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-models" /></svg
+              ></span>
+              <h3 data-i18n="f.models.title">Models, your way</h3>
+              <p data-i18n="f.models.text">
+                A small, reviewed catalog: every file pinned to its size and
+                SHA-256, with its licence shown before download. Or bring any
+                Hugging Face repository of separate weights (ComfyUI-style or
+                GGUF): you confirm the parts, and only those are downloaded and
+                checked. Downloads resume after a quit.
+              </p>
+              <p class="card-tag" data-i18n="f.models.tag">
+                Catalog + Hugging Face
+              </p>
+            </li>
+            <li class="card reveal">
+              <span class="card-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-lab" /></svg
+              ></span>
+              <h3 data-i18n="f.lab.title">Video DNA Lab</h3>
+              <p data-i18n="f.lab.text">
+                Study reference videos with your own YouTube Data API key:
+                public details, comments and a transcript you may use, with
+                findings that each cite the data they rest on. The Story
+                Architect turns a concept into an outline and scenes you edit
+                and approve.
+              </p>
+              <p class="card-tag" data-i18n="f.lab.tag">
+                Research · local language model
+              </p>
+            </li>
+          </ul>
+
+          <div class="workshop reveal">
+            <h3 class="workshop-title" data-i18n="f.workshop">
+              Still in the workshop
+            </h3>
+            <ul class="workshop-list">
+              <li>
+                <span class="card-icon card-icon-quiet"
+                  ><svg class="icon" aria-hidden="true">
+                    <use href="icons.svg#i-film" /></svg
+                ></span>
+                <div>
+                  <h4>
+                    <span data-i18n="f.clips.title">Moving clips</span>
+                    <span class="pill pill-warn" data-i18n="f.experimental"
+                      >Experimental</span
+                    >
+                  </h4>
+                  <p data-i18n="f.clips.text">
+                    <strong>Make it move</strong> turns a scene's picture into a
+                    short clip with Wan 2.2 TI2V 5B. Sampling works on Apple
+                    silicon, but decoding the frames is still far too slow to be
+                    useful. Uploading your own clips works today.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="card-icon card-icon-quiet"
+                  ><svg class="icon" aria-hidden="true">
+                    <use href="icons.svg#i-figure" /></svg
+                ></span>
+                <div>
+                  <h4>
+                    <span data-i18n="f.anim.title">2D animation</span>
+                    <span class="pill pill-muted" data-i18n="f.prototype"
+                      >Prototype</span
+                    >
+                  </h4>
+                  <p data-i18n="f.anim.text">
+                    A built-in engine for vector or sprite characters with
+                    camera moves, drawn in SVG or PixiJS. Demo scenes with test
+                    art only, for now.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- The first videos from showcase.js (see gallery.js); while the list
+           is empty, an invitation shows instead. -->
+      <section
+        class="section"
+        id="showcase"
+        aria-labelledby="showcase-title"
+        data-gallery-root
+      >
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow" data-i18n="showcase.eyebrow">Showcase</p>
+            <h2 id="showcase-title" data-i18n="showcase.title">
+              Videos made with Framebop.
+            </h2>
+            <p
+              class="section-lede"
+              data-i18n="showcase.lede"
+              data-showcase-filled
+              hidden
+            >
+              Each one was made on the maker's own computer. Under every video
+              is what it was made with.
+            </p>
+          </div>
+
+          <div class="showcase-empty reveal" data-showcase-empty>
+            <div class="empty-art" aria-hidden="true">
+              <span class="empty-frame">
+                <span class="glass-play">
+                  <svg class="icon"><use href="icons.svg#i-play" /></svg>
+                </span>
+                <span class="empty-bar"><span></span></span>
+              </span>
+            </div>
+            <div class="empty-copy">
+              <span class="pill pill-warn" data-i18n="showcase.soon"
+                >Coming soon</span
+              >
+              <h3 data-i18n="showcase.emptyTitle">Your video could be here.</h3>
+              <p data-i18n="showcase.emptyText">
+                Framebop Studio is new, so this showcase is still empty. Soon
+                you will be able to share the videos you make with it here, and
+                we would love to show them.
+              </p>
+              <a
+                class="button button-secondary"
+                href="https://github.com/eaabak/framebop-studio"
+                data-repo=""
+              >
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-github" />
+                </svg>
+                <span data-i18n="showcase.follow">Follow along on GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <ul
+            class="v-grid"
+            data-gallery-preview
+            data-showcase-filled
+            hidden
+          ></ul>
+          <div class="showcase-more" data-showcase-filled hidden>
+            <a class="button button-secondary" href="/videos">
+              <span data-i18n="gallery.seeAll">See all videos</span>
+              <span class="count-pill" data-gallery-total></span>
+              <svg class="icon icon-sm" aria-hidden="true">
+                <use href="icons.svg#i-arrow" />
+              </svg>
+            </a>
+            <p class="showcase-note" data-i18n="showcase.note">
+              Made something with Framebop? Sharing your own videos here opens
+              soon.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section band"
+        id="privacy"
+        aria-labelledby="privacy-title"
+      >
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow" data-i18n="privacy.eyebrow">Privacy</p>
+            <h2 id="privacy-title" data-i18n="privacy.title">
+              Your stories stay on your computer.
+            </h2>
+            <p class="section-lede" data-i18n="privacy.lede">
+              Projects, prompts and media never leave your machine, and once it
+              is set up, Framebop works offline.
+            </p>
+          </div>
+          <ul class="privacy-grid">
+            <li class="reveal">
+              <span class="band-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-laptop" /></svg
+              ></span>
+              <h3 data-i18n="privacy.local.title">Everything local</h3>
+              <p data-i18n="privacy.local.text">
+                The app, the AI engines and your library live on your computer.
+                Rendering makes no network requests.
+              </p>
+            </li>
+            <li class="reveal">
+              <span class="band-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-eye-off" /></svg
+              ></span>
+              <h3 data-i18n="privacy.telemetry.title">No telemetry</h3>
+              <p data-i18n="privacy.telemetry.text">
+                No analytics, no crash reports, no account. This website has no
+                trackers or cookies either.
+              </p>
+            </li>
+            <li class="reveal">
+              <span class="band-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-download" /></svg
+              ></span>
+              <h3 data-i18n="privacy.consent.title">
+                Downloads only with your yes
+              </h3>
+              <p data-i18n="privacy.consent.text">
+                Engines and models come from Hugging Face and GitHub only after
+                you agree, with the size shown first. No account or token
+                needed.
+              </p>
+            </li>
+            <li class="reveal">
+              <span class="band-icon"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-shield" /></svg
+              ></span>
+              <h3 data-i18n="privacy.hash.title">Checked by SHA-256</h3>
+              <p data-i18n="privacy.hash.text">
+                Every engine and model is pinned to an exact version and checked
+                against its published SHA-256 before it is used.
+              </p>
+            </li>
+          </ul>
+          <p class="band-note" data-i18n="privacy.note">
+            Besides the downloads you approve, the only part that goes online is
+            Video DNA Lab, and only when you use it: it talks to the YouTube
+            Data API with your own key, kept in your system's secure storage.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="status" aria-labelledby="status-title">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow" data-i18n="status.eyebrow">Honest status</p>
+            <h2 id="status-title" data-i18n="status.title">
+              Early, and honest about it.
+            </h2>
+            <p class="section-lede" data-i18n="status.lede">
+              Framebop Studio is in alpha. It is developed and tested on macOS
+              with Apple silicon only; Windows and Linux are not tested yet.
+            </p>
+          </div>
+          <div class="status-grid">
+            <div class="panel reveal">
+              <h3 data-i18n="status.platforms">Platforms</h3>
+              <ul class="platforms">
+                <li>
+                  <span class="platform-name">macOS, Apple silicon</span>
+                  <span class="pill pill-ok" data-i18n="status.tested"
+                    >Tested</span
+                  >
+                  <span class="platform-note" data-i18n="status.appleNote"
+                    >Developed and tested here. Framebop's own engines are
+                    pinned for it.</span
+                  >
+                </li>
+                <li>
+                  <span class="platform-name">macOS, Intel</span>
+                  <span class="pill pill-warn" data-i18n="status.partly"
+                    >Partly</span
+                  >
+                  <span class="platform-note" data-i18n="status.intelNote"
+                    >The app is expected to work; Framebop's own engines are not
+                    yet.</span
+                  >
+                </li>
+                <li>
+                  <span class="platform-name" data-i18n="status.windows"
+                    >Windows 10 and 11</span
+                  >
+                  <span class="pill pill-muted" data-i18n="status.notYet"
+                    >Not yet</span
+                  >
+                  <span class="platform-note" data-i18n="status.plannedNote"
+                    >Designed for; not yet built or tested.</span
+                  >
+                </li>
+                <li>
+                  <span class="platform-name">Linux</span>
+                  <span class="pill pill-muted" data-i18n="status.notYet"
+                    >Not yet</span
+                  >
+                  <span class="platform-note" data-i18n="status.plannedNote"
+                    >Designed for; not yet built or tested.</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="panel reveal">
+              <h3 data-i18n="status.alpha">What alpha means here</h3>
+              <ul class="checklist">
+                <li data-i18n="status.a1">
+                  No installer yet. You run Framebop from source, with Node.js,
+                  pnpm and Rust.
+                </li>
+                <li data-i18n="status.a2">
+                  Rendering and the AI helpers work in the development build;
+                  the installed app does not contain the renderer yet.
+                </li>
+                <li data-i18n="status.a3">
+                  Moving clips made with AI are not usable yet, and 2D animation
+                  is a prototype.
+                </li>
+                <li data-i18n="status.a4">
+                  Signed installers for macOS, Windows and Linux are planned.
+                </li>
+              </ul>
+              <a
+                class="text-link"
+                href="https://github.com/eaabak/framebop-studio/blob/main/docs/roadmap.md"
+                data-repo="blob/main/docs/roadmap.md"
+              >
+                <span data-i18n="status.roadmap">Read the roadmap</span>
+                <svg class="icon icon-sm" aria-hidden="true">
+                  <use href="icons.svg#i-arrow" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section section-soft"
+        id="open-source"
+        aria-labelledby="open-title"
+      >
+        <div class="wrap open-grid">
+          <div>
+            <p class="eyebrow" data-i18n="open.eyebrow">Open source</p>
+            <h2 id="open-title" data-i18n="open.title">
+              Free and open, under Apache 2.0.
+            </h2>
+            <p data-i18n="open.p1">
+              Read the code, change it, share it. Engines sit behind small
+              adapters, so new models and backends can be added without touching
+              the rest.
+            </p>
+            <p data-i18n="open.p2">
+              Contributions of every size are welcome: bug reports from real
+              use, models for the catalog, translations, code.
+            </p>
+            <div class="cta-row">
+              <a
+                class="button button-primary"
+                href="https://github.com/eaabak/framebop-studio"
+                data-repo=""
+              >
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-github" />
+                </svg>
+                <span data-i18n="cta.github">View on GitHub</span>
+              </a>
+              <a
+                class="button button-secondary"
+                href="https://github.com/eaabak/framebop-studio/blob/main/CONTRIBUTING.md"
+                data-repo="blob/main/CONTRIBUTING.md"
+                data-i18n="open.contribute"
+                >How to contribute</a
+              >
+            </div>
+          </div>
+          <div class="panel reveal">
+            <h3 data-i18n="open.engines">The engines it works with</h3>
+            <ul class="engines">
+              <li>
+                <span>stable-diffusion.cpp</span
+                ><span class="licence">MIT</span>
+              </li>
+              <li><span>llama.cpp</span><span class="licence">MIT</span></li>
+              <li>
+                <span>sherpa-onnx</span><span class="licence">Apache 2.0</span>
+              </li>
+              <li>
+                <span>FFmpeg</span
+                ><span class="licence" data-i18n="open.ffmpeg"
+                  >Your system's copy</span
+                >
+              </li>
+              <li>
+                <span>Remotion</span
+                ><span class="licence licence-note" data-i18n="open.remotion"
+                  >Own licence, not open source</span
+                >
+              </li>
+            </ul>
+            <p class="small" data-i18n="open.note">
+              They are not part of the repository and keep their own licences.
+              Framebop downloads or uses them only when you choose to.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq" aria-labelledby="faq-title">
+        <div class="wrap faq-wrap">
+          <div class="section-head">
+            <p class="eyebrow" data-i18n="faq.eyebrow">FAQ</p>
+            <h2 id="faq-title" data-i18n="faq.title">Questions, answered.</h2>
+          </div>
+          <div class="faq">
+            <details>
+              <summary data-i18n="faq.q1">Is it free?</summary>
+              <p data-i18n="faq.a1">
+                Yes. Framebop Studio is free and open source under the Apache
+                License 2.0: no account, no subscription. The AI models you
+                download keep their own licences, shown before each download,
+                and some restrict commercial use. The final render uses
+                <a href="https://www.remotion.dev/docs/license" rel="noopener"
+                  >Remotion</a
+                >, which is not open source: it is free for individuals,
+                non-profits, companies of up to three people and for evaluation,
+                while larger companies need a Remotion company licence.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q2">
+                Which computers does it run on?
+              </summary>
+              <p data-i18n="faq.a2">
+                Today, Macs with Apple silicon: that is where it is developed
+                and tested, on an M4 Pro with 24 GB of memory. On Intel Macs the
+                app is expected to work, but Framebop's own AI engines are not
+                set up there yet. Windows 10 and 11 and Linux are planned, but
+                not built or tested yet.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q3">Which AI models does it use?</summary>
+              <p data-i18n="faq.a3">
+                For pictures, Stable Diffusion 1.5 through stable-diffusion.cpp,
+                and larger, newer models from the catalog or Hugging Face. For
+                voice, Kokoro and Piper voices through sherpa-onnx. For script
+                drafts, Qwen3 4B through llama.cpp. For moving clips, Wan 2.2
+                TI2V 5B, which is still experimental. Every model's licence is
+                shown before you download it.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q4">Do I need the internet?</summary>
+              <p data-i18n="faq.a4">
+                Only to download the engines and models you choose, from Hugging
+                Face and GitHub. After that,
+                <strong>Make with AI</strong> and
+                <strong>Read with AI</strong> work offline. Video DNA Lab is the
+                one part that goes online, to the YouTube Data API with your own
+                key.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q5">Can I download it now?</summary>
+              <p data-i18n="faq.a5">
+                Not as an installer yet; signed installers are planned. Today
+                you can build it from source on a Mac with Apple silicon, with
+                Node.js, pnpm and Rust: the
+                <a
+                  href="https://github.com/eaabak/framebop-studio/blob/main/README.md#quick-start"
+                  data-repo="blob/main/README.md#quick-start"
+                  >quick start</a
+                >
+                walks you through it.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q6">Where are my files kept?</summary>
+              <p data-i18n="faq.a6">
+                In one library folder on your computer; on a Mac,
+                <code
+                  >~/Library/Application&nbsp;Support/com.framebop.studio</code
+                >. Imported files are copied, never moved, and finished videos
+                are never overwritten or deleted by the app.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section closing" aria-labelledby="closing-title">
+        <div class="wrap">
+          <div class="closing-card reveal">
+            <img
+              class="closing-icon"
+              src="favicon.svg"
+              width="120"
+              height="120"
+              alt=""
+            />
+            <h2 id="closing-title" data-i18n="closing.title">
+              Made for people who want to tell stories, not manage tools.
+            </h2>
+            <div class="cta-row">
+              <a
+                class="button button-dark"
+                href="https://github.com/eaabak/framebop-studio"
+                data-repo=""
+              >
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-github" />
+                </svg>
+                <span data-i18n="cta.github">View on GitHub</span>
+              </a>
+              <a
+                class="button button-light"
+                href="https://github.com/eaabak/framebop-studio/blob/main/README.md#quick-start"
+                data-repo="blob/main/README.md#quick-start"
+                data-i18n="closing.build"
+                >Build from source</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <a
+            class="brand"
+            href="#top"
+            aria-label="Framebop Studio, home"
+            data-i18n-attr="aria-label:brand.home"
+          >
+            <img src="favicon.svg" width="30" height="30" alt="" />
+            <span class="wordmark" aria-hidden="true" lang="en"
+              ><span>Frame</span><span class="bop">bop</span
+              ><span class="studio">Studio</span></span
+            >
+          </a>
+          <p data-i18n="footer.tagline">
+            Animated videos with AI, on your own computer.
+          </p>
+        </div>
+        <nav
+          class="footer-links"
+          aria-label="Project links"
+          data-i18n-attr="aria-label:footer.label"
+        >
+          <a href="https://github.com/eaabak/framebop-studio" data-repo=""
+            >GitHub</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/LICENSE"
+            data-repo="blob/main/LICENSE"
+            data-i18n="footer.licence"
+            >Licence (Apache 2.0)</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/docs/roadmap.md"
+            data-repo="blob/main/docs/roadmap.md"
+            data-i18n="footer.roadmap"
+            >Roadmap</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/CONTRIBUTING.md"
+            data-repo="blob/main/CONTRIBUTING.md"
+            data-i18n="footer.contributing"
+            >Contributing</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/SECURITY.md"
+            data-repo="blob/main/SECURITY.md"
+            data-i18n="footer.security"
+            >Security</a
+          >
+        </nav>
+        <div class="footer-legal">
+          <p data-i18n="footer.legal">
+            Framebop Studio is licensed under the Apache License 2.0. Remotion,
+            used for the final render, is third-party software under its own
+            licence, which is not open source.
+          </p>
+          <p>
+            <span data-i18n="footer.copyright"
+              >© 2026 The Framebop Studio authors</span
+            >&nbsp;· <a href="https://framebop.com/">framebop.com</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

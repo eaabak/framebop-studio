@@ -1,0 +1,25 @@
+{
+  "name": "framebop-studio",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "description": "Local-first AI video production studio.",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @framebop/desktop dev",
+    "dev:web": "node scripts/dev-web.mjs",
+    "build": "pnpm --filter @framebop/renderer build && pnpm --filter @framebop/orchestrator build && pnpm --filter @framebop/desktop build:ui",
+    "build:app": "pnpm --filter @framebop/desktop build:app",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter @framebop/renderer build && pnpm -r test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

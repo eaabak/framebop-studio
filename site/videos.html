@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-page="videos">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Videos made with Framebop Studio</title>
+    <meta
+      name="description"
+      content="Animated videos made with Framebop Studio, each on the maker's own computer, with the AI models used for every one."
+    />
+    <link rel="canonical" href="https://framebop.com/videos" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      content="#fffaf2"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#141211"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Framebop Studio" />
+    <meta property="og:url" content="https://framebop.com/videos" />
+    <meta property="og:title" content="Videos made with Framebop Studio" />
+    <meta
+      property="og:description"
+      content="Animated videos made with Framebop Studio, each on the maker's own computer, with the AI models used for every one."
+    />
+    <meta property="og:image" content="https://framebop.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="The Framebop Studio icon, an orange tile with a TV-headed character, next to the line: Make animated videos with AI that runs on your own computer."
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="tr_TR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Videos made with Framebop Studio" />
+    <meta
+      name="twitter:description"
+      content="Animated videos made with Framebop Studio, each on the maker's own computer, with the AI models used for every one."
+    />
+    <meta name="twitter:image" content="https://framebop.com/og-image.jpg" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js" defer></script>
+    <script src="showcase.js" defer></script>
+    <script src="player.js" defer></script>
+    <script src="gallery.js" defer></script>
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a
+          class="brand"
+          href="/"
+          aria-label="Framebop Studio, home"
+          data-i18n-attr="aria-label:brand.home"
+        >
+          <img src="favicon.svg" width="34" height="34" alt="" />
+          <span class="wordmark" aria-hidden="true" lang="en"
+            ><span>Frame</span><span class="bop">bop</span
+            ><span class="studio">Studio</span></span
+          >
+        </a>
+        <nav
+          class="nav"
+          aria-label="Sections"
+          data-i18n-attr="aria-label:nav.label"
+        >
+          <a href="/#how" data-i18n="nav.how">How it works</a>
+          <a href="/#features" data-i18n="nav.features">Features</a>
+          <a href="/videos" aria-current="page" data-i18n="nav.showcase"
+            >Videos</a
+          >
+          <a href="/#privacy" data-i18n="nav.privacy">Privacy</a>
+          <a href="/#faq" data-i18n="nav.faq">FAQ</a>
+        </nav>
+        <div class="header-actions">
+          <div
+            class="lang-switch"
+            role="group"
+            aria-label="Language"
+            data-i18n-attr="aria-label:lang.label"
+          >
+            <button
+              type="button"
+              data-lang="en"
+              aria-pressed="true"
+              lang="en"
+              title="English"
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              data-lang="tr"
+              aria-pressed="false"
+              lang="tr"
+              title="Türkçe"
+            >
+              TR
+            </button>
+          </div>
+          <a
+            class="icon-button"
+            href="https://github.com/eaabak/framebop-studio"
+            data-repo=""
+            aria-label="Framebop Studio on GitHub"
+            data-i18n-attr="aria-label:github.label"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use href="icons.svg#i-github" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="gallery-hero" aria-labelledby="gallery-title">
+        <div class="wrap">
+          <p class="eyebrow" data-i18n="showcase.eyebrow">Showcase</p>
+          <h1 id="gallery-title" data-i18n="gallery.title">
+            Videos made with Framebop
+          </h1>
+          <p class="section-lede" data-i18n="gallery.lede">
+            Stories, lessons and experiments, each made on the maker's own
+            computer. Under every video is what it was made with.
+          </p>
+          <div class="cta-row">
+            <span class="button button-soon">
+              <svg class="icon" aria-hidden="true">
+                <use href="icons.svg#i-upload" />
+              </svg>
+              <span data-i18n="gallery.share">Share your video</span>
+              <span class="soon-pill" data-i18n="cta.soon">Coming soon</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filled from showcase.js by gallery.js; while the list is empty, an
+           invitation shows instead. -->
+      <section
+        class="section gallery-section"
+        aria-labelledby="gallery-title"
+        data-gallery-root
+      >
+        <div class="wrap">
+          <div class="showcase-empty reveal" data-gallery-empty>
+            <div class="empty-art" aria-hidden="true">
+              <span class="empty-frame">
+                <span class="glass-play">
+                  <svg class="icon"><use href="icons.svg#i-play" /></svg>
+                </span>
+                <span class="empty-bar"><span></span></span>
+              </span>
+            </div>
+            <div class="empty-copy">
+              <span class="pill pill-warn" data-i18n="showcase.soon"
+                >Coming soon</span
+              >
+              <h3 data-i18n="showcase.emptyTitle">Your video could be here.</h3>
+              <p data-i18n="showcase.emptyText">
+                Framebop Studio is new, so this showcase is still empty. Soon
+                you will be able to share the videos you make with it here, and
+                we would love to show them.
+              </p>
+              <a
+                class="button button-secondary"
+                href="https://github.com/eaabak/framebop-studio"
+                data-repo=""
+              >
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-github" />
+                </svg>
+                <span data-i18n="showcase.follow">Follow along on GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <div data-gallery-filled hidden>
+            <div class="gallery-toolbar">
+              <label class="search-field">
+                <span class="visually-hidden" data-i18n="gallery.searchLabel"
+                  >Search videos</span
+                >
+                <svg class="icon" aria-hidden="true">
+                  <use href="icons.svg#i-search" />
+                </svg>
+                <input
+                  type="search"
+                  autocomplete="off"
+                  data-gallery-search
+                  placeholder="Search by title, maker or topic"
+                  data-i18n-attr="placeholder:gallery.searchPlaceholder"
+                />
+              </label>
+              <label class="select-field">
+                <span data-i18n="gallery.narration">Narration</span>
+                <select data-gallery-narration>
+                  <option value="" data-i18n="gallery.anyLanguage">
+                    Any language
+                  </option>
+                </select>
+              </label>
+              <label class="select-field">
+                <span data-i18n="gallery.sort">Sort by</span>
+                <select data-gallery-sort>
+                  <option value="featured" data-i18n="gallery.sortFeatured">
+                    Featured
+                  </option>
+                  <option value="newest" data-i18n="gallery.sortNewest">
+                    Newest
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div
+              class="tag-row"
+              role="group"
+              aria-label="Topics"
+              data-i18n-attr="aria-label:gallery.topics"
+              data-gallery-tags
+            ></div>
+            <p class="gallery-count" aria-live="polite" data-gallery-count></p>
+            <ul class="v-grid" data-gallery-grid></ul>
+            <div class="gallery-none" data-gallery-none hidden>
+              <p data-i18n="gallery.none">No videos match your search.</p>
+              <button
+                type="button"
+                class="button button-secondary"
+                data-gallery-clear
+                data-i18n="gallery.clear"
+              >
+                Clear filters
+              </button>
+            </div>
+            <div class="gallery-more">
+              <button
+                type="button"
+                class="button button-secondary"
+                data-gallery-more
+                data-i18n="gallery.more"
+                hidden
+              >
+                Show more
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <a
+            class="brand"
+            href="/"
+            aria-label="Framebop Studio, home"
+            data-i18n-attr="aria-label:brand.home"
+          >
+            <img src="favicon.svg" width="30" height="30" alt="" />
+            <span class="wordmark" aria-hidden="true" lang="en"
+              ><span>Frame</span><span class="bop">bop</span
+              ><span class="studio">Studio</span></span
+            >
+          </a>
+          <p data-i18n="footer.tagline">
+            Animated videos with AI, on your own computer.
+          </p>
+        </div>
+        <nav
+          class="footer-links"
+          aria-label="Project links"
+          data-i18n-attr="aria-label:footer.label"
+        >
+          <a href="https://github.com/eaabak/framebop-studio" data-repo=""
+            >GitHub</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/LICENSE"
+            data-repo="blob/main/LICENSE"
+            data-i18n="footer.licence"
+            >Licence (Apache 2.0)</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/docs/roadmap.md"
+            data-repo="blob/main/docs/roadmap.md"
+            data-i18n="footer.roadmap"
+            >Roadmap</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/CONTRIBUTING.md"
+            data-repo="blob/main/CONTRIBUTING.md"
+            data-i18n="footer.contributing"
+            >Contributing</a
+          >
+          <a
+            href="https://github.com/eaabak/framebop-studio/blob/main/SECURITY.md"
+            data-repo="blob/main/SECURITY.md"
+            data-i18n="footer.security"
+            >Security</a
+          >
+        </nav>
+        <div class="footer-legal">
+          <p data-i18n="footer.legal">
+            Framebop Studio is licensed under the Apache License 2.0. Remotion,
+            used for the final render, is third-party software under its own
+            licence, which is not open source.
+          </p>
+          <p>
+            <span data-i18n="footer.copyright"
+              >© 2026 The Framebop Studio authors</span
+            >&nbsp;· <a href="https://framebop.com/">framebop.com</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

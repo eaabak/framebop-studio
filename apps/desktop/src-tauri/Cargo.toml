@@ -1,0 +1,39 @@
+[package]
+name = "framebop-studio"
+version = "0.1.0"
+description = "Framebop Studio desktop shell"
+edition = "2021"
+rust-version = "1.77.2"
+publish = false
+
+[lib]
+# The library form is what Tauri builds for mobile targets; keeping the split
+# from the start avoids restructuring later.
+name = "framebop_studio_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# `protocol-asset` serves library media to the webview through a scoped,
+# read-only URL scheme instead of exposing the filesystem.
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+# Used from Rust only, to launch the bundled engine. The webview is granted no
+# shell permissions (see capabilities/default.json).
+tauri-plugin-shell = "2"
+tokio = { version = "1", features = ["sync", "time"] }
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-single-instance = "2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

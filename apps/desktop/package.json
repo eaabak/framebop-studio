@@ -1,0 +1,43 @@
+{
+  "name": "@framebop/desktop",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "description": "The Framebop Studio desktop application: Tauri shell and React interface.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/prepare-sidecar.mjs && pnpm --filter @framebop/renderer ensure-browser && pnpm --filter @framebop/renderer build && pnpm --filter @framebop/orchestrator build && tauri dev",
+    "dev:ui": "vite",
+    "build:ui": "vite build",
+    "build:app": "node scripts/prepare-sidecar.mjs && pnpm --filter @framebop/orchestrator build && tauri build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@framebop/core": "workspace:*",
+    "@framebop/renderer": "workspace:*",
+    "@tauri-apps/api": "^2.12.3",
+    "@tauri-apps/plugin-dialog": "^2.8.2",
+    "@tauri-apps/plugin-opener": "^2.7.1",
+    "i18next": "^25.10.10",
+    "lucide-react": "^1.55.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-i18next": "^15.7.4",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@tauri-apps/cli": "^2.12.2",
+    "@types/node": "catalog:",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "catalog:",
+    "vite": "^8.3.4",
+    "vitest": "catalog:"
+  }
+}

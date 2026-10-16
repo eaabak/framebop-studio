@@ -1,0 +1,31 @@
+{
+  "name": "@framebop/orchestrator",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "description": "The headless production engine: library services, background jobs and the RPC server. Runs as a child process of the desktop shell.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@framebop/ai-adapters": "workspace:*",
+    "@framebop/core": "workspace:*",
+    "@framebop/database": "workspace:*",
+    "@framebop/model-manager": "workspace:*",
+    "@framebop/renderer": "workspace:*",
+    "@framebop/research": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "esbuild": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

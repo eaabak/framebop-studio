@@ -1,0 +1,9 @@
+Framebop Studio
+Copyright 2026 The Framebop Studio authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It works with third-party software and models that are not part of this
+distribution and keep their own licences, notably Remotion (used for
+rendering, under the Remotion License, which is not an open-source licence).
+See docs/licensing.md.

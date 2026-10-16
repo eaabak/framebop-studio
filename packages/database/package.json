@@ -1,0 +1,23 @@
+{
+  "name": "@framebop/database",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "description": "SQLite persistence: connection, migrations and repositories.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@framebop/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
