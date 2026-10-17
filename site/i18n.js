@@ -111,13 +111,12 @@ window.FRAMEBOP_I18N = {
     "showcase.title": "Framebop ile yapılan videolar.",
     "showcase.lede":
       "Her biri yapanın kendi bilgisayarında yapıldı. Her videonun altında neyle yapıldığı yazıyor.",
-    "showcase.soon": "Yakında",
     "showcase.emptyTitle": "Videonuz burada olabilir.",
     "showcase.emptyText":
-      "Framebop Studio yeni, bu yüzden vitrin henüz boş. Yakında Framebop ile yaptığınız videoları burada paylaşabileceksiniz; onları göstermeyi çok isteriz.",
-    "showcase.follow": "GitHub'da takip et",
-    "showcase.note":
-      "Framebop ile bir şey mi yaptınız? Kendi videolarınızı burada paylaşmak yakında mümkün olacak.",
+      "Framebop Studio yeni, bu yüzden vitrin henüz boş. Framebop ile bir video mu yaptınız? GitHub Discussions'ta paylaşın; burada göstermeyi çok isteriz.",
+    "showcase.note": `Framebop ile bir şey mi yaptınız? <a href="#" data-repo="discussions/categories/show-and-tell">GitHub Discussions'ta paylaşın</a>.`,
+    "showcase.first": "İlk siz olun",
+    "showcase.share": "Videonu paylaş",
     "showcase.madeWith": "Kullanılanlar",
     "showcase.by": "Yapan:",
     "gallery.seeAll": "Tüm videolar",
