@@ -25,6 +25,8 @@ No account, no subscription, no cloud.
 
 </div>
 
+https://github.com/user-attachments/assets/799f0207-cca8-4f8d-bd06-9bad2fed33ee
+
 ---
 
 ## Why Framebop Studio
