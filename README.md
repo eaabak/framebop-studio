@@ -10,7 +10,7 @@ No account, no subscription, no cloud.
 
 [![Version](https://img.shields.io/badge/version-0.1.0%20alpha-f97316)](docs/roadmap.md)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS%20·%20Apple%20silicon-lightgrey?logo=apple)](#platform-support)
+[![Platform: macOS today, Windows and Linux planned](https://img.shields.io/badge/platform-macOS%20today%20·%20Windows%20%26%20Linux%20planned-lightgrey)](#platform-support)
 [![Local-first](https://img.shields.io/badge/local--first-yes-22c55e)](#privacy-and-security)
 [![Telemetry](https://img.shields.io/badge/telemetry-none-22c55e)](#privacy-and-security)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-8b5cf6)](CONTRIBUTING.md)
@@ -21,7 +21,7 @@ No account, no subscription, no cloud.
 [![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A522.13-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![Models: Hugging Face](https://img.shields.io/badge/models-Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)](docs/models.md)
 
-[Features](#features) · [Quick start](#quick-start) · [How it works](#how-it-works) · [Documentation](#documentation) · [Contributing](#contributing)
+[Features](#features) · [Requirements](#system-requirements) · [Quick start](#quick-start) · [How it works](#how-it-works) · [Documentation](#documentation) · [Contributing](#contributing)
 
 </div>
 
@@ -246,6 +246,54 @@ More in [docs/architecture.md](docs/architecture.md).
 
 Everything that depends on the operating system sits behind one interface
 (`packages/ai-adapters/src/host/platform.ts`).
+
+## System requirements
+
+|                 | Minimum                                                         | Recommended                     |
+| --------------- | --------------------------------------------------------------- | ------------------------------- |
+| Computer        | Today, a Mac with Apple silicon (Windows and Linux are planned) | A Mac with Apple silicon        |
+| macOS           | 13.3 or newer; pictures need 26                                 | 26 Tahoe or newer               |
+| Memory          | 8 GB (expected, not tested yet)                                 | 16 GB or more                   |
+| Free disk space | 5 GB for the engines and their models                           | 15 GB, to also try moving clips |
+
+The pinned stable-diffusion.cpp build needs macOS 26, so on macOS 13.3 to 15
+pictures can be imported but not made with AI; script drafts (llama.cpp,
+macOS 13.3) and voice (sherpa-onnx, macOS 11) run there.
+
+Only an Apple M4 Pro with 24 GB has been tested so far. Building from
+source needs about 5 GB more for the Node.js packages and the Rust build
+(see [Requirements](#requirements)).
+
+### What each feature needs
+
+Each AI engine runs on its own and stops when its job is done, so what
+counts is the heaviest single step, not the sum. Measured on the M4 Pro with
+the default models:
+
+| Feature                      | Engine and model                               | Peak memory | Time on an M4 Pro                       |
+| ---------------------------- | ---------------------------------------------- | ----------- | --------------------------------------- |
+| Script draft                 | llama.cpp, Qwen3 4B (2.3 GB)                   | 3.7 GB      | 6 s for a one-minute, three-scene draft |
+| Picture                      | stable-diffusion.cpp, SD 1.5 Q8 (1.6 GB)       | 4.2 GB      | 25 s per 512 × 512 picture              |
+| Voice                        | sherpa-onnx, Kokoro (English)                  | 0.6 GB      | 7 to 9 s per scene                      |
+| Final video                  | Remotion and FFmpeg                            | 1.6 GB      | 21 s for a 61-second 1080p video        |
+| Moving clip _(experimental)_ | stable-diffusion.cpp, Wan 2.2 TI2V 5B (7.9 GB) | 9.8 GB      | Not usable yet: decoding is too slow    |
+
+Peak memory is how much the computer's used memory (app memory, wired and
+compressed) grew while the step ran, including the model the engine loads.
+The window of the app itself is not included. Smaller chips will be slower.
+
+### By amount of memory
+
+| Memory | Tested  | What to expect                                                                                                                                        |
+| ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8 GB   | Not yet | Script drafts, pictures, voice and the final video should each fit, one at a time. Close other apps while making pictures. Moving clips will not fit. |
+| 16 GB  | Not yet | Everything except moving clips, with room for other apps.                                                                                             |
+| 24 GB  | Yes     | Everything in the table above; the measurements come from this machine.                                                                               |
+
+The 8 GB and 16 GB rows are worked out from the measurements, not tested on
+such a Mac. If you have one, please
+[open an issue](https://github.com/eaabak/framebop-studio/issues) with your
+model, memory and what worked; this table will be updated from real reports.
 
 ## Where your data is stored
 
