@@ -19,6 +19,7 @@ No account, no subscription, no cloud.
 [![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A522.13-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![Models: Hugging Face](https://img.shields.io/badge/models-Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)](docs/models.md)
 
 [Features](#features) · [Quick start](#quick-start) · [How it works](#how-it-works) · [Documentation](#documentation) · [Contributing](#contributing)
 
