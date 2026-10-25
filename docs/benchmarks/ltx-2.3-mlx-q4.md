@@ -1,8 +1,11 @@
 # LTX-2.3 MLX Q4: independent benchmark preparation
 
-Status: preparation only, 25 October 2026. No runtime was installed, no model
-weights were downloaded, and no inference was run. Compatibility and performance
-on an Apple M4 with 24 GB unified memory remain unverified.
+Status: one independent smoke run completed on 25 October 2026. The selected
+weights were downloaded and hash-verified, and the pinned runtime was installed
+in a separate environment. The tested machine is an Apple **M4 Pro** with 24 GiB
+unified memory. See the [measured result](ltx-2.3-mlx-q4-result.md): a nine-frame
+clip completed, but substantial system swap growth prevents a claim of
+comfortable operation. Longer clips and application integration remain untested.
 
 ## Question and scope
 
