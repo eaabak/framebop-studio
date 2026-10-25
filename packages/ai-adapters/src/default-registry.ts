@@ -5,6 +5,7 @@ import {
 } from "./adapters/draw-things-cli";
 import { DrawThingsHttpImageAdapter } from "./adapters/draw-things-http";
 import { KokoroSpeechAdapter } from "./adapters/kokoro";
+import { Qwen3TtsSpeechAdapter } from "./adapters/qwen3-tts";
 import {
   type StableDiffusionCppEnvironment,
   StableDiffusionCppImageAdapter,
@@ -34,6 +35,10 @@ export interface RegistryEnvironment {
   drawThingsHttpPort: () => number;
   /** The Python interpreter chosen for Kokoro, if any. */
   kokoroPython: () => string | null;
+  /** The Python interpreter chosen for Qwen3-TTS (with mlx-audio), if any. */
+  qwenTtsPython: () => string | null;
+  /** The folder of Qwen3-TTS voice profiles chosen in settings, if any. */
+  qwenVoicesDirectory: () => string | null;
   /** Where the render worker and its composition are. */
   remotion: RemotionEnvironment;
   /** Framebop's own image runtime, installed and pinned by the engine. */
@@ -83,6 +88,15 @@ export function createDefaultRegistry(
     .register(new SherpaOnnxSpeechAdapter(environment.sherpaOnnx))
     .register(
       new KokoroSpeechAdapter({ env, python: environment.kokoroPython }),
+    )
+    .register(
+      new Qwen3TtsSpeechAdapter({
+        host,
+        env,
+        python: environment.qwenTtsPython,
+        voicesDirectory: environment.qwenVoicesDirectory,
+        ffmpeg: ffmpegPath,
+      }),
     )
     .register(new RemotionRenderAdapter(environment.remotion));
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "registryVersion": "2026.10.16",
-  "publishedAt": "2026-10-16",
+  "registryVersion": "2026.10.20",
+  "publishedAt": "2026-10-20",
   "models": [
     {
       "id": "kokoro-82m",
@@ -183,6 +183,555 @@
       "presets": [],
       "inferenceTests": [],
       "origin": "registry"
+    },
+    {
+      "id": "qwen3-tts-1.7b-base-bf16",
+      "name": "Qwen3-TTS 1.7B Base · bf16",
+      "description": "Qwen3-TTS Base, 1.7 billion parameters, bf16 weights converted for MLX. Clones a voice from a short reference recording and its exact transcript, so every narration sounds like the same speaker. The Qwen3-TTS engine uses it with a voice profile, through a Python with mlx-audio, without network access. Ten languages.",
+      "source": "huggingface",
+      "repoId": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16",
+      "revision": "a6eb4f68e4b056f1215157bb696209bc82a6db48",
+      "family": "Qwen3-TTS",
+      "task": "audio",
+      "variant": "12Hz 1.7B Base",
+      "quantization": null,
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 5317,
+          "sha256": null,
+          "gitBlobId": "7292c06f63ee990989f1fa9475b2df7310f313d1"
+        },
+        {
+          "path": "generation_config.json",
+          "sizeBytes": 245,
+          "sha256": null,
+          "gitBlobId": "1872b16d4535564abf2db5d6debe6cddd82b7f2e"
+        },
+        {
+          "path": "merges.txt",
+          "sizeBytes": 1671839,
+          "sha256": null,
+          "gitBlobId": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"
+        },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 3857414009,
+          "sha256": "81fb76175ff74e69be25fef2cc3e54f016df3034f1514c8e1c89da06a3510cff",
+          "gitBlobId": null
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "sizeBytes": 38742,
+          "sha256": null,
+          "gitBlobId": "565be76a6c664d2187bbe47a0d1700cebeb73642"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "sizeBytes": 127,
+          "sha256": null,
+          "gitBlobId": "0525dd953bb9241912f7147666f0d535165d5d4f"
+        },
+        {
+          "path": "speech_tokenizer/config.json",
+          "sizeBytes": 2336,
+          "sha256": null,
+          "gitBlobId": "06cc8dc4c5ec8a1929086b71b98c313020d9268b"
+        },
+        {
+          "path": "speech_tokenizer/configuration.json",
+          "sizeBytes": 76,
+          "sha256": null,
+          "gitBlobId": "ab58e2eaf53cd14a1a2a7527d9261ceea93a24cd"
+        },
+        {
+          "path": "speech_tokenizer/model.safetensors",
+          "sizeBytes": 682293092,
+          "sha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+          "gitBlobId": null
+        },
+        {
+          "path": "speech_tokenizer/preprocessor_config.json",
+          "sizeBytes": 234,
+          "sha256": null,
+          "gitBlobId": "ba40914f4f49ab98a8ca545d4892ef7291a39592"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sizeBytes": 7344,
+          "sha256": null,
+          "gitBlobId": "6ff9fd60cc623bb54bbd603cbd418c97a11528d7"
+        },
+        {
+          "path": "vocab.json",
+          "sizeBytes": 2776833,
+          "sha256": null,
+          "gitBlobId": "4783fe10ac3adce15ac8f358ef5462739852c569"
+        }
+      ],
+      "runtime": {
+        "id": "qwen3-tts-mlx",
+        "name": "Qwen3-TTS (MLX, mlx-audio package)"
+      },
+      "hardware": {
+        "accelerators": ["apple-metal"],
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "Runs through MLX, so on Macs with Apple Silicon only. The publisher states no memory requirement.",
+          "Used during development on an Apple M4 Pro with 24 GB of unified memory."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive. Allows commercial use, modification and redistribution, provided the licence and notices are kept."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16",
+      "verifiedOn": "2026-10-20",
+      "provider": "mlx-community",
+      "group": "qwen3-tts",
+      "categories": ["text-to-speech"],
+      "platforms": ["macos"],
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "profile-pace",
+          "kind": "balanced",
+          "label": "Profile's own pace",
+          "description": "The tempo, gaps, loudness and seed saved in the voice profile.",
+          "adapterId": "qwen3-tts",
+          "task": "audio_generation",
+          "parameters": {
+            "speed": 1,
+            "seed": 0
+          },
+          "size": null,
+          "verified": true,
+          "note": "Used for the narration checked during development."
+        }
+      ],
+      "inferenceTests": [
+        {
+          "date": "2026-10-20",
+          "os": "macos",
+          "arch": "arm64",
+          "hardware": "Apple M4 Pro, 24 GB unified memory",
+          "adapterId": "qwen3-tts",
+          "result": "works",
+          "detail": "A two-paragraph English narration (7 sentences, 28.0 seconds of speech) with a voice profile designed for the project, through mlx-audio 0.6.0: about 32 seconds in all, including loading the model. The 48 kHz WAV was byte-identical to the one the profile's own reference script made with the same seed."
+        }
+      ]
+    },
+    {
+      "id": "qwen3-tts-1.7b-voicedesign-bf16",
+      "name": "Qwen3-TTS 1.7B VoiceDesign · bf16",
+      "description": "Qwen3-TTS VoiceDesign, 1.7 billion parameters, bf16 weights converted for MLX. Makes up a new voice from a written description, for designing original voices. A take worth keeping can become a voice profile for the Base model. Ten languages.",
+      "source": "huggingface",
+      "repoId": "mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16",
+      "revision": "7d3824abff87e49756bb0f83fb5411de75d160c4",
+      "family": "Qwen3-TTS",
+      "task": "audio",
+      "variant": "12Hz 1.7B VoiceDesign",
+      "quantization": null,
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 5232,
+          "sha256": null,
+          "gitBlobId": "a85d67f0b825609a93a5989c3356b1c83f3173d6"
+        },
+        {
+          "path": "generation_config.json",
+          "sizeBytes": 245,
+          "sha256": null,
+          "gitBlobId": "1872b16d4535564abf2db5d6debe6cddd82b7f2e"
+        },
+        {
+          "path": "merges.txt",
+          "sizeBytes": 1671839,
+          "sha256": null,
+          "gitBlobId": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"
+        },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 3833402589,
+          "sha256": "96ae28bec2205ec0b5e0c750bea2b8a5deac4f14d33a8a25a5f753299486b70e",
+          "gitBlobId": null
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "sizeBytes": 32458,
+          "sha256": null,
+          "gitBlobId": "fc3cdcdcf6a8c50686589f5f9ee2bbeda94c1908"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "sizeBytes": 127,
+          "sha256": null,
+          "gitBlobId": "0525dd953bb9241912f7147666f0d535165d5d4f"
+        },
+        {
+          "path": "speech_tokenizer/config.json",
+          "sizeBytes": 2336,
+          "sha256": null,
+          "gitBlobId": "06cc8dc4c5ec8a1929086b71b98c313020d9268b"
+        },
+        {
+          "path": "speech_tokenizer/configuration.json",
+          "sizeBytes": 76,
+          "sha256": null,
+          "gitBlobId": "ab58e2eaf53cd14a1a2a7527d9261ceea93a24cd"
+        },
+        {
+          "path": "speech_tokenizer/model.safetensors",
+          "sizeBytes": 682293092,
+          "sha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+          "gitBlobId": null
+        },
+        {
+          "path": "speech_tokenizer/preprocessor_config.json",
+          "sizeBytes": 234,
+          "sha256": null,
+          "gitBlobId": "ba40914f4f49ab98a8ca545d4892ef7291a39592"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sizeBytes": 7344,
+          "sha256": null,
+          "gitBlobId": "6ff9fd60cc623bb54bbd603cbd418c97a11528d7"
+        },
+        {
+          "path": "vocab.json",
+          "sizeBytes": 2776833,
+          "sha256": null,
+          "gitBlobId": "4783fe10ac3adce15ac8f358ef5462739852c569"
+        }
+      ],
+      "runtime": {
+        "id": "qwen3-tts-mlx",
+        "name": "Qwen3-TTS (MLX, mlx-audio package)"
+      },
+      "hardware": {
+        "accelerators": ["apple-metal"],
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "Runs through MLX, so on Macs with Apple Silicon only. The publisher states no memory requirement."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive. Allows commercial use, modification and redistribution, provided the licence and notices are kept."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16",
+      "verifiedOn": "2026-10-20",
+      "provider": "mlx-community",
+      "group": "qwen3-tts",
+      "categories": ["text-to-speech"],
+      "platforms": ["macos"],
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "calm-narrator",
+          "kind": "custom",
+          "label": "Calm narrator",
+          "description": "An example description to start from.",
+          "adapterId": "qwen3-tts",
+          "task": "audio_generation",
+          "parameters": {
+            "voice": "designed",
+            "instruct": "A calm, warm, middle-aged narrator with a low, clear voice. Measured pace, gentle pauses, natural American English.",
+            "seed": 0
+          },
+          "size": null,
+          "verified": false,
+          "note": "Not compared with other descriptions yet."
+        }
+      ],
+      "inferenceTests": []
+    },
+    {
+      "id": "qwen3-tts-1.7b-customvoice-bf16",
+      "name": "Qwen3-TTS 1.7B CustomVoice · bf16",
+      "description": "Qwen3-TTS CustomVoice, 1.7 billion parameters, bf16 weights converted for MLX. Nine preset speakers, each steerable with a short instruction about how to speak. Ten languages.",
+      "source": "huggingface",
+      "repoId": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16",
+      "revision": "52f4770fd9726457eae3d3b6aa92047a25a10776",
+      "family": "Qwen3-TTS",
+      "task": "audio",
+      "variant": "12Hz 1.7B CustomVoice",
+      "quantization": null,
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 5853,
+          "sha256": null,
+          "gitBlobId": "13fa6cfa6b7809fd1cbd587f643c158b60c49ab0"
+        },
+        {
+          "path": "generation_config.json",
+          "sizeBytes": 245,
+          "sha256": null,
+          "gitBlobId": "1872b16d4535564abf2db5d6debe6cddd82b7f2e"
+        },
+        {
+          "path": "merges.txt",
+          "sizeBytes": 1671839,
+          "sha256": null,
+          "gitBlobId": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"
+        },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 3833402589,
+          "sha256": "3a791fb8250fc32ab0259b679d834159d3c8516af62f033ff2b9f42913e3fab6",
+          "gitBlobId": null
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "sizeBytes": 32458,
+          "sha256": null,
+          "gitBlobId": "fc3cdcdcf6a8c50686589f5f9ee2bbeda94c1908"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "sizeBytes": 127,
+          "sha256": null,
+          "gitBlobId": "0525dd953bb9241912f7147666f0d535165d5d4f"
+        },
+        {
+          "path": "speech_tokenizer/config.json",
+          "sizeBytes": 2336,
+          "sha256": null,
+          "gitBlobId": "06cc8dc4c5ec8a1929086b71b98c313020d9268b"
+        },
+        {
+          "path": "speech_tokenizer/configuration.json",
+          "sizeBytes": 76,
+          "sha256": null,
+          "gitBlobId": "ab58e2eaf53cd14a1a2a7527d9261ceea93a24cd"
+        },
+        {
+          "path": "speech_tokenizer/model.safetensors",
+          "sizeBytes": 682293092,
+          "sha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+          "gitBlobId": null
+        },
+        {
+          "path": "speech_tokenizer/preprocessor_config.json",
+          "sizeBytes": 234,
+          "sha256": null,
+          "gitBlobId": "ba40914f4f49ab98a8ca545d4892ef7291a39592"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sizeBytes": 7344,
+          "sha256": null,
+          "gitBlobId": "6ff9fd60cc623bb54bbd603cbd418c97a11528d7"
+        },
+        {
+          "path": "vocab.json",
+          "sizeBytes": 2776833,
+          "sha256": null,
+          "gitBlobId": "4783fe10ac3adce15ac8f358ef5462739852c569"
+        }
+      ],
+      "runtime": {
+        "id": "qwen3-tts-mlx",
+        "name": "Qwen3-TTS (MLX, mlx-audio package)"
+      },
+      "hardware": {
+        "accelerators": ["apple-metal"],
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "Runs through MLX, so on Macs with Apple Silicon only. The publisher states no memory requirement."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive. Allows commercial use, modification and redistribution, provided the licence and notices are kept."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16",
+      "verifiedOn": "2026-10-20",
+      "provider": "mlx-community",
+      "group": "qwen3-tts",
+      "categories": ["text-to-speech"],
+      "platforms": ["macos"],
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "aiden-calm",
+          "kind": "custom",
+          "label": "Aiden, calm",
+          "description": "A preset English speaker with a calm instruction.",
+          "adapterId": "qwen3-tts",
+          "task": "audio_generation",
+          "parameters": {
+            "voice": "aiden",
+            "instruct": "Calm, measured documentary narration.",
+            "seed": 0
+          },
+          "size": null,
+          "verified": false,
+          "note": "Not tried yet."
+        }
+      ],
+      "inferenceTests": []
+    },
+    {
+      "id": "qwen3-tts-0.6b-base-bf16",
+      "name": "Qwen3-TTS 0.6B Base · bf16",
+      "description": "Qwen3-TTS Base, 0.6 billion parameters, bf16 weights converted for MLX. The smaller, faster Base model: clones a voice from a voice profile's reference recording and transcript. Ten languages.",
+      "source": "huggingface",
+      "repoId": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16",
+      "revision": "1eccf1cb2519b5a4e8a95b5f0544f3303568164f",
+      "family": "Qwen3-TTS",
+      "task": "audio",
+      "variant": "12Hz 0.6B Base",
+      "quantization": null,
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 5317,
+          "sha256": null,
+          "gitBlobId": "c47a194f0fa16fa541752f1529daaa2cf503e963"
+        },
+        {
+          "path": "generation_config.json",
+          "sizeBytes": 245,
+          "sha256": null,
+          "gitBlobId": "1872b16d4535564abf2db5d6debe6cddd82b7f2e"
+        },
+        {
+          "path": "merges.txt",
+          "sizeBytes": 1671839,
+          "sha256": null,
+          "gitBlobId": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0"
+        },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 1829344448,
+          "sha256": "d7c7ed3e3464e3e59de0f955b3755891fa8319ff061c3f0307fe2e1343bc122d",
+          "gitBlobId": null
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "sizeBytes": 38573,
+          "sha256": null,
+          "gitBlobId": "20ddf76ea27a2d53b3cb55824907634a0e9da512"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "sizeBytes": 127,
+          "sha256": null,
+          "gitBlobId": "0525dd953bb9241912f7147666f0d535165d5d4f"
+        },
+        {
+          "path": "speech_tokenizer/config.json",
+          "sizeBytes": 2336,
+          "sha256": null,
+          "gitBlobId": "06cc8dc4c5ec8a1929086b71b98c313020d9268b"
+        },
+        {
+          "path": "speech_tokenizer/configuration.json",
+          "sizeBytes": 76,
+          "sha256": null,
+          "gitBlobId": "ab58e2eaf53cd14a1a2a7527d9261ceea93a24cd"
+        },
+        {
+          "path": "speech_tokenizer/model.safetensors",
+          "sizeBytes": 682293092,
+          "sha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+          "gitBlobId": null
+        },
+        {
+          "path": "speech_tokenizer/preprocessor_config.json",
+          "sizeBytes": 234,
+          "sha256": null,
+          "gitBlobId": "ba40914f4f49ab98a8ca545d4892ef7291a39592"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sizeBytes": 7344,
+          "sha256": null,
+          "gitBlobId": "6ff9fd60cc623bb54bbd603cbd418c97a11528d7"
+        },
+        {
+          "path": "vocab.json",
+          "sizeBytes": 2776833,
+          "sha256": null,
+          "gitBlobId": "4783fe10ac3adce15ac8f358ef5462739852c569"
+        }
+      ],
+      "runtime": {
+        "id": "qwen3-tts-mlx",
+        "name": "Qwen3-TTS (MLX, mlx-audio package)"
+      },
+      "hardware": {
+        "accelerators": ["apple-metal"],
+        "minimumMemoryBytes": null,
+        "source": null,
+        "notes": [
+          "Runs through MLX, so on Macs with Apple Silicon only. The publisher states no memory requirement."
+        ]
+      },
+      "license": {
+        "id": "apache-2.0",
+        "name": "Apache License 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "summary": "Permissive. Allows commercial use, modification and redistribution, provided the licence and notices are kept."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16",
+      "verifiedOn": "2026-10-20",
+      "provider": "mlx-community",
+      "group": "qwen3-tts",
+      "categories": ["text-to-speech"],
+      "platforms": ["macos"],
+      "origin": "registry",
+      "presets": [
+        {
+          "id": "profile-pace",
+          "kind": "balanced",
+          "label": "Profile's own pace",
+          "description": "The tempo, gaps, loudness and seed saved in the voice profile.",
+          "adapterId": "qwen3-tts",
+          "task": "audio_generation",
+          "parameters": {
+            "speed": 1,
+            "seed": 0
+          },
+          "size": null,
+          "verified": false,
+          "note": "Not tried yet."
+        }
+      ],
+      "inferenceTests": []
     },
     {
       "id": "ltx-2.3-22b-distilled-1.1",

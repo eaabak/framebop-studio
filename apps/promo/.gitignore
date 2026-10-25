@@ -1,0 +1,8 @@
+# Recordings of the app and voice-over clips are large and made locally;
+# see README.md for how to make them. Rendered videos go to out/.
+public/rec/
+public/vo/
+public/demo/
+public/music/
+public/shots/
+out/

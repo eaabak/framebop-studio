@@ -266,7 +266,8 @@ export async function validateRenderOutput(options: {
       "-",
     ],
     {
-      timeoutMs: Math.max(60_000, expect.durationSeconds * 4000),
+      // Whole milliseconds: a process timeout must be an integer.
+      timeoutMs: Math.max(60_000, Math.ceil(expect.durationSeconds * 4000)),
       maxOutputBytes: 16 * 1024 * 1024,
     },
   );

@@ -289,6 +289,7 @@ Adapters in this build:
 | Test pattern       | Image, video | Works. Draws a test pattern, runs no model. Labelled as a test everywhere.             |
 | Draw Things (HTTP) | Image        | Experimental. Written from the published server source; not run against a live app.    |
 | Draw Things CLI    | Image, video | Experimental. Written from the published tool source; the tool has not been installed. |
+| Qwen3-TTS          | Narration    | Experimental. mlx-audio in a Python you choose, Apple Silicon only; see Speech below.  |
 
 See [draw-things.md](draw-things.md) for what each Draw Things route can and
 cannot do. ComfyUI, an MLX runtime, Kokoro and a renderer are planned and have
@@ -631,6 +632,55 @@ adapter then reads the file's header itself: an empty or invalid file is a
 failure, whatever the script said. Voices are the voice files next to the
 model; English ones are offered, the others are listed as not supported.
 
+`packages/ai-adapters/src/adapters/qwen3-tts.ts` runs Qwen3-TTS the same way,
+through the `mlx-audio` package in a second interpreter chosen in Settings, on
+Apple Silicon only. It is one engine for every Qwen3-TTS model: what a model
+folder can do is read from its `config.json` (`tts_model_type`, size,
+quantization, speakers, languages), so Base, VoiceDesign and CustomVoice
+models in any size or precision take the same path, and a Qwen3-TTS folder in
+the Hugging Face cache is accepted even when the catalog does not list it.
+
+- **Base** models clone a voice. They speak only with a **voice profile**: a
+  folder holding `voice.json` and a reference WAV. `voice.json` names the
+  voice, says where it comes from (`provenance`, required), gives the
+  recording's exact transcript and the synthesis settings that keep the
+  voice the same from one narration to the next (seed, silence between
+  sentences and between paragraphs, tempo, a `loudnorm` filter, output
+  sample rate). Settings point at one profile folder or a folder of them;
+  each profile is a voice in the Voice list. Profiles are made from designed
+  voices or voices recorded with consent, never from a real person's voice
+  taken without it.
+- **Clone your voice** (Settings → Voice profiles) makes a profile from the
+  user's own voice, and only theirs. The user ticks that it is their own
+  voice, gives their name and reads a consent sentence naming them, then a
+  fixed paragraph, into the microphone (`apps/desktop/src/lib/recorder.ts`,
+  raw 16-bit PCM without browser processing). There is no way to load an
+  audio file for this: `voices.saveRecording` takes only the recorder's WAV
+  and `ownVoice: true`. `VoiceService`
+  (`packages/orchestrator/src/services/voices.ts`) cleans the take with FFmpeg
+  (80 Hz high-pass, `afftdn`, silence trimmed at both ends, `loudnorm`),
+  stores it as `reference.wav` with the consent sentence and paragraph as the
+  transcript, and records the consent (speaker, date, sentence, "recorded
+  live from microphone") in `provenance` and a `consent` object. The Base
+  model copies the delivery of the reference, so each reading style (calm,
+  lively, mysterious) is its own profile with its own starting pace. New
+  profiles go in `<dataDir>/voices`; when Settings pointed at a single
+  profile, that profile is copied there first. A sample sentence is spoken
+  with the first usable Base model (`voices.preview`, polled with
+  `voices.previewStatus`). macOS asks for microphone access using
+  `NSMicrophoneUsageDescription` from `src-tauri/Info.plist`; signed builds
+  carry the `audio-input` entitlement.
+- **VoiceDesign** models make a voice up from the `instruct` description.
+- **CustomVoice** models use one of their preset speakers, optionally with
+  an `instruct` about how to speak.
+
+The script seeds MLX, speaks one sentence at a time (the Base model ignores
+mlx-audio's speed option, so pace comes from the gaps), and writes the model's
+24 kHz output. FFmpeg then applies a pitch-preserving `atempo` (the profile's
+tempo times the job's `speed`), the loudness filter and the output sample rate
+(48 kHz by default). Only a `loudnorm` filter with numeric options is accepted
+from a profile, so a profile cannot add other filters.
+
 Narration is an `audio_generation` job like images and clips: it lands in the
 scene's narration slot if that is empty, and is otherwise kept as a take the
 user can switch to. Imported narration works without any of this.
@@ -764,7 +814,7 @@ each platform's usual install directories.
   input so it never appears in a process list, and is never logged or
   returned to the interface.
 - **Separate processes for heavy work.** The render worker, its headless
-  browser and Kokoro run as their own processes, started with fixed
+  browser, Kokoro and Qwen3-TTS run as their own processes, started with fixed
   arguments and no shell. The render worker reads media only through its
   loopback server, which serves the plan's files and nothing else. A job may
   name a model file by path only if the model picker offered it.
@@ -845,7 +895,8 @@ headers.
   suite needs FFmpeg and a Chrome build in `FRAMEBOP_RENDER_BROWSER`, and is
   skipped without them. Narration and music jobs are tested with a stand-in
   speech engine, and the Kokoro adapter with a stand-in interpreter that
-  speaks its protocol.
+  speaks its protocol. The Qwen3-TTS adapter is tested with a stand-in
+  interpreter and a stand-in FFmpeg (`qwen3-tts.test.ts`).
 - `desktop`: pure helpers of the interface only.
 
 The interface's components and the Rust shell have no automated tests yet.

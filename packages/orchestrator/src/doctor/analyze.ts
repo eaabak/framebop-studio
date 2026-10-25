@@ -191,7 +191,10 @@ export function timelineFromPlan(plan: RenderPlan): Timeline {
         start: seconds(clip.from),
         end: seconds(clip.from + clip.durationInFrames),
       })),
-    music: plan.audio.some((clip) => clip.kind === "music"),
+    // A scene's sound effects run throughout, like music.
+    music: plan.audio.some(
+      (clip) => clip.kind === "music" || clip.kind === "effects",
+    ),
     gaps: [],
   };
   for (const scene of plan.scenes) {

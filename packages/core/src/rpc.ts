@@ -1,5 +1,13 @@
 import { z } from "zod";
 import {
+  AnimationBlueprintSchema,
+  AnimationCapabilitySchema,
+  CapabilityInfoSchema,
+  DirectorNoticeSchema,
+  DirectorResultSchema,
+  QualityReportSchema,
+} from "./director";
+import {
   AppSettingsPatchSchema,
   AppSettingsSchema,
   type Asset,
@@ -57,6 +65,17 @@ import {
   VisualReferenceSchema,
 } from "./blueprint";
 import { AnimationTemplateSchema } from "./animation";
+import { ArtStyleSchema } from "./direction";
+import {
+  VOICE_RECORDING_MAX_BASE64,
+  VoiceLibrarySchema,
+  VoicePacingSchema,
+  VoicePreviewSchema,
+  VoiceProfileIdSchema,
+  VoiceProfileInfoSchema,
+  VoiceSpeakerSchema,
+  VoiceStyleSchema,
+} from "./voice-clone";
 import {
   DoctorExportSchema,
   InspectRequestSchema,
@@ -626,6 +645,77 @@ export const rpcContract = {
     z.object({ script: z.string(), words: z.number().int() }),
   ),
   "script.cancel": method(Empty, Deleted),
+  /** What the AI Animation Director can build, with each one's limits. */
+  "director.capabilities": method(Empty, z.array(CapabilityInfoSchema)),
+  /** A capability's starting plan in the scene's project language. */
+  "director.defaults": method(
+    z.strictObject({
+      sceneId: IdSchema,
+      capability: AnimationCapabilitySchema,
+    }),
+    AnimationBlueprintSchema,
+  ),
+  /** Plans an animation from an idea, or revises a plan, with the local model. */
+  "director.plan": method(
+    z.strictObject({
+      sceneId: IdSchema,
+      idea: z.string().trim().min(3).max(1000),
+      previous: AnimationBlueprintSchema.optional(),
+      instruction: z.string().trim().max(500).optional(),
+      modelId: z.string().min(1).max(200).optional(),
+      /** The art style the user chose; the plan keeps it. */
+      style: ArtStyleSchema.optional(),
+    }),
+    DirectorResultSchema,
+  ),
+  "director.cancel": method(Empty, Deleted),
+  /** Checks an edited plan; returns it as it would be built. */
+  "director.normalize": method(
+    z.strictObject({ blueprint: z.unknown() }),
+    z.object({
+      blueprint: AnimationBlueprintSchema,
+      notices: z.array(DirectorNoticeSchema),
+      quality: QualityReportSchema,
+    }),
+  ),
+  /** Builds the scene's animation from a plan. */
+  "director.apply": method(
+    z.strictObject({ sceneId: IdSchema, blueprint: z.unknown() }),
+    ScenePlanSchema,
+  ),
+  /** Qwen3-TTS voice profiles in the folder chosen in Settings. */
+  "voices.list": method(Empty, VoiceLibrarySchema),
+  /**
+   * Makes a profile from a live microphone recording of the user reading
+   * the consent sentence and paragraph. `ownVoice` records that the user
+   * confirmed it is their own voice. Audio files are never accepted here
+   * from anywhere but the in-app recorder.
+   */
+  "voices.saveRecording": method(
+    z.strictObject({
+      speaker: VoiceSpeakerSchema,
+      style: VoiceStyleSchema,
+      ownVoice: z.literal(true),
+      /** The recording as a base64 16-bit mono WAV. */
+      audio: z.string().min(64).max(VOICE_RECORDING_MAX_BASE64),
+    }),
+    VoiceProfileInfoSchema,
+  ),
+  "voices.updatePacing": method(
+    z.strictObject({ id: VoiceProfileIdSchema, pacing: VoicePacingSchema }),
+    VoiceProfileInfoSchema,
+  ),
+  /** Deletes a profile the user recorded; other profiles are never touched. */
+  "voices.delete": method(
+    z.strictObject({ id: VoiceProfileIdSchema }),
+    Deleted,
+  ),
+  /** Starts speaking a sample sentence with a profile. Returns at once. */
+  "voices.preview": method(
+    z.strictObject({ id: VoiceProfileIdSchema }),
+    VoicePreviewSchema,
+  ),
+  "voices.previewStatus": method(Empty, VoicePreviewSchema),
   "doctor.exports": method(Empty, z.array(DoctorExportSchema)),
   /** Queues an inspection. The video itself is only ever read. */
   "doctor.inspect": method(InspectRequestSchema, InspectionSchema),

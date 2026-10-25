@@ -11,6 +11,7 @@ import { access } from "node:fs/promises";
 import { type AdapterRegistry, describeEngines } from "@framebop/ai-adapters";
 import {
   AppError,
+  type AnimationSpec,
   type AnimationTemplate,
   type Blueprint,
   type BlueprintScene,
@@ -31,10 +32,10 @@ import {
 } from "@framebop/core";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
-import { animationTemplate } from "@framebop/renderer";
+import { animationTemplate, labSoundtrack, wavFile } from "@framebop/renderer";
 import type { EngineContext } from "../context";
 import { resolveMediaPath } from "../paths";
-import { importLibraryPicture } from "./assets";
+import { importLibraryPicture, importLibrarySound } from "./assets";
 import type { ModelService } from "./models";
 import { getSettings } from "./settings";
 import { requireEpisode, requireProject } from "./shared";
@@ -429,10 +430,22 @@ export class BlueprintService {
     sceneId: string,
     template: AnimationTemplate,
   ): Promise<ScenePlan> {
+    return this.useAnimation(sceneId, animationTemplate(template), template);
+  }
+
+  /**
+   * Draws the scene with an animation: its pictures (temporary test art)
+   * are copied into the project's library, a Lab experiment's sound is made
+   * for its timeline, and the scene lasts exactly as long as an experiment.
+   */
+  async useAnimation(
+    sceneId: string,
+    animation: AnimationSpec,
+    name: string,
+  ): Promise<ScenePlan> {
     const scene = this.ctx.db.scenes.get(sceneId);
     if (!scene) throw new AppError("NOT_FOUND", "That scene no longer exists.");
     const episode = requireEpisode(this.ctx, scene.episodeId);
-    const animation = animationTemplate(template);
     for (const image of Object.values(animation.images)) {
       if (image.assetId) continue;
       const asset = await importLibraryPicture(
@@ -442,11 +455,29 @@ export class BlueprintService {
       );
       image.assetId = asset.id;
     }
-    return this.updatePlan(sceneId, {
+    if (animation.lab) {
+      const sound = await importLibrarySound(
+        this.ctx,
+        episode.projectId,
+        `${name}.wav`,
+        wavFile(labSoundtrack(animation)),
+      );
+      animation.lab.soundAssetId = sound.id;
+      const seconds = animation.durationFrames / animation.fps;
+      this.ctx.db.scenes.update(
+        sceneId,
+        { durationSeconds: seconds },
+        this.ctx.now(),
+      );
+    }
+    const plan = this.updatePlan(sceneId, {
       method: "layered-2d",
       engineId: ANIMATION_ENGINE.id,
       animation,
     });
+    if (!animation.lab) return plan;
+    this.markManualDuration(sceneId);
+    return this.ctx.db.plans.get(sceneId) ?? plan;
   }
 
   /** Called when the user sets a scene's duration by hand. */
@@ -583,7 +614,9 @@ export class BlueprintService {
       );
     }
     if (
-      !["1920x1080", "1280x720"].includes(settings.exportResolution) ||
+      !["1920x1080", "1280x720", "1080x1920"].includes(
+        settings.exportResolution,
+      ) ||
       ![24, 25, 30].includes(settings.exportFps)
     ) {
       add(

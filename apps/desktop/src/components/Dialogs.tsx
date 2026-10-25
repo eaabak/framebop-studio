@@ -18,6 +18,7 @@ import { LANGUAGES, languageName } from "../lib/languages";
 import { clientOs, fileManagerName } from "../lib/platform";
 import { useStudio } from "../store/studio";
 import { Button, Field, IconButton, Modal, cx } from "./ui";
+import { VoiceProfilesSection } from "./VoiceProfiles";
 import { YouTubeKeySetting } from "../views/research/KeySetting";
 import { currentLanguage, formatBytes, t } from "../i18n";
 import { NATIVE_NAMES, UI_LANGUAGES, type UiLanguage } from "../i18n/languages";
@@ -256,7 +257,12 @@ function ProgramSetting({
   label,
   hint,
 }: {
-  setting: "kokoroPython" | "rendererBrowserPath" | "llamaServerPath";
+  setting:
+    | "kokoroPython"
+    | "qwenTtsPython"
+    | "qwenVoicesDirectory"
+    | "rendererBrowserPath"
+    | "llamaServerPath";
   label: string;
   hint: string;
 }) {
@@ -494,12 +500,24 @@ function SettingsDialog() {
               hint={t("dialogs:anInterpreterWhereTheKokoroPackage")}
             />
             <ProgramSetting
+              setting="qwenTtsPython"
+              label={t("dialogs:speechPythonWithQwen")}
+              hint={t("dialogs:anInterpreterWhereMlxAudio")}
+            />
+            <ProgramSetting
+              setting="qwenVoicesDirectory"
+              label={t("dialogs:qwenVoiceProfiles")}
+              hint={t("dialogs:aFolderOfVoiceProfiles")}
+            />
+            <ProgramSetting
               setting="rendererBrowserPath"
               label={t("dialogs:renderingChromeBuild")}
               hint={t("dialogs:theHeadlessChromeThatRemotionRenders")}
             />
           </div>
         </section>
+
+        <VoiceProfilesSection />
 
         {system && (
           <section>

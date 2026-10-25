@@ -9,6 +9,7 @@ import {
   rename,
   rm,
   stat,
+  writeFile,
 } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join } from "node:path";
 import { Transform } from "node:stream";
@@ -482,6 +483,49 @@ export async function importLibraryPicture(
   projectId: string,
   sourcePath: string,
 ): Promise<Asset> {
+  return importLibraryFile(ctx, projectId, sourcePath, {
+    kind: "image",
+    mimeType: "image/png",
+    extension: "png",
+  });
+}
+
+/**
+ * Stores a WAV made by the engine, such as a Lab experiment's sound, in a
+ * project's library without attaching it to a scene.
+ */
+export async function importLibrarySound(
+  ctx: EngineContext,
+  projectId: string,
+  name: string,
+  wav: Uint8Array,
+): Promise<Asset> {
+  const source = resolveMediaPath(
+    ctx.paths.mediaRoot,
+    `${projectId}/${ctx.newId()}.source.partial`,
+  );
+  await mkdir(dirname(source), { recursive: true });
+  await writeFile(source, wav);
+  try {
+    return await importLibraryFile(
+      ctx,
+      projectId,
+      source,
+      { kind: "audio", mimeType: "audio/wav", extension: "wav" },
+      name,
+    );
+  } finally {
+    await rm(source, { force: true });
+  }
+}
+
+async function importLibraryFile(
+  ctx: EngineContext,
+  projectId: string,
+  sourcePath: string,
+  type: { kind: Asset["kind"]; mimeType: string; extension: string },
+  originalFilename = basename(sourcePath),
+): Promise<Asset> {
   const temporary = resolveMediaPath(
     ctx.paths.mediaRoot,
     `${projectId}/${ctx.newId()}.partial`,
@@ -493,11 +537,9 @@ export async function importLibraryPicture(
       ctx,
       {
         projectId,
-        kind: "image",
+        ...type,
         origin: "imported",
-        mimeType: "image/png",
-        extension: "png",
-        originalFilename: basename(sourcePath),
+        originalFilename,
         sizeBytes: (await stat(temporary)).size,
         sha256: await hashFile(temporary),
       },

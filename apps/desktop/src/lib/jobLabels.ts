@@ -60,6 +60,7 @@ const FIXED_PROGRESS: Record<string, TranslationKey> = {
   "Loading the model": "jobs:progressLoadingModel",
   "Loading the voice": "jobs:progressLoadingVoice",
   "Loading Kokoro": "jobs:progressLoadingVoice",
+  "Finishing the narration": "jobs:progressFinishingNarration",
   Speaking: "jobs:progressSpeaking",
   "Encoding the clip": "jobs:progressEncodingClip",
   "Preparing the pattern": "jobs:progressPreparing",
@@ -101,6 +102,8 @@ const PARAMETERS: Record<string, [TranslationKey, TranslationKey]> = {
   sampler: ["jobs:paramSampler", "jobs:paramSamplerHint"],
   voice: ["jobs:paramVoice", "jobs:paramVoiceHint"],
   speed: ["jobs:paramSpeed", "jobs:paramSpeedHint"],
+  instruct: ["jobs:paramInstruct", "jobs:paramInstructHint"],
+  seed: ["jobs:paramSeed", "jobs:paramSeedHint"],
 };
 
 /** A setting's name and help in the interface language. */

@@ -16,6 +16,8 @@ const DESCRIPTIONS: Readonly<Record<string, string>> = {
     "The official Draw Things command-line tool, a separate download from the app. It can write video files and can be stopped mid-run.",
   kokoro:
     "Kokoro-82M text-to-speech through the kokoro Python package, in an interpreter you choose. Loads the model from files on this computer and never downloads anything.",
+  "qwen3-tts":
+    "Qwen3-TTS through the mlx-audio Python package, in an interpreter you choose, on Apple Silicon. Base models clone a voice profile, VoiceDesign models make a voice from a description, CustomVoice models use preset speakers. Loads models from files on this computer and never downloads anything.",
   remotion:
     "Composes the episode from its scenes, narration, music and captions, and writes an H.264 MP4. Runs in a separate process with a headless Chrome build you choose.",
 };

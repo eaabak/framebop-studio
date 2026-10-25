@@ -66,7 +66,8 @@
       "../../../packages/orchestrator/dist/worker.mjs": "engine/worker.mjs"
     },
     "macOS": {
-      "minimumSystemVersion": "13.0"
+      "minimumSystemVersion": "13.0",
+      "entitlements": "./Entitlements.plist"
     }
   }
 }

@@ -5,6 +5,7 @@
  */
 import type { AnimationSpec } from "@framebop/core";
 import { useId } from "react";
+import { LabScene } from "../lab/LabScene";
 import { CharacterView, SpriteCharacterView } from "./character";
 import { type Hold, PixiScene } from "./PixiScene";
 import { Prop } from "./props";
@@ -37,6 +38,11 @@ export function AnimatedScene({
   /** Lets the host wait for pictures to load (the render does). */
   hold?: () => Hold;
 }) {
+  if (spec.renderer === "lab") {
+    return (
+      <LabScene spec={spec} frame={frame} fps={fps} size={size} hold={hold} />
+    );
+  }
   if (spec.renderer === "pixi") {
     return (
       <PixiScene

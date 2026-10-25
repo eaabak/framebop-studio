@@ -242,9 +242,17 @@ interface StudioState {
   importMusic(): Promise<void>;
   removeMusic(): Promise<void>;
   setMusicVolume(volume: number): Promise<void>;
-  /** Chooses a program in Settings: Kokoro's Python, or Remotion's browser. */
+  /**
+   * Chooses a program in Settings (a speech engine's Python, Remotion's
+   * browser, llama-server), or the folder of Qwen3-TTS voice profiles.
+   */
   chooseProgram(
-    setting: "kokoroPython" | "rendererBrowserPath" | "llamaServerPath",
+    setting:
+      | "kokoroPython"
+      | "qwenTtsPython"
+      | "qwenVoicesDirectory"
+      | "rendererBrowserPath"
+      | "llamaServerPath",
   ): Promise<void>;
   retryJob(id: string): Promise<void>;
   cancelJob(id: string): Promise<void>;
@@ -720,6 +728,8 @@ export const useStudio = create<StudioState>((set, get) => {
         if (
           "registryUrl" in patch ||
           "kokoroPython" in patch ||
+          "qwenTtsPython" in patch ||
+          "qwenVoicesDirectory" in patch ||
           "rendererBrowserPath" in patch ||
           "llamaServerPath" in patch
         ) {
@@ -1487,13 +1497,20 @@ export const useStudio = create<StudioState>((set, get) => {
     },
 
     async chooseProgram(setting) {
-      const path = await bridge.chooseFile(
-        setting === "kokoroPython"
-          ? t("studio:chooseAPythonInterpreterThatHas")
-          : setting === "llamaServerPath"
-            ? t("studio:chooseLlamaServerFromALlama")
-            : t("studio:chooseAChromeBuildForRendering"),
-      );
+      const path =
+        setting === "qwenVoicesDirectory"
+          ? await bridge.chooseFolder(
+              t("studio:chooseTheFolderOfVoiceProfiles"),
+            )
+          : await bridge.chooseFile(
+              setting === "kokoroPython"
+                ? t("studio:chooseAPythonInterpreterThatHas")
+                : setting === "qwenTtsPython"
+                  ? t("studio:chooseAPythonInterpreterWithMlxAudio")
+                  : setting === "llamaServerPath"
+                    ? t("studio:chooseLlamaServerFromALlama")
+                    : t("studio:chooseAChromeBuildForRendering"),
+            );
       if (!path) return;
       await get().updateSettings({ [setting]: path });
       void get().refreshEngines();

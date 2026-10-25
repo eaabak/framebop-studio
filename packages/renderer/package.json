@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./scene": "./src/animation/AnimatedScene.tsx",
+    "./brand": "./src/brand/logoArt.ts",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -17,6 +18,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
     "@framebop/core": "workspace:*",
     "@remotion/bundler": "4.0.535",
     "@remotion/renderer": "4.0.535",
@@ -24,12 +26,14 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "remotion": "4.0.535",
+    "three": "0.186.1",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/three": "0.186.0",
     "esbuild": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

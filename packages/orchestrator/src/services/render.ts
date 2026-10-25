@@ -158,7 +158,8 @@ async function planEpisode(ctx: EngineContext, episodeId: string) {
     }
   }
   if (episode.musicAssetId) ids.add(episode.musicAssetId);
-  // Pictures of scenes drawn as 2D animation, and the shots of the others.
+  // Pictures (and a Lab experiment's sound) of scenes drawn as 2D
+  // animation, and the shots of the others.
   const plans = ctx.db.plans.forEpisode(episodeId);
   for (const plan of plans.values()) {
     for (const shot of plan.shots) ids.add(shot.assetId);
@@ -166,6 +167,8 @@ async function planEpisode(ctx: EngineContext, episodeId: string) {
     for (const image of Object.values(plan.animation.images)) {
       if (image.assetId) ids.add(image.assetId);
     }
+    const sound = plan.animation.lab?.soundAssetId;
+    if (sound) ids.add(sound);
   }
   const assets = new Map(
     [...ids]
@@ -357,7 +360,9 @@ function filesOf(
       clip.src,
       clip.kind === "music"
         ? "The background music"
-        : `Scene ${index + 1}'s narration`,
+        : clip.kind === "effects"
+          ? `Scene ${index + 1}'s sound effects`
+          : `Scene ${index + 1}'s narration`,
     );
   }
   return [...files.values()];

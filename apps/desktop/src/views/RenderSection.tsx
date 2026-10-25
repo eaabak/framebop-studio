@@ -77,6 +77,7 @@ function SettingsCard() {
             >
               <option value="1920x1080">1920 × 1080</option>
               <option value="1280x720">1280 × 720</option>
+              <option value="1080x1920">1080 × 1920</option>
             </select>
           )}
         </Field>

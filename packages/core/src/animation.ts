@@ -6,19 +6,11 @@
  */
 import { z } from "zod";
 import { IdSchema } from "./domain";
+import { AnimationBlueprintSchema } from "./director";
+import { LabExperimentSchema } from "./lab";
 
-export const EASES = [
-  "linear",
-  "inSine",
-  "outSine",
-  "inOutSine",
-  "inCubic",
-  "outCubic",
-  "inOutCubic",
-  "outBack",
-] as const;
-export const EaseSchema = z.enum(EASES);
-export type Ease = z.infer<typeof EaseSchema>;
+export { EASES, type Ease, EaseSchema } from "./ease";
+import { EaseSchema } from "./ease";
 
 const Frame = z.number().int().min(0).max(100_000);
 
@@ -241,57 +233,69 @@ export const AnimationCharacterSchema = z.object({
 });
 export type AnimationCharacter = z.infer<typeof AnimationCharacterSchema>;
 
-export const AnimationSpecSchema = z.object({
-  version: z.literal(1),
-  width: z.number().int().positive().max(8192),
-  height: z.number().int().positive().max(8192),
-  /**
-   * "svg" draws with React SVG; "pixi" draws pictures with PixiJS (WebGL).
-   * PixiJS draws only image props and sprite characters.
-   */
-  renderer: z.enum(["svg", "pixi"]).default("svg"),
-  /** Frames per second the timeline is written in; any output rate works. */
-  fps: z.number().int().min(1).max(120).default(30),
-  durationFrames: z.number().int().positive().max(100_000),
-  sky: z.object({ top: z.string().max(40), bottom: z.string().max(40) }),
-  camera: z.object({
-    x: TrackSchema,
-    y: TrackSchema,
-    zoom: TrackSchema,
-    /** Keeps a character in view: x follows its smoothed position instead. */
-    follow: z
-      .object({
-        character: z.string().max(40),
-        offsetX: z.number().default(0),
-        /** Frames of position averaged, so the camera eases after them. */
-        lagFrames: z.number().int().min(1).max(120).default(20),
-        minX: z.number().optional(),
-        maxX: z.number().optional(),
-      })
-      .nullable()
-      .default(null),
-    shakes: z
-      .array(
-        z.object({
-          frame: Frame,
-          amplitude: z.number(),
-          frames: z.number().int().positive(),
-        }),
-      )
-      .max(20)
-      .default([]),
-  }),
-  assets: z.record(z.string().max(60), PropAssetSchema),
-  images: z.record(z.string().max(60), AnimationImageSchema).default({}),
-  layers: z.array(AnimationLayerSchema).min(1).max(20),
-  characters: z.array(AnimationCharacterSchema).max(20),
-});
+export const AnimationSpecSchema = z
+  .object({
+    version: z.literal(1),
+    width: z.number().int().positive().max(8192),
+    height: z.number().int().positive().max(8192),
+    /**
+     * "svg" draws with React SVG; "pixi" draws pictures with PixiJS (WebGL).
+     * PixiJS draws only image props and sprite characters. "lab" draws the
+     * Framebop Lab experiment in `lab`, and ignores the layers and characters.
+     */
+    renderer: z.enum(["svg", "pixi", "lab"]).default("svg"),
+    /** Frames per second the timeline is written in; any output rate works. */
+    fps: z.number().int().min(1).max(120).default(30),
+    durationFrames: z.number().int().positive().max(100_000),
+    sky: z.object({ top: z.string().max(40), bottom: z.string().max(40) }),
+    camera: z.object({
+      x: TrackSchema,
+      y: TrackSchema,
+      zoom: TrackSchema,
+      /** Keeps a character in view: x follows its smoothed position instead. */
+      follow: z
+        .object({
+          character: z.string().max(40),
+          offsetX: z.number().default(0),
+          /** Frames of position averaged, so the camera eases after them. */
+          lagFrames: z.number().int().min(1).max(120).default(20),
+          minX: z.number().optional(),
+          maxX: z.number().optional(),
+        })
+        .nullable()
+        .default(null),
+      shakes: z
+        .array(
+          z.object({
+            frame: Frame,
+            amplitude: z.number(),
+            frames: z.number().int().positive(),
+          }),
+        )
+        .max(20)
+        .default([]),
+    }),
+    assets: z.record(z.string().max(60), PropAssetSchema),
+    images: z.record(z.string().max(60), AnimationImageSchema).default({}),
+    layers: z.array(AnimationLayerSchema).max(20),
+    characters: z.array(AnimationCharacterSchema).max(20),
+    /** The experiment the "lab" renderer draws. */
+    lab: LabExperimentSchema.nullable().default(null),
+    /** The AI Director's plan this animation was built from, to edit again. */
+    director: AnimationBlueprintSchema.nullable().default(null),
+  })
+  .refine(
+    (spec) =>
+      spec.renderer === "lab" ? spec.lab !== null : spec.layers.length > 0,
+    "A Lab animation needs its experiment; any other needs a layer.",
+  );
 export type AnimationSpec = z.infer<typeof AnimationSpecSchema>;
 
 /** Ready-made animations the engine ships with. */
 export const ANIMATION_TEMPLATES = [
   "roman-street",
   "roman-street-sprites",
+  "lab-which-path",
 ] as const;
 export const AnimationTemplateSchema = z.enum(ANIMATION_TEMPLATES);
 export type AnimationTemplate = z.infer<typeof AnimationTemplateSchema>;

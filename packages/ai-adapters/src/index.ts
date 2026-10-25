@@ -9,6 +9,17 @@ export {
 } from "./adapters/kokoro";
 export { encodePng } from "./adapters/png";
 export {
+  DEFAULT_SYNTHESIS,
+  QWEN3_TTS_ID,
+  QWEN3_TTS_RUNTIME,
+  Qwen3TtsSpeechAdapter,
+  type VoiceProfile,
+  listVoiceProfiles,
+  narrationParagraphs,
+  readQwen3TtsModel,
+  readVoiceProfile,
+} from "./adapters/qwen3-tts";
+export {
   SD_CPP_ID,
   SD_CPP_RUNTIME,
   SD_CPP_VIDEO_ID,

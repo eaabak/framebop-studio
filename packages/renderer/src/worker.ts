@@ -188,13 +188,14 @@ async function render(
   });
 
   const { plan, server } = await serveMedia(job.plan);
-  // PixiJS needs WebGL. ANGLE gives the headless browser a GPU-backed
+  // PixiJS and the Lab need WebGL. ANGLE gives the headless browser a GPU-backed
   // context; other renders keep Remotion's default.
   const usesWebGl = plan.scenes.some((scene) =>
     scene.shots.some(
       (shot) =>
         shot.visual.kind === "animation" &&
-        shot.visual.spec.renderer === "pixi",
+        (shot.visual.spec.renderer === "pixi" ||
+          shot.visual.spec.renderer === "lab"),
     ),
   );
   const chromiumOptions = usesWebGl ? { gl: "angle" as const } : {};

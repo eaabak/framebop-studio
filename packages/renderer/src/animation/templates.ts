@@ -13,6 +13,7 @@ import {
 } from "@framebop/core";
 import type { z } from "zod";
 import { TEST_ART } from "../../test-art/manifest";
+import { whichPathWins } from "../lab/experiments";
 import { hash } from "./timing";
 
 type Item = z.input<typeof LayerItemSchema>;
@@ -708,5 +709,7 @@ export function animationTemplate(name: AnimationTemplate): AnimationSpec {
       return romanStreet();
     case "roman-street-sprites":
       return romanStreetSprites();
+    case "lab-which-path":
+      return whichPathWins();
   }
 }

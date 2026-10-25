@@ -13,7 +13,8 @@ import type { Engine } from "../engine";
 import { resolveMediaPath } from "../paths";
 
 const LOOPBACK = "127.0.0.1";
-const MAX_BODY_BYTES = 1024 * 1024;
+// Large enough for a voice recording (voices.saveRecording).
+const MAX_BODY_BYTES = 32 * 1024 * 1024;
 
 export interface DevBridgeOptions {
   port: number;

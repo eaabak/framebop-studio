@@ -2,12 +2,14 @@ import { randomUUID } from "node:crypto";
 import {
   type AdapterRegistry,
   type HostPlatform,
+  QWEN3_TTS_ID,
   SD_CPP_ID,
   SHERPA_ONNX_ID,
   type SecretStore,
   createDefaultRegistry,
   createHostPlatform,
   createSecretStore,
+  readQwen3TtsModel,
 } from "@framebop/ai-adapters";
 import {
   AppError,
@@ -60,9 +62,11 @@ import {
   LlamaRuntimeService,
   VoiceRuntimeService,
 } from "./services/runtimes";
+import { DirectorService } from "./services/director";
 import { ScriptWriterService } from "./services/script-writer";
 import { renderBrowser } from "./services/render-browser";
 import { StoryService } from "./services/story";
+import { VoiceService } from "./services/voices";
 import { ModelService } from "./services/models";
 import {
   createRenderExecutor,
@@ -202,6 +206,8 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
       ffmpeg: () => ctx.tools.ffmpeg,
       drawThingsHttpPort: () => getSettings(ctx).drawThingsHttpPort,
       kokoroPython: () => getSettings(ctx).kokoroPython,
+      qwenTtsPython: () => getSettings(ctx).qwenTtsPython,
+      qwenVoicesDirectory: () => getSettings(ctx).qwenVoicesDirectory,
       stableDiffusionCpp: () => imageRuntime.locate(),
       // Read when a model is run; the model service exists by then.
       modelParts: (reference) => models.partsOf(reference),
@@ -281,8 +287,32 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
   stories.recover();
   jobs.register("story_generation", stories.executor());
   const blueprints = new BlueprintService(ctx, registry, models);
+  const director = new DirectorService(ctx, llm, blueprints);
   const references = new VisualReferenceService(ctx);
   stories.blueprint = blueprints;
+  const voices = new VoiceService(ctx, {
+    registry,
+    // A Base model, which clones from a profile; the full-precision 1.7B
+    // first, as the voices were approved with it.
+    baseModel: async () => {
+      const found: { reference: string; rank: number }[] = [];
+      for (const choice of await models.choices(
+        "audio_generation",
+        QWEN3_TTS_ID,
+      )) {
+        if (!choice.usable || !choice.reference || choice.kind === "download") {
+          continue;
+        }
+        const model = await readQwen3TtsModel(choice.reference);
+        if (model?.kind !== "base") continue;
+        found.push({
+          reference: choice.reference,
+          rank: (model.size === "1.7B" ? 0 : 2) + (model.bits ? 1 : 0),
+        });
+      }
+      return found.sort((a, b) => a.rank - b.rank)[0]?.reference ?? null;
+    },
+  });
 
   const research = new ResearchService(
     ctx,
@@ -530,6 +560,17 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
     "runtimes.llmStatus": () => llamaRuntime.status(),
     "runtimes.installLlm": () => llamaRuntime.install(),
     "script.write": (input) => scriptWriter.write(input),
+    "director.capabilities": () => director.capabilities(),
+    "director.defaults": ({ sceneId, capability }) =>
+      director.defaults(sceneId, capability),
+    "director.plan": (input) => director.plan(input),
+    "director.cancel": () => {
+      director.cancel();
+      return DELETED;
+    },
+    "director.normalize": ({ blueprint }) => director.normalize(blueprint),
+    "director.apply": ({ sceneId, blueprint }) =>
+      director.apply(sceneId, blueprint),
     "script.cancel": () => {
       scriptWriter.cancel();
       return DELETED;
@@ -560,6 +601,15 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
       refuseWhileUsed("The language-model runtime", usesLlm, llm.inUse());
       return llamaRuntime.remove();
     },
+    "voices.list": () => voices.list(),
+    "voices.saveRecording": (input) => voices.saveRecording(input),
+    "voices.updatePacing": ({ id, pacing }) => voices.updatePacing(id, pacing),
+    "voices.delete": async ({ id }) => {
+      await voices.remove(id);
+      return DELETED;
+    },
+    "voices.preview": ({ id }) => voices.startPreview(id),
+    "voices.previewStatus": () => voices.previewStatus(),
     "doctor.exports": () => doctor.exports(),
     "doctor.inspect": (input) => doctor.inspect(input),
     "doctor.list": () => doctor.list(),

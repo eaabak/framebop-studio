@@ -89,15 +89,29 @@ files that variant needs, with their sizes and hashes, so the files you get are
 the ones that were checked. Entries record when they were last compared with
 Hugging Face.
 
-| Model                     | Task           | Download | Format      | Licence                 | Runnable in this version |
-| ------------------------- | -------------- | -------- | ----------- | ----------------------- | ------------------------ |
-| Kokoro 82M, ONNX 8-bit    | Speech         | 92.9 MB  | ONNX        | Apache-2.0              | No                       |
-| Kokoro 82M                | Speech         | 327.7 MB | PyTorch     | Apache-2.0              | Yes, with Kokoro\*       |
-| LTX-2.3 22B Distilled 1.1 | Image to video | 46.1 GB  | safetensors | LTX-2 Community License | No                       |
+| Model                      | Task           | Download | Format      | Licence                 | Runnable in this version |
+| -------------------------- | -------------- | -------- | ----------- | ----------------------- | ------------------------ |
+| Kokoro 82M, ONNX 8-bit     | Speech         | 92.9 MB  | ONNX        | Apache-2.0              | No                       |
+| Kokoro 82M                 | Speech         | 327.7 MB | PyTorch     | Apache-2.0              | Yes, with Kokoro\*       |
+| LTX-2.3 22B Distilled 1.1  | Image to video | 46.1 GB  | safetensors | LTX-2 Community License | No                       |
+| Qwen3-TTS 1.7B Base        | Speech         | 4.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
+| Qwen3-TTS 1.7B VoiceDesign | Speech         | 4.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
+| Qwen3-TTS 1.7B CustomVoice | Speech         | 4.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
+| Qwen3-TTS 0.6B Base        | Speech         | 2.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
 
 \* When a Python interpreter with the `kokoro` package is chosen in Settings.
 The same model already in your Hugging Face cache works too: add the cache in
 **Models → Installed**.
+
+† On a Mac with Apple Silicon, when a Python interpreter with the `mlx-audio`
+package is chosen in Settings (**Speech: Python with Qwen3-TTS**) and FFmpeg
+is installed. The Qwen3-TTS entries are the MLX conversions published by
+mlx-community, pinned to one commit each. Base models also need a voice
+profile folder (**Speech: Qwen3-TTS voice profiles**); see
+[architecture.md](architecture.md#speech). Other Qwen3-TTS variants (8-bit,
+4-bit, other sizes) are not in the catalog but work from the Hugging Face
+cache: the engine reads what a model is from its `config.json`. Only the
+1.7B Base model has been run through the engine; the others have not.
 
 Sizes here are decimal megabytes and gigabytes. The application counts in
 binary units (1 MB = 1,048,576 bytes), so it shows 88.6 MB for the first model
@@ -238,3 +252,13 @@ systems.
   only once their folder is added, and Draw Things' own files cannot be
   matched to registry models.
 - Only one runtime (Kokoro, PyTorch) can take models added from Hugging Face.
+  Qwen3-TTS models cannot be added from the Hugging Face search yet: their
+  file names do not tell an MLX conversion from the original release, which
+  this engine has not been tried with. Download them with another tool, or
+  use the copies in the Hugging Face cache.
+- **Qwen3-TTS** runs only on Apple Silicon, through a Python you provide with
+  `mlx-audio` (tested with 0.6.0). The app can record a profile of your own
+  voice (Settings → Voice profiles → Clone your voice), in English only;
+  designing a voice or saving a take as a profile is still done outside the
+  app. Narration previews in the blueprint still use the sherpa-onnx and
+  Kokoro engines.

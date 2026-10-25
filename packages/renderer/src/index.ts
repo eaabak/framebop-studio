@@ -5,6 +5,19 @@ export {
   samplesFromPcm16,
   speechEnvelope,
 } from "./animation";
+export {
+  CAPABILITIES,
+  SCREEN_TEXT_MAX,
+  capabilityInfo,
+  compileBlueprint,
+  defaultBlueprint,
+  arrivalFrame,
+  brachistochroneRun,
+  exactArrivals,
+  labSoundtrack,
+  wavFile,
+  whichPathWins,
+} from "./lab";
 export { approximateCaptions, splitSentences } from "./captions";
 export { planIdentity } from "./identity";
 export {

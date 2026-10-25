@@ -396,7 +396,7 @@ const settingsFields = {
    * folder inside the library.
    */
   exportDirectory: z.string().max(4096).nullable(),
-  exportResolution: z.enum(["1920x1080", "1280x720"]),
+  exportResolution: z.enum(["1920x1080", "1280x720", "1080x1920"]),
   exportFps: z.union([z.literal(24), z.literal(25), z.literal(30)]),
   /**
    * "approximate" shows each scene's narration text as captions, timed by
@@ -408,6 +408,16 @@ const settingsFields = {
    * speech. Null until the user chooses one.
    */
   kokoroPython: z.string().max(4096).nullable(),
+  /**
+   * A Python interpreter that has the `mlx-audio` package installed, used
+   * for Qwen3-TTS speech. Null until the user chooses one.
+   */
+  qwenTtsPython: z.string().max(4096).nullable(),
+  /**
+   * A folder of Qwen3-TTS voice profiles (or one profile folder): each a
+   * voice.json with a reference recording. Null until the user chooses one.
+   */
+  qwenVoicesDirectory: z.string().max(4096).nullable(),
   /**
    * The Chrome build Remotion renders with. Null uses the one Remotion
    * manages itself.
@@ -455,6 +465,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
   exportFps: 30,
   exportCaptions: "none",
   kokoroPython: null,
+  qwenTtsPython: null,
+  qwenVoicesDirectory: null,
   rendererBrowserPath: null,
   llamaServerPath: null,
   registryUrl: null,

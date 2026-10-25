@@ -10,6 +10,7 @@ import {
   Clapperboard,
   ClipboardCheck,
   ClipboardList,
+  FlaskConical,
   Image as ImageIcon,
   Play,
   Ruler,
@@ -36,6 +37,7 @@ const AnimationPreview = lazy(() =>
 );
 import { DetailBlock } from "./models/shared";
 import { MediaProduction } from "./blueprint/MediaProduction";
+import { AnimationDirector } from "./AnimationDirector";
 import { currentLanguage, t } from "../i18n";
 
 const SOURCE_TEXT = {
@@ -293,7 +295,9 @@ function SceneRow({
         ) : plan.method === "layered-2d" ? (
           <div className="flex flex-col items-start gap-1 text-2xs leading-4 text-fg-dim">
             <span>{t("blueprint:animation")}</span>
-            {plan.animation ? (
+            {plan.animation?.renderer === "lab" ? (
+              <p>{t("blueprint:labWhichPathWinsHint")}</p>
+            ) : plan.animation ? (
               <p>
                 {t("blueprint:charactersLayersSTimelineAfterIt", {
                   plan: plan.animation.characters.length,
@@ -327,6 +331,17 @@ function SceneRow({
                 }
               >
                 {t("blueprint:paintedStreetPixijsTestArt")}
+              </Button>
+              <Button
+                size="sm"
+                icon={FlaskConical}
+                disabled={busy}
+                title={t("blueprint:labWhichPathWinsHint")}
+                onClick={() =>
+                  void applyAnimation(scene.sceneId, "lab-which-path")
+                }
+              >
+                {t("blueprint:labWhichPathWins")}
               </Button>
             </div>
           </div>
@@ -364,6 +379,12 @@ function SceneRow({
           onCommit={(claims) => void updatePlan(scene.sceneId, { claims })}
         />
       </div>
+      {plan.method === "layered-2d" && (
+        <AnimationDirector
+          sceneId={scene.sceneId}
+          built={plan.animation?.director ?? null}
+        />
+      )}
       {plan.method === "layered-2d" && plan.animation && (
         <Suspense fallback={<Spinner />}>
           <AnimationPreview sceneId={scene.sceneId} version={plan.updatedAt} />

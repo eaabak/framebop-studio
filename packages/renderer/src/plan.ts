@@ -223,6 +223,34 @@ export function buildRenderPlan(input: PlanInput): PlanResult {
     }
 
     const shots: PlanShot[] = [];
+    let effects: { file: Asset; frames: number } | null = null;
+    if (animation?.lab) {
+      // A Lab experiment brings its own sound, timed to its timeline.
+      const id = animation.lab.soundAssetId;
+      const sound = asset(id, "audio");
+      if (id !== null && sound === null) {
+        error(
+          scene.id,
+          `${label}: its sound effects are missing from the library.`,
+        );
+      } else if (sound && sound.durationSeconds) {
+        effects = {
+          file: sound,
+          frames: Math.min(
+            duration,
+            framesToContain(sound.durationSeconds, fps),
+          ),
+        };
+      }
+      const made = animation.width / animation.height;
+      const output = settings.width / settings.height;
+      if (Math.abs(made - output) > 0.01) {
+        warn(
+          scene.id,
+          `${label}: the Lab experiment is made for ${animation.width} × ${animation.height}; at ${settings.width} × ${settings.height} it is shown smaller, with bars. Choose ${animation.width} × ${animation.height} in the render settings.`,
+        );
+      }
+    }
     if (animation) {
       // The mouth follows the narration from the moment it starts.
       const voice = narration ? input.speech?.get(narration.sha256) : undefined;
@@ -352,6 +380,21 @@ export function buildRenderPlan(input: PlanInput): PlanResult {
         sha256: narration.sha256,
         from: from + lead,
         durationInFrames: narrationFrames,
+        volume: 1,
+        loop: false,
+        fadeInFrames: 0,
+        fadeOutFrames: 0,
+      });
+    }
+
+    if (effects) {
+      audio.push({
+        kind: "effects",
+        sceneId: scene.id,
+        src: input.pathOf(effects.file),
+        sha256: effects.file.sha256,
+        from,
+        durationInFrames: effects.frames,
         volume: 1,
         loop: false,
         fadeInFrames: 0,

@@ -30,6 +30,8 @@ export function sceneSecondsForNarration(narrationSeconds: number): number {
 export const RENDER_RESOLUTIONS = {
   "1920x1080": { width: 1920, height: 1080 },
   "1280x720": { width: 1280, height: 720 },
+  /** Vertical, for Shorts, Reels and TikTok. */
+  "1080x1920": { width: 1080, height: 1920 },
 } as const;
 export type RenderResolution = keyof typeof RENDER_RESOLUTIONS;
 
@@ -118,7 +120,8 @@ export const PlanSceneSchema = z.object({
 export type PlanScene = z.infer<typeof PlanSceneSchema>;
 
 export const PlanAudioSchema = MediaRef.extend({
-  kind: z.enum(["narration", "music"]),
+  /** "effects" is a scene's own sound design, such as a Lab experiment's. */
+  kind: z.enum(["narration", "music", "effects"]),
   sceneId: z.string().nullable(),
   from: Frames,
   durationInFrames: z.number().int().positive(),
