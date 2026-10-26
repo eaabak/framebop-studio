@@ -117,7 +117,9 @@ start over active generation. Imports and inspection keep their existing lanes.
 
 Each generation is a fresh Python process with an isolated scratch directory.
 Cancellation sends SIGTERM to its process group, followed by SIGKILL after five
-seconds if needed. The default model deadline is twenty minutes, configurable down to ten; final encoding has a separate one-minute limit. Sustained critical system
+seconds if needed. There is no model deadline by default (`timeoutSeconds: 0`). Users may opt into
+a ten- or twenty-minute limit. Manual cancellation remains available; final
+encoding has a separate one-minute limit. Sustained critical system
 memory pressure stops the model. A failed or stopped job never replaces scene
 media. In-flight inference is not resumable after shutdown.
 

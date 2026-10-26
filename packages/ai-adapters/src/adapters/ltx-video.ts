@@ -270,14 +270,14 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
         },
         {
           key: "timeoutSeconds",
-          label: "Generation deadline (seconds)",
+          label: "Optional generation deadline (seconds; 0 = unlimited)",
           type: "integer",
-          min: 60,
+          min: 0,
           max: 1200,
           step: 60,
-          defaultValue: 1200,
+          defaultValue: 0,
           description:
-            "Stops the model process at this deadline. Encoding may take up to another minute.",
+            "Zero disables the generation deadline. A positive limit stops the model process; encoding may take up to another minute.",
         },
       ],
       resolutions: [...LTX_VIDEO_SIZES],
@@ -378,7 +378,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
         "Choose a complete local LTX-2.3 MLX Q4 pack.",
       );
     const strength = request.parameters.referenceStrength ?? 1;
-    const timeout = request.parameters.timeoutSeconds ?? 1200;
+    const timeout = request.parameters.timeoutSeconds ?? 0;
     if (
       typeof strength !== "number" ||
       !Number.isFinite(strength) ||
@@ -386,7 +386,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       strength > 1 ||
       typeof timeout !== "number" ||
       !Number.isInteger(timeout) ||
-      timeout < 60 ||
+      (timeout !== 0 && timeout < 60) ||
       timeout > 1200
     )
       throw new AdapterError(
@@ -504,7 +504,10 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       const abort = () => stop("cancelled");
       context.signal.addEventListener("abort", abort, { once: true });
       if (context.signal.aborted) abort();
-      const deadline = setTimeout(() => stop("timeout"), timeoutMs);
+      const deadline =
+        timeoutMs > 0
+          ? setTimeout(() => stop("timeout"), timeoutMs)
+          : undefined;
       const cleanup = () => {
         clearTimeout(deadline);
         clearTimeout(killTimer);

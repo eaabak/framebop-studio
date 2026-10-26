@@ -66,7 +66,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
   const [seed, setSeed] = useState("");
   const [startId, setStartId] = useState<string | null>(null);
   const [strength, setStrength] = useState(1);
-  const [deadline, setDeadline] = useState(1200);
+  const [deadline, setDeadline] = useState(0);
   const [starting, setStarting] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -491,6 +491,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                   value={deadline}
                   onChange={(e) => setDeadline(Number(e.target.value))}
                 >
+                  <option value={0}>{t("video:noDeadline")}</option>
                   <option value={600}>10 min</option>
                   <option value={1200}>20 min</option>
                 </select>

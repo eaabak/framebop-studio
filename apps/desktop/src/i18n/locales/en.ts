@@ -1,6 +1,7 @@
 // The source language. Every other locale has exactly these keys.
 const en = {
   video: {
+    noDeadline: "No time limit",
     quality: "Video quality",
     qualityFast: "Fast",
     qualityBalanced: "Balanced",
@@ -36,7 +37,7 @@ const en = {
     strength: "First-frame strength",
     deadline: "Generation deadline",
     deadlineHint:
-      "A run stops at this limit. Sustained critical memory pressure also stops it.",
+      "No time limit by default. You can cancel manually; sustained critical memory pressure still stops generation.",
     performanceHint:
       "One generation at a time. A 1K five-second clip took about 6 min 39 s on an M4 Pro with 24 GiB; your time and memory use will vary. Longer clips have not been verified on 24 GiB. 1280×704 also remains unverified and uses 53% more pixels than 1K.",
     generate: "Generate {{seconds}} s video",

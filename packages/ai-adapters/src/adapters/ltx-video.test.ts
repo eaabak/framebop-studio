@@ -270,6 +270,20 @@ describe("LTX video boundary", () => {
     const { pid } = JSON.parse(await readFile(env.LTX_RECORD!, "utf8"));
     expect(() => process.kill(pid, 0)).toThrow();
   });
+  it("does not schedule a generation deadline by default or for an explicit zero", async () => {
+    const timers = vi.spyOn(globalThis, "setTimeout");
+    try {
+      const cases: Record<string, number>[] = [{}, { timeoutSeconds: 0 }];
+      for (const parameters of cases) {
+        await adapter().generate({ ...request(), parameters }, context());
+      }
+      const delays = timers.mock.calls.map((call) => call[1]);
+      expect(delays).not.toContain(0);
+      expect(delays).not.toContain(1_200_000);
+    } finally {
+      timers.mockRestore();
+    }
+  });
   it("enforces the model deadline without accepting or encoding a partial result", async () => {
     env.LTX_WAIT = "1";
     const realTimeout = globalThis.setTimeout;

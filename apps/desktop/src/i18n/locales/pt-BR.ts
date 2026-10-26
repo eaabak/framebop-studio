@@ -3,6 +3,7 @@ import type { LocaleResources } from "../resources";
 
 const ptBR: LocaleResources = {
   video: {
+    noDeadline: "Sem limite de tempo",
     quality: "Qualidade do vídeo",
     qualityFast: "Rápida",
     qualityBalanced: "Equilibrada",
@@ -38,7 +39,7 @@ const ptBR: LocaleResources = {
     strength: "Influência do primeiro quadro",
     deadline: "Limite de geração",
     deadlineHint:
-      "A geração para ao atingir o limite ou com pressão crítica de memória persistente.",
+      "Sem limite de tempo por padrão. Você pode cancelar manualmente; pressão crítica de memória persistente ainda interrompe a geração.",
     performanceHint:
       "Uma geração por vez. Um clipe 1K de cinco segundos levou cerca de 6 min 39 s em um M4 Pro com 24 GiB; tempo e memória podem variar. Clipes mais longos ainda não foram verificados com 24 GiB. 1280×704 também não foi verificado e tem 53% mais pixels que 1K.",
     generate: "Gerar vídeo de {{seconds}} s",
