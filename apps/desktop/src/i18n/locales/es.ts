@@ -49,8 +49,6 @@ const es: LocaleResources = {
     deadline: "Límite de generación",
     deadlineHint:
       "Sin límite de tiempo por defecto. Puedes cancelar manualmente; la presión crítica de memoria sostenida sigue deteniendo la generación.",
-    performanceHint:
-      "Una generación a la vez. M4 Pro / 24 GiB: cinco segundos en 1K tardaron unos 6 min 39 s; siete segundos en 1280×704 con imagen de referencia, 18 min 13 s. 1408×768 tiene un 20 % más de píxeles y no se ha probado. Diez segundos siguen sin verificarse; tiempo y memoria varían.",
     generate: "Generar vídeo de {{seconds}} s",
     attempts: "Intentos anteriores ({{count}})",
     runtimeSettings: "Configuración del motor",

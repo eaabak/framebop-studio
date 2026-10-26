@@ -49,8 +49,6 @@ const ptBR: LocaleResources = {
     deadline: "Limite de geração",
     deadlineHint:
       "Sem limite de tempo por padrão. Você pode cancelar manualmente; pressão crítica de memória persistente ainda interrompe a geração.",
-    performanceHint:
-      "Uma geração por vez. M4 Pro / 24 GiB: cinco segundos em 1K levaram cerca de 6 min 39 s; sete segundos em 1280×704 com imagem de referência, 18 min 13 s. 1408×768 tem 20% mais pixels e não foi testado. Dez segundos ainda não foram verificados; tempo e memória variam.",
     generate: "Gerar vídeo de {{seconds}} s",
     attempts: "Tentativas anteriores ({{count}})",
     runtimeSettings: "Configurações do motor",

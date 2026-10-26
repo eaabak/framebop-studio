@@ -514,9 +514,6 @@ export function VideoStudio({ scene }: { scene: Scene }) {
             </Button>
           </div>
         </details>
-        <p className="text-2xs leading-4 text-fg-dim">
-          {t("video:performanceHint")}
-        </p>
         {clip && <DurationMismatch scene={scene} />}
         {active && <ActiveRun job={active} />}
         <div className="grid grid-cols-[1fr_auto] gap-2">

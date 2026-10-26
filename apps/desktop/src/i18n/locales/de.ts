@@ -50,8 +50,6 @@ const de: LocaleResources = {
     deadline: "Zeitlimit",
     deadlineHint:
       "Standardmäßig kein Zeitlimit. Manueller Abbruch ist möglich; anhaltender kritischer Speicherdruck stoppt die Generierung weiterhin.",
-    performanceHint:
-      "Eine Generierung gleichzeitig. M4 Pro / 24 GiB: fünf Sekunden in 1K etwa 6 Min. 39 Sek.; sieben Sekunden in 1280×704 mit Bildreferenz 18 Min. 13 Sek. 1408×768 hat 20 % mehr Pixel und ist ungeprüft. Zehn Sekunden bleiben ungeprüft; Zeit und Speicherbedarf variieren.",
     generate: "{{seconds}} s Video erzeugen",
     attempts: "Frühere Versuche ({{count}})",
     runtimeSettings: "Laufzeiteinstellungen",
