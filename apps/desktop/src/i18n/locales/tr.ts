@@ -3,6 +3,14 @@ import type { LocaleResources } from "../resources";
 
 const tr: LocaleResources = {
   video: {
+    quality: "Video kalitesi",
+    qualityFast: "Hızlı",
+    qualityBalanced: "Dengeli",
+    qualityHigh: "Yüksek",
+    qualityHighest: "En yüksek",
+    qualityHint:
+      "Çıktı çözünürlüğünü ve işlem yükünü değiştirir. 24 fps ve 8+3 üretim adımı sabittir.",
+
     experimental: "Deneysel",
     expand: "Video stüdyosunu genişlet",
     pythonNotChosen: "Seçilmedi",

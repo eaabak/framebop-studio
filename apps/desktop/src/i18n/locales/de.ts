@@ -3,6 +3,14 @@ import type { LocaleResources } from "../resources";
 
 const de: LocaleResources = {
   video: {
+    quality: "Videoqualität",
+    qualityFast: "Schnell",
+    qualityBalanced: "Ausgewogen",
+    qualityHigh: "Hoch",
+    qualityHighest: "Höchste",
+    qualityHint:
+      "Ändert Auflösung und Rechenaufwand. 24 fps und 8+3 Generierungsschritte bleiben fest.",
+
     experimental: "Experimentell",
     expand: "Videostudio vergrößern",
     pythonNotChosen: "Nicht ausgewählt",

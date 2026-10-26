@@ -311,7 +311,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
               </div>
             )}
           </Field>
-          <Field label={t("video:resolution")} hint="24 fps · H.264">
+          <Field label={t("video:quality")} hint={t("video:qualityHint")}>
             {(id) => (
               <select
                 id={id}
@@ -321,12 +321,17 @@ export function VideoStudio({ scene }: { scene: Scene }) {
               >
                 {sizes.map((s, index) => (
                   <option key={index} value={index}>
-                    {s.width} × {s.height}
-                    {s.width === 1024
-                      ? " · 1K"
-                      : s.width === 1280
-                        ? ` · ${t("video:experimental")}`
-                        : ""}
+                    {t(
+                      s.width === 640
+                        ? "video:qualityFast"
+                        : s.width === 768
+                          ? "video:qualityBalanced"
+                          : s.width === 1024
+                            ? "video:qualityHigh"
+                            : "video:qualityHighest",
+                    )}{" "}
+                    · {s.width} × {s.height}
+                    {s.width === 1280 ? ` · ${t("video:experimental")}` : ""}
                   </option>
                 ))}
               </select>

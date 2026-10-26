@@ -1,6 +1,14 @@
 // The source language. Every other locale has exactly these keys.
 const en = {
   video: {
+    quality: "Video quality",
+    qualityFast: "Fast",
+    qualityBalanced: "Balanced",
+    qualityHigh: "High",
+    qualityHighest: "Highest",
+    qualityHint:
+      "Changes output resolution and processing load. Fixed 24 fps and 8+3 generation steps.",
+
     experimental: "Experimental",
     expand: "Expand video studio",
     pythonNotChosen: "Not selected",

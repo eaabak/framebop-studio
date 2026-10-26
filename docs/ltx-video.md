@@ -10,6 +10,9 @@ downloads automatically. The engine is experimental.
 - Silent H.264 clips, 1–10 seconds (default: 10), fixed 24 fps.
 - 640×384, 768×512, 1024×576 or experimental 1280×704. The default 1K preset is the same size as the
   independently checked fox clip; time and quality depend on the prompt.
+- A visible Video quality selector: Fast (640×384), Balanced (768×512), High
+  (1024×576, default), Highest (1280×704, experimental). These presets control
+  spatial resolution and processing load; sampler steps remain fixed at 8+3.
 - Editable prompt, optional seed, local model choice and generation deadline.
 - Words alone, or one starting image with an adjustable first-frame strength.
 - Saved project references for characters, environments and styles; their words
