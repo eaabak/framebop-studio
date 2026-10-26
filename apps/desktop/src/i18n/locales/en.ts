@@ -1,6 +1,14 @@
 // The source language. Every other locale has exactly these keys.
 const en = {
   video: {
+    format: "Video format",
+    landscape: "YouTube · Landscape · 16:9",
+    portrait: "Instagram / Shorts · Portrait · 9:16",
+    formatHint:
+      "Sets generation orientation and the shared export format. Existing clips stay unchanged and may be cropped to fill the output.",
+    formatGridHint:
+      "Native sizes follow the model’s 64-pixel grid; export is exactly 16:9 or 9:16 and may crop the edges slightly. Portrait inference is experimental and unverified.",
+
     qualityUltra: "Ultra",
     noDeadline: "No time limit",
     quality: "Video quality",

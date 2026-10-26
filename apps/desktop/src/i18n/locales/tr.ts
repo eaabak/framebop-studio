@@ -3,6 +3,14 @@ import type { LocaleResources } from "../resources";
 
 const tr: LocaleResources = {
   video: {
+    format: "Video formatı",
+    landscape: "YouTube · Yatay · 16:9",
+    portrait: "Instagram / Shorts · Dikey · 9:16",
+    formatHint:
+      "Üretim yönünü ve ortak dışa aktarma formatını belirler. Önceki klipler değişmez; çıktıyı doldurmak için kırpılabilir.",
+    formatGridHint:
+      "Üretim boyutları modelin 64 piksel ızgarasına uyar; çıktı tam 16:9 veya 9:16 olur ve kenarlardan hafif kırpılabilir. Dikey üretim deneyseldir ve henüz doğrulanmadı.",
+
     qualityUltra: "Ultra",
     noDeadline: "Süre sınırı yok",
     quality: "Video kalitesi",

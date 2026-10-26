@@ -232,6 +232,23 @@ describe("LTX video boundary", () => {
       durationSeconds: 10,
     });
   });
+  it("generates portrait frames natively rather than rotating a landscape result", async () => {
+    expect((await adapter().getCapabilities()).resolutions).toContainEqual({
+      width: 576,
+      height: 1024,
+    });
+    const result = await adapter().generate(
+      { ...request(), width: 576, height: 1024 },
+      context(),
+    );
+    const recorded = JSON.parse(await readFile(env.LTX_RECORD!, "utf8"));
+    expect(recorded.request).toMatchObject({
+      width: 576,
+      height: 1024,
+      frames: 121,
+    });
+    expect(result).toBeDefined();
+  });
   it("rejects unsupported size, duration and negative prompts before inference", async () => {
     for (const change of [
       { width: 1920 },

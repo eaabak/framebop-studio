@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { VideoFormatPicker } from "../../components/VideoFormatPicker";
 import { ModelPicker } from "../../components/ModelPicker";
 import { AssetThumb } from "../../components/media";
 import { Badge, Button, Field, Modal, cx } from "../../components/ui";
@@ -139,7 +140,10 @@ export function VideoStudio({ scene }: { scene: Scene }) {
       !isActiveJob(j),
   );
   const clip = scene.videoAssetId ? assets[scene.videoAssetId] : null;
-  const sizes = capability?.resolutions ?? [];
+  const portrait = settings.exportResolution === "1080x1920";
+  const sizes = (capability?.resolutions ?? []).filter((s) =>
+    portrait ? s.height > s.width : s.width > s.height,
+  );
   const size = sizes[sizeIndex] ?? sizes[0];
   const prompt = scene.motionPrompt;
   const seedNumber = seed === "" ? null : Number(seed);
@@ -215,7 +219,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
             controls
             preload="metadata"
             src={bridge.mediaUrl(clip, "file")}
-            className="aspect-video w-full rounded-lg bg-black object-contain"
+            className="max-h-72 w-full rounded-lg bg-black object-contain"
           />
         ) : (
           <div className="grid aspect-video place-items-center rounded-lg border border-dashed border-line-strong bg-canvas/60 text-center">
@@ -292,6 +296,10 @@ export function VideoStudio({ scene }: { scene: Scene }) {
           )}
         </Field>
 
+        <VideoFormatPicker />
+        <p className="text-2xs leading-4 text-fg-dim">
+          {t("video:formatGridHint")}
+        </p>
         <div className="grid grid-cols-2 gap-2">
           <Field label={t("video:duration")} hint={t("video:durationHint")}>
             {(id) => (
@@ -322,18 +330,20 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                 {sizes.map((s, index) => (
                   <option key={index} value={index}>
                     {t(
-                      s.width === 640
+                      Math.max(s.width, s.height) === 640
                         ? "video:qualityFast"
-                        : s.width === 768
+                        : Math.max(s.width, s.height) === 768
                           ? "video:qualityBalanced"
-                          : s.width === 1024
+                          : Math.max(s.width, s.height) === 1024
                             ? "video:qualityHigh"
-                            : s.width === 1280
+                            : Math.max(s.width, s.height) === 1280
                               ? "video:qualityHighest"
                               : "video:qualityUltra",
                     )}{" "}
                     · {s.width} × {s.height}
-                    {s.width >= 1280 ? ` · ${t("video:experimental")}` : ""}
+                    {portrait || Math.max(s.width, s.height) >= 1280
+                      ? ` · ${t("video:experimental")}`
+                      : ""}
                   </option>
                 ))}
               </select>

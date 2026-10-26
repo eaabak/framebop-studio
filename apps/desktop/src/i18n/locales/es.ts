@@ -3,6 +3,14 @@ import type { LocaleResources } from "../resources";
 
 const es: LocaleResources = {
   video: {
+    format: "Formato de vídeo",
+    landscape: "YouTube · Horizontal · 16:9",
+    portrait: "Instagram / Shorts · Vertical · 9:16",
+    formatHint:
+      "Define la orientación de generación y el formato compartido de exportación. Los clips existentes no cambian y pueden recortarse al exportar.",
+    formatGridHint:
+      "Los tamaños nativos siguen la cuadrícula de 64 píxeles; la salida es exactamente 16:9 o 9:16 y puede recortar los bordes. La generación vertical es experimental y no está verificada.",
+
     qualityUltra: "Ultra",
     noDeadline: "Sin límite de tiempo",
     quality: "Calidad de vídeo",

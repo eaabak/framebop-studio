@@ -4,13 +4,22 @@ export const LTX_VIDEO_MODEL = "ltx-2.3-mlx-q4";
 export const LTX_TEXT_ENCODER_MODEL = "gemma-3-12b-ltx-q4";
 export const LTX_VIDEO_FPS = 24;
 export const LTX_MAX_SECONDS = 10;
-export const LTX_VIDEO_SIZES = [
+export const LTX_LANDSCAPE_SIZES = [
   { width: 1024, height: 576 },
   { width: 1280, height: 704 },
   { width: 1408, height: 768 },
   { width: 640, height: 384 },
   { width: 768, height: 512 },
 ] as const;
+
+/** Native portrait generation uses the same grid and pixel budget. */
+export const LTX_VIDEO_SIZES = [
+  ...LTX_LANDSCAPE_SIZES,
+  ...LTX_LANDSCAPE_SIZES.map(({ width, height }) => ({
+    width: height,
+    height: width,
+  })),
+];
 
 /** Generate on the 8n+1 grid, then trim to the requested display duration. */
 export function ltxFrameCounts(seconds: number) {

@@ -114,3 +114,55 @@ describe("model memory exclusion", () => {
     }
   });
 });
+
+describe("social export formats", () => {
+  it("plans the same episode at exact landscape and portrait export sizes", async () => {
+    const dir = await temporaryDirectory();
+    const engine = await openTestEngine(dir);
+    try {
+      const project = await call(engine, "projects.create", {
+        name: "Social formats",
+      });
+      const episode = await call(engine, "episodes.create", {
+        projectId: project.id,
+        title: "Test",
+      });
+      const scene = await call(engine, "scenes.create", {
+        episodeId: episode.id,
+        fields: { title: "Picture", durationSeconds: 1 },
+      });
+      const sourcePath = join(dir, "picture.png");
+      await writeFile(
+        sourcePath,
+        encodePng(
+          2,
+          2,
+          Buffer.from([255, 100, 0, 255, 100, 0, 255, 100, 0, 255, 100, 0]),
+        ),
+      );
+      await call(engine, "assets.import", {
+        sceneId: scene.id,
+        slot: "image",
+        sourcePath,
+      });
+      await engine.idle();
+      for (const format of [
+        { resolution: "1920x1080" as const, width: 1920, height: 1080 },
+        { resolution: "1080x1920" as const, width: 1080, height: 1920 },
+      ]) {
+        await call(engine, "settings.update", {
+          patch: { exportResolution: format.resolution },
+        });
+        const preview = await call(engine, "render.preview", {
+          episodeId: episode.id,
+        });
+        expect(preview.plan).toMatchObject({
+          width: format.width,
+          height: format.height,
+        });
+      }
+    } finally {
+      await engine.close();
+    }
+  });
+});

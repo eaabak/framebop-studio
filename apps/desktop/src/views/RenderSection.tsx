@@ -35,6 +35,7 @@ import {
   Spinner,
   cx,
 } from "../components/ui";
+import { VideoFormatPicker } from "../components/VideoFormatPicker";
 import { bridge } from "../lib/bridge";
 import { useStudio } from "../store/studio";
 import { currentLanguage, formatBytes, t } from "../i18n";
@@ -61,6 +62,7 @@ function SettingsCard() {
 
   return (
     <div className="flex flex-col gap-4 card-surface rounded-xl border p-4">
+      <VideoFormatPicker />
       <div className="grid grid-cols-3 gap-3">
         <Field label={t("production:resolution")}>
           {(id) => (
@@ -75,9 +77,9 @@ function SettingsCard() {
                 })
               }
             >
-              <option value="1920x1080">1920 × 1080</option>
-              <option value="1280x720">1280 × 720</option>
-              <option value="1080x1920">1080 × 1920</option>
+              <option value="1920x1080">1920 × 1080 · 16:9</option>
+              <option value="1280x720">1280 × 720 · 16:9</option>
+              <option value="1080x1920">1080 × 1920 · 9:16</option>
             </select>
           )}
         </Field>

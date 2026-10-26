@@ -143,3 +143,25 @@ performance on all Macs, or flawless character anatomy. See the
 The new text-to-video scene method uses an append-only schema migration. Existing
 scene plans, references, animation and assembly data are retained, and the normal
 pre-upgrade database backup applies.
+
+## YouTube and Instagram formats
+
+The Video format selector appears in Video studio and export settings. It reuses
+Framebop’s existing shared export setting, so changing it affects the next export
+and the orientation of new LTX generations across the workspace:
+
+- YouTube / landscape: exact 1920×1080 (16:9) export by default. The existing
+  1280×720 export option remains available.
+- Instagram / Shorts / portrait: exact 1080×1920 (9:16) export.
+
+Portrait generation uses the same quality presets with width and height swapped,
+for example 576×1024, 704×1280 or 768×1408. It generates portrait frames directly;
+it does not rotate a landscape clip. Native sizes obey LTX’s 64-pixel grid, so
+some are approximate ratios; the existing renderer fills the exact output canvas
+with a centered crop. Existing clips are not regenerated when the format changes
+and may crop substantially if their orientation differs. Match reference images
+to the desired shot orientation to avoid losing the character at the edges.
+
+All portrait inference presets remain experimental and have not been verified on
+the 24 GiB test machine. Upscaled 1080p export does not imply native 1080p detail.
+Generation stays at 24 fps; export frame rate remains a separate existing control.
