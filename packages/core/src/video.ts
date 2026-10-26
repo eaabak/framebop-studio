@@ -6,6 +6,7 @@ export const LTX_VIDEO_FPS = 24;
 export const LTX_MAX_SECONDS = 10;
 export const LTX_VIDEO_SIZES = [
   { width: 1024, height: 576 },
+  { width: 1280, height: 704 },
   { width: 640, height: 384 },
   { width: 768, height: 512 },
 ] as const;

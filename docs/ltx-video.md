@@ -8,7 +8,7 @@ downloads automatically. The engine is experimental.
 ## What the panel controls
 
 - Silent H.264 clips, 1–10 seconds (default: 10), fixed 24 fps.
-- 640×384, 768×512 or 1024×576. The default 1K preset is the same size as the
+- 640×384, 768×512, 1024×576 or experimental 1280×704. The default 1K preset is the same size as the
   independently checked fox clip; time and quality depend on the prompt.
 - Editable prompt, optional seed, local model choice and generation deadline.
 - Words alone, or one starting image with an adjustable first-frame strength.
@@ -27,6 +27,11 @@ Clips longer than five seconds are experimental and have not been verified on
 the 24 GiB test machine. The ten-second default is a product setting, not a
 hardware compatibility claim. Reduce duration or resolution if memory pressure
 or the generation deadline stops a run.
+
+The 1280×704 preset has approximately 53% more pixels than 1024×576 and is
+also unverified on the test machine. It respects the two-stage model’s
+64-pixel dimension grid; it is not 720p or a quality guarantee. Combining it
+with ten seconds increases workload substantially. The default remains 1024×576.
 
 ## Runtime setup
 

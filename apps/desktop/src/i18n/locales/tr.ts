@@ -3,6 +3,7 @@ import type { LocaleResources } from "../resources";
 
 const tr: LocaleResources = {
   video: {
+    experimental: "Deneysel",
     expand: "Video stüdyosunu genişlet",
     pythonNotChosen: "Seçilmedi",
     title: "Video stüdyosu",
@@ -31,7 +32,7 @@ const tr: LocaleResources = {
     deadlineHint:
       "Bu süre dolunca üretim durur. Süren kritik bellek baskısı da üretimi durdurur.",
     performanceHint:
-      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB üzerinde 1K, beş saniyelik klip yaklaşık 6 dk 39 sn sürdü; süre ve bellek kullanımı değişebilir. Daha uzun klipler 24 GiB cihazda henüz doğrulanmadı.",
+      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB üzerinde 1K, beş saniyelik klip yaklaşık 6 dk 39 sn sürdü; süre ve bellek kullanımı değişebilir. Daha uzun klipler 24 GiB cihazda henüz doğrulanmadı. 1280×704 de henüz doğrulanmadı ve 1K’dan %53 fazla piksel içeriyor.",
     generate: "{{seconds}} sn video üret",
     attempts: "Önceki denemeler ({{count}})",
     runtimeSettings: "Çalıştırma ayarları",

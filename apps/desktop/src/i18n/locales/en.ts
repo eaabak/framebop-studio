@@ -1,6 +1,7 @@
 // The source language. Every other locale has exactly these keys.
 const en = {
   video: {
+    experimental: "Experimental",
     expand: "Expand video studio",
     pythonNotChosen: "Not selected",
     title: "Video studio",
@@ -29,7 +30,7 @@ const en = {
     deadlineHint:
       "A run stops at this limit. Sustained critical memory pressure also stops it.",
     performanceHint:
-      "One generation at a time. A 1K five-second clip took about 6 min 39 s on an M4 Pro with 24 GiB; your time and memory use will vary. Longer clips have not been verified on 24 GiB.",
+      "One generation at a time. A 1K five-second clip took about 6 min 39 s on an M4 Pro with 24 GiB; your time and memory use will vary. Longer clips have not been verified on 24 GiB. 1280×704 also remains unverified and uses 53% more pixels than 1K.",
     generate: "Generate {{seconds}} s video",
     attempts: "Earlier attempts ({{count}})",
     runtimeSettings: "Runtime settings",

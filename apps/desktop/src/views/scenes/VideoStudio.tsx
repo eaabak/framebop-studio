@@ -322,7 +322,11 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                 {sizes.map((s, index) => (
                   <option key={index} value={index}>
                     {s.width} × {s.height}
-                    {s.width === 1024 ? " · 1K" : ""}
+                    {s.width === 1024
+                      ? " · 1K"
+                      : s.width === 1280
+                        ? ` · ${t("video:experimental")}`
+                        : ""}
                   </option>
                 ))}
               </select>
