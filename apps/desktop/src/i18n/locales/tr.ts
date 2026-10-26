@@ -3,6 +3,7 @@ import type { LocaleResources } from "../resources";
 
 const tr: LocaleResources = {
   video: {
+    qualityUltra: "Ultra",
     noDeadline: "Süre sınırı yok",
     quality: "Video kalitesi",
     qualityFast: "Hızlı",
@@ -41,7 +42,7 @@ const tr: LocaleResources = {
     deadlineHint:
       "Varsayılan olarak süre sınırı yoktur. Elle iptal edebilirsin; süren kritik bellek baskısı üretimi yine durdurur.",
     performanceHint:
-      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB üzerinde 1K, beş saniyelik klip yaklaşık 6 dk 39 sn sürdü; süre ve bellek kullanımı değişebilir. Daha uzun klipler 24 GiB cihazda henüz doğrulanmadı. 1280×704 de henüz doğrulanmadı ve 1K’dan %53 fazla piksel içeriyor.",
+      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB: 1K, beş saniye yaklaşık 6 dk 39 sn; görsel referanslı 1280×704, yedi saniye 18 dk 13 sn sürdü. 1408×768 %20 fazla piksel içerir ve henüz denenmedi. On saniyelik üretimler henüz doğrulanmadı; süre ve bellek kullanımı değişebilir.",
     generate: "{{seconds}} sn video üret",
     attempts: "Önceki denemeler ({{count}})",
     runtimeSettings: "Çalıştırma ayarları",

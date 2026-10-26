@@ -212,17 +212,17 @@ describe("LTX video boundary", () => {
       message: "Stage 1 complete",
     });
   });
-  it("passes an experimental 1280×704 ten-second request and trims it to 240 frames", async () => {
+  it("passes an experimental 1408×768 ten-second request and trims it to 240 frames", async () => {
     expect((await adapter().getCapabilities()).maxClipSeconds).toBe(10);
     const result = await adapter().generate(
-      { ...request(), durationSeconds: 10, width: 1280, height: 704 },
+      { ...request(), durationSeconds: 10, width: 1408, height: 768 },
       context(),
     );
     const recorded = JSON.parse(await readFile(env.LTX_RECORD!, "utf8"));
     expect(recorded.request).toMatchObject({
       frames: 241,
-      width: 1280,
-      height: 704,
+      width: 1408,
+      height: 768,
     });
     expect(JSON.parse(await readFile(env.LTX_ENCODING!, "utf8"))).toContain(
       "240",

@@ -328,10 +328,12 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                           ? "video:qualityBalanced"
                           : s.width === 1024
                             ? "video:qualityHigh"
-                            : "video:qualityHighest",
+                            : s.width === 1280
+                              ? "video:qualityHighest"
+                              : "video:qualityUltra",
                     )}{" "}
                     · {s.width} × {s.height}
-                    {s.width === 1280 ? ` · ${t("video:experimental")}` : ""}
+                    {s.width >= 1280 ? ` · ${t("video:experimental")}` : ""}
                   </option>
                 ))}
               </select>

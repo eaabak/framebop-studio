@@ -292,7 +292,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       reportsProgress: true,
       expensive: true,
       notes: [
-        "24 fps, silent MP4, 1–10 seconds. Clips longer than 5 seconds and the 1280×704 preset are unverified on 24 GiB. Distilled 8+3 steps and low-memory streaming.",
+        "24 fps, silent MP4, 1–10 seconds. Seven seconds at 1280×704 with a reference image completed on 24 GiB; ten-second clips and 1408×768 remain unverified. Distilled 8+3 steps and low-memory streaming.",
         "A 1024×576 five-second clip took about 6 minutes 39 seconds on an M4 Pro with 24 GiB. This is a recorded run, not a time estimate for every clip.",
         "One starting image anchors the first frame. Character identity and exact actions are not guaranteed.",
         "Models stay local; sustained critical memory pressure stops the generation.",

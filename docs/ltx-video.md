@@ -8,10 +8,11 @@ downloads automatically. The engine is experimental.
 ## What the panel controls
 
 - Silent H.264 clips, 1–10 seconds (default: 10), fixed 24 fps.
-- 640×384, 768×512, 1024×576 or experimental 1280×704. The default 1K preset is the same size as the
+- 640×384, 768×512, 1024×576 or experimental 1280×704 and 1408×768. The default 1K preset is the same size as the
   independently checked fox clip; time and quality depend on the prompt.
 - A visible Video quality selector: Fast (640×384), Balanced (768×512), High
-  (1024×576, default), Highest (1280×704, experimental). These presets control
+  (1024×576, default), Highest (1280×704, experimental), Ultra (1408×768,
+  experimental). These presets control
   spatial resolution and processing load; sampler steps remain fixed at 8+3.
 - Editable prompt, optional seed, local model choice and generation deadline.
 - Words alone, or one starting image with an adjustable first-frame strength.
@@ -26,15 +27,20 @@ multi-image identity embeddings or a character-identity guarantee. A full-body
 picture of a character also anchors the composition: it is not an identity-only
 reference. Start with a picture close to the shot you want.
 
-Clips longer than five seconds are experimental and have not been verified on
-the 24 GiB test machine. The ten-second default is a product setting, not a
+Clips longer than seven seconds remain unverified on the 24 GiB test machine. The ten-second default is a product setting, not a
 hardware compatibility claim. Reduce duration or resolution if memory pressure
 or the generation deadline stops a run.
 
-The 1280×704 preset has approximately 53% more pixels than 1024×576 and is
-also unverified on the test machine. It respects the two-stage model’s
-64-pixel dimension grid; it is not 720p or a quality guarantee. Combining it
-with ten seconds increases workload substantially. The default remains 1024×576.
+A local application run with a reference image completed seven seconds at
+1280×704 / 24 fps in 18 min 13 s on M4 Pro / 24 GiB. A previous ten-second
+1280×704 run hit its twenty-minute deadline, so ten seconds remain unverified.
+The exported scene was five seconds at 1080p; that export is not evidence of
+native 1080p generation or a ten-second result.
+
+The Ultra 1408×768 preset has exactly 20% more pixels than 1280×704 and has not
+been tested with real inference. Both dimensions respect the two-stage model’s
+64-pixel grid. More pixels do not guarantee better motion or character identity;
+processing time and memory use may grow nonlinearly. The default remains 1024×576.
 
 ## Runtime setup
 
