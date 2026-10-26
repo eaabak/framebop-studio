@@ -18,7 +18,7 @@ const de: LocaleResources = {
     promptPlaceholder:
       "Ein kleiner orangefarbener Fuchs entdeckt einen leuchtenden Schmetterling im Mondwald. Feste Kamera, handgezeichnete 2D-Animation.",
     duration: "Cliplänge",
-    durationHint: "1–5 Sekunden · feste 24 fps",
+    durationHint: "1–10 Sekunden · feste 24 fps",
     resolution: "Bilddetails",
     referenceTitle: "Figuren und erstes Bild",
     referenceHint:
@@ -32,7 +32,7 @@ const de: LocaleResources = {
     deadlineHint:
       "Beim Erreichen des Limits stoppt die Erzeugung, ebenso bei anhaltendem kritischem Speicherdruck.",
     performanceHint:
-      "Eine Erzeugung gleichzeitig. Ein fünfsekündiger 1K-Clip dauerte auf einem M4 Pro mit 24 GiB etwa 6 Min. 39 Sek.; Zeit und Speicherbedarf variieren.",
+      "Eine Erzeugung gleichzeitig. Ein fünfsekündiger 1K-Clip dauerte auf einem M4 Pro mit 24 GiB etwa 6 Min. 39 Sek.; Zeit und Speicherbedarf variieren. Längere Clips wurden auf 24 GiB noch nicht geprüft.",
     generate: "{{seconds}} s Video erzeugen",
     attempts: "Frühere Versuche ({{count}})",
     runtimeSettings: "Laufzeiteinstellungen",

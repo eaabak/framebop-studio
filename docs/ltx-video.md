@@ -7,7 +7,7 @@ downloads automatically. The engine is experimental.
 
 ## What the panel controls
 
-- Silent H.264 clips, 1–5 seconds, fixed 24 fps.
+- Silent H.264 clips, 1–10 seconds (default: 10), fixed 24 fps.
 - 640×384, 768×512 or 1024×576. The default 1K preset is the same size as the
   independently checked fox clip; time and quality depend on the prompt.
 - Editable prompt, optional seed, local model choice and generation deadline.
@@ -22,6 +22,11 @@ offer a negative prompt, arbitrary step counts, audio generation, LoRA training,
 multi-image identity embeddings or a character-identity guarantee. A full-body
 picture of a character also anchors the composition: it is not an identity-only
 reference. Start with a picture close to the shot you want.
+
+Clips longer than five seconds are experimental and have not been verified on
+the 24 GiB test machine. The ten-second default is a product setting, not a
+hardware compatibility claim. Reduce duration or resolution if memory pressure
+or the generation deadline stops a run.
 
 ## Runtime setup
 
@@ -104,8 +109,7 @@ start over active generation. Imports and inspection keep their existing lanes.
 
 Each generation is a fresh Python process with an isolated scratch directory.
 Cancellation sends SIGTERM to its process group, followed by SIGKILL after five
-seconds if needed. The default model deadline is ten minutes, configurable up to
-twenty; final encoding has a separate one-minute limit. Sustained critical system
+seconds if needed. The default model deadline is twenty minutes, configurable down to ten; final encoding has a separate one-minute limit. Sustained critical system
 memory pressure stops the model. A failed or stopped job never replaces scene
 media. In-flight inference is not resumable after shutdown.
 

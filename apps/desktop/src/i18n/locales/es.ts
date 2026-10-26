@@ -17,7 +17,7 @@ const es: LocaleResources = {
     promptPlaceholder:
       "Un pequeño zorro naranja descubre una mariposa luminosa en un bosque iluminado por la luna. Cámara fija, animación 2D dibujada a mano.",
     duration: "Duración del clip",
-    durationHint: "1–5 segundos · 24 fps fijos",
+    durationHint: "1–10 segundos · 24 fps fijos",
     resolution: "Detalle de imagen",
     referenceTitle: "Personajes y primer fotograma",
     referenceHint:
@@ -31,7 +31,7 @@ const es: LocaleResources = {
     deadlineHint:
       "La generación se detiene al alcanzar este límite o ante presión de memoria crítica sostenida.",
     performanceHint:
-      "Una generación a la vez. Un clip 1K de cinco segundos tardó unos 6 min 39 s en un M4 Pro con 24 GiB; el tiempo y la memoria varían.",
+      "Una generación a la vez. Un clip 1K de cinco segundos tardó unos 6 min 39 s en un M4 Pro con 24 GiB; el tiempo y la memoria varían. Los clips más largos aún no se han verificado con 24 GiB.",
     generate: "Generar vídeo de {{seconds}} s",
     attempts: "Intentos anteriores ({{count}})",
     runtimeSettings: "Configuración del motor",

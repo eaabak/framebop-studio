@@ -1,5 +1,6 @@
 import {
   LTX_VIDEO_ENGINE,
+  LTX_MAX_SECONDS,
   type ModelChoice,
   type Scene,
   isActiveJob,
@@ -60,12 +61,12 @@ export function VideoStudio({ scene }: { scene: Scene }) {
     (c) => c.task === "video_generation",
   );
   const [model, setModel] = useState("");
-  const [seconds, setSeconds] = useState(5);
+  const [seconds, setSeconds] = useState(LTX_MAX_SECONDS);
   const [sizeIndex, setSizeIndex] = useState(0);
   const [seed, setSeed] = useState("");
   const [startId, setStartId] = useState<string | null>(null);
   const [strength, setStrength] = useState(1);
-  const [deadline, setDeadline] = useState(600);
+  const [deadline, setDeadline] = useState(1200);
   const [starting, setStarting] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -157,7 +158,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
     !active &&
     (!startId || selectedImage?.kind === "image") &&
     seconds >= 1 &&
-    seconds <= 5,
+    seconds <= LTX_MAX_SECONDS,
   );
   const setupFields = [
     ["ltxVideoPython", t("video:python"), settings.ltxVideoPython],
@@ -301,7 +302,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                   className="control tabular-nums"
                   type="number"
                   min={1}
-                  max={5}
+                  max={LTX_MAX_SECONDS}
                   step={0.5}
                   value={seconds}
                   onChange={(e) => setSeconds(Number(e.target.value))}

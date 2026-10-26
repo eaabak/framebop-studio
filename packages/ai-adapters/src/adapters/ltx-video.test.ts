@@ -130,8 +130,13 @@ describe("LTX video boundary", () => {
       generatedFrames: 121,
       actualSeconds: 5,
     });
+    expect(ltxFrameCounts(10)).toEqual({
+      outputFrames: 240,
+      generatedFrames: 241,
+      actualSeconds: 10,
+    });
     expect(ltxFrameCounts(1.5).generatedFrames).toBe(41);
-    for (const value of [0, 0.5, 6, NaN, Infinity])
+    for (const value of [0, 0.5, 10.5, NaN, Infinity])
       expect(() => ltxFrameCounts(value)).toThrow();
   });
   it("requires complete format-specific packs and safe encoder shard names", async () => {
@@ -207,10 +212,26 @@ describe("LTX video boundary", () => {
       message: "Stage 1 complete",
     });
   });
+  it("passes a ten-second request to the sampler and trims it to 240 frames", async () => {
+    expect((await adapter().getCapabilities()).maxClipSeconds).toBe(10);
+    const result = await adapter().generate(
+      { ...request(), durationSeconds: 10 },
+      context(),
+    );
+    const recorded = JSON.parse(await readFile(env.LTX_RECORD!, "utf8"));
+    expect(recorded.request.frames).toBe(241);
+    expect(JSON.parse(await readFile(env.LTX_ENCODING!, "utf8"))).toContain(
+      "240",
+    );
+    expect(result.details).toMatchObject({
+      outputFrames: 240,
+      durationSeconds: 10,
+    });
+  });
   it("rejects unsupported size, duration and negative prompts before inference", async () => {
     for (const change of [
       { width: 1920 },
-      { durationSeconds: 10 },
+      { durationSeconds: 11 },
       { negativePrompt: "bad" },
     ])
       await expect(

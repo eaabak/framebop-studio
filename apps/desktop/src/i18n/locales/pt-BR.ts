@@ -17,7 +17,7 @@ const ptBR: LocaleResources = {
     promptPlaceholder:
       "Uma pequena raposa laranja percebe uma borboleta brilhante na floresta ao luar. Câmera fixa, animação 2D desenhada à mão.",
     duration: "Duração do clipe",
-    durationHint: "1–5 segundos · 24 fps fixos",
+    durationHint: "1–10 segundos · 24 fps fixos",
     resolution: "Detalhes da imagem",
     referenceTitle: "Personagens e primeiro quadro",
     referenceHint:
@@ -31,7 +31,7 @@ const ptBR: LocaleResources = {
     deadlineHint:
       "A geração para ao atingir o limite ou com pressão crítica de memória persistente.",
     performanceHint:
-      "Uma geração por vez. Um clipe 1K de cinco segundos levou cerca de 6 min 39 s em um M4 Pro com 24 GiB; tempo e memória podem variar.",
+      "Uma geração por vez. Um clipe 1K de cinco segundos levou cerca de 6 min 39 s em um M4 Pro com 24 GiB; tempo e memória podem variar. Clipes mais longos ainda não foram verificados com 24 GiB.",
     generate: "Gerar vídeo de {{seconds}} s",
     attempts: "Tentativas anteriores ({{count}})",
     runtimeSettings: "Configurações do motor",

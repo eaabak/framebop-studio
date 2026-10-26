@@ -15,7 +15,7 @@ const en = {
     promptPlaceholder:
       "A small orange fox notices a glowing butterfly in a moonlit forest. Fixed camera, hand-drawn 2D animation.",
     duration: "Clip length",
-    durationHint: "1–5 seconds · fixed 24 fps",
+    durationHint: "1–10 seconds · fixed 24 fps",
     resolution: "Picture detail",
     referenceTitle: "Characters & first frame",
     referenceHint:
@@ -29,7 +29,7 @@ const en = {
     deadlineHint:
       "A run stops at this limit. Sustained critical memory pressure also stops it.",
     performanceHint:
-      "One generation at a time. A 1K five-second clip took about 6 min 39 s on an M4 Pro with 24 GiB; your time and memory use will vary.",
+      "One generation at a time. A 1K five-second clip took about 6 min 39 s on an M4 Pro with 24 GiB; your time and memory use will vary. Longer clips have not been verified on 24 GiB.",
     generate: "Generate {{seconds}} s video",
     attempts: "Earlier attempts ({{count}})",
     runtimeSettings: "Runtime settings",

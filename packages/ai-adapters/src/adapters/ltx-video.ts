@@ -275,7 +275,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
           min: 60,
           max: 1200,
           step: 60,
-          defaultValue: 600,
+          defaultValue: 1200,
           description:
             "Stops the model process at this deadline. Encoding may take up to another minute.",
         },
@@ -292,7 +292,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       reportsProgress: true,
       expensive: true,
       notes: [
-        "24 fps, silent MP4, 1–5 seconds. Distilled 8+3 steps and low-memory streaming.",
+        "24 fps, silent MP4, 1–10 seconds. Clips longer than 5 seconds are unverified on 24 GiB. Distilled 8+3 steps and low-memory streaming.",
         "A 1024×576 five-second clip took about 6 minutes 39 seconds on an M4 Pro with 24 GiB. This is a recorded run, not a time estimate for every clip.",
         "One starting image anchors the first frame. Character identity and exact actions are not guaranteed.",
         "Models stay local; sustained critical memory pressure stops the generation.",
@@ -378,7 +378,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
         "Choose a complete local LTX-2.3 MLX Q4 pack.",
       );
     const strength = request.parameters.referenceStrength ?? 1;
-    const timeout = request.parameters.timeoutSeconds ?? 600;
+    const timeout = request.parameters.timeoutSeconds ?? 1200;
     if (
       typeof strength !== "number" ||
       !Number.isFinite(strength) ||

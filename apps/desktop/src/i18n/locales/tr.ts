@@ -17,7 +17,7 @@ const tr: LocaleResources = {
     promptPlaceholder:
       "Küçük turuncu bir tilki, ay ışığındaki ormanda parlayan bir kelebeği fark ediyor. Sabit kamera, elle çizilmiş 2D animasyon.",
     duration: "Klip süresi",
-    durationHint: "1–5 saniye · sabit 24 fps",
+    durationHint: "1–10 saniye · sabit 24 fps",
     resolution: "Görüntü ayrıntısı",
     referenceTitle: "Karakterler ve ilk kare",
     referenceHint:
@@ -31,7 +31,7 @@ const tr: LocaleResources = {
     deadlineHint:
       "Bu süre dolunca üretim durur. Süren kritik bellek baskısı da üretimi durdurur.",
     performanceHint:
-      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB üzerinde 1K, beş saniyelik klip yaklaşık 6 dk 39 sn sürdü; süre ve bellek kullanımı değişebilir.",
+      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB üzerinde 1K, beş saniyelik klip yaklaşık 6 dk 39 sn sürdü; süre ve bellek kullanımı değişebilir. Daha uzun klipler 24 GiB cihazda henüz doğrulanmadı.",
     generate: "{{seconds}} sn video üret",
     attempts: "Önceki denemeler ({{count}})",
     runtimeSettings: "Çalıştırma ayarları",
