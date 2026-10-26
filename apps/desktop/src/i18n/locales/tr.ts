@@ -2,6 +2,62 @@
 import type { LocaleResources } from "../resources";
 
 const tr: LocaleResources = {
+  video: {
+    expand: "Video stüdyosunu genişlet",
+    pythonNotChosen: "Seçilmedi",
+    title: "Video stüdyosu",
+    local: "Yerel üretim",
+    ready: "Hazır",
+    setup: "Kurulum",
+    previewEmpty: "Sıradaki sahnen burada başlıyor",
+    previewHint: "Bir anı tarif et, süresini seç ve canlandır.",
+    prompt: "Bu planda ne oluyor?",
+    promptHint:
+      "Karakteri, hareketi, ortamı ve kamerayı tarif et. Kısa klipte tek bir net ana odaklan.",
+    promptPlaceholder:
+      "Küçük turuncu bir tilki, ay ışığındaki ormanda parlayan bir kelebeği fark ediyor. Sabit kamera, elle çizilmiş 2D animasyon.",
+    duration: "Klip süresi",
+    durationHint: "1–5 saniye · sabit 24 fps",
+    resolution: "Görüntü ayrıntısı",
+    referenceTitle: "Karakterler ve ilk kare",
+    referenceHint:
+      "Seçilen görsel ilk kareyi belirler. Karakter açıklamaları prompt’a eklenir; kareler boyunca aynı kimlik garanti edilmez.",
+    fromText: "Metinden",
+    fromImage: "Görselden",
+    anchored: "İlk kare: {{name}}",
+    advanced: "Model ve gelişmiş kontroller",
+    strength: "İlk kare etkisi",
+    deadline: "Üretim süre sınırı",
+    deadlineHint:
+      "Bu süre dolunca üretim durur. Süren kritik bellek baskısı da üretimi durdurur.",
+    performanceHint:
+      "Aynı anda tek üretim yapılır. M4 Pro / 24 GiB üzerinde 1K, beş saniyelik klip yaklaşık 6 dk 39 sn sürdü; süre ve bellek kullanımı değişebilir.",
+    generate: "{{seconds}} sn video üret",
+    attempts: "Önceki denemeler ({{count}})",
+    runtimeSettings: "Çalıştırma ayarları",
+    python: "Video: LTX MLX içeren Python",
+    pythonHint:
+      "Ayrı ortam: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. Kurulum: docs/ltx-video.md.",
+    modelFolder: "LTX Q4 model klasörü",
+    modelFolderHint:
+      "İsteğe bağlı harici split pack. Model Manager’ın doğrulanmış kurulumları da seçilebilir.",
+    encoderFolder: "Gemma metin kodlayıcı klasörü",
+    encoderFolderHint:
+      "İsteğe bağlı harici Gemma 3 12B Q4 klasörü. Boşsa Model Manager’ın doğrulanmış kurulumu kullanılır.",
+    choosePython: "LTX Python yorumlayıcısını seç",
+    chooseModelFolder: "Yerel model klasörünü seç",
+    choose: "Seç",
+    notChosen: "Seçilmedi · yönetilen modeller de kullanılabilir",
+    setupHint:
+      "Çalıştırma ortamını ve yerel klasörleri seç veya model dosyalarını Modeller’den kur. Bu panel otomatik Python kurulumu ya da indirme yapmaz.",
+    manageModels: "Modeller ve indirmeler",
+    refresh: "Tekrar kontrol et",
+    uploadReference: "Referans görseli yükle",
+    referenceImportFailed: "Referans görseli içe aktarılamadı.",
+    referenceSeedHint:
+      "İsteğe bağlı ortak seed. Aynı seed aynı karakteri garanti etmez.",
+    stageComposing: "Kareleri çöz ve kodla",
+  },
   common: {
     openingYourLibrary: "Kitaplığınız açılıyor",
     framebopStudioCouldNotStart: "Framebop Studio başlatılamadı",

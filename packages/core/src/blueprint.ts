@@ -22,6 +22,7 @@ export const PRODUCTION_METHODS = [
   "video-clip",
   "image-generation",
   "image-to-video",
+  "text-to-video",
 ] as const;
 export const ProductionMethodSchema = z.enum(PRODUCTION_METHODS);
 export type ProductionMethod = z.infer<typeof ProductionMethodSchema>;
@@ -32,6 +33,7 @@ export const PRODUCTION_METHOD_LABELS: Record<ProductionMethod, string> = {
   "video-clip": "Existing video clip",
   "image-generation": "Generated image",
   "image-to-video": "Generated video from an image",
+  "text-to-video": "Generated video from text",
 };
 
 /** Where a scene's duration came from. */

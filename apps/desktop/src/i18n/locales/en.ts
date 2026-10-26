@@ -1,5 +1,61 @@
 // The source language. Every other locale has exactly these keys.
 const en = {
+  video: {
+    expand: "Expand video studio",
+    pythonNotChosen: "Not selected",
+    title: "Video studio",
+    local: "Local generation",
+    ready: "Ready",
+    setup: "Set up",
+    previewEmpty: "Your next scene starts here",
+    previewHint: "Describe a moment, choose its length, then bring it to life.",
+    prompt: "What happens in this shot?",
+    promptHint:
+      "Describe the character, action, setting and camera. Keep a short clip to one clear moment.",
+    promptPlaceholder:
+      "A small orange fox notices a glowing butterfly in a moonlit forest. Fixed camera, hand-drawn 2D animation.",
+    duration: "Clip length",
+    durationHint: "1–5 seconds · fixed 24 fps",
+    resolution: "Picture detail",
+    referenceTitle: "Characters & first frame",
+    referenceHint:
+      "A selected picture anchors the first frame. Character descriptions join the prompt; identity across frames is not guaranteed.",
+    fromText: "From words",
+    fromImage: "From a picture",
+    anchored: "First frame: {{name}}",
+    advanced: "Model & advanced controls",
+    strength: "First-frame strength",
+    deadline: "Generation deadline",
+    deadlineHint:
+      "A run stops at this limit. Sustained critical memory pressure also stops it.",
+    performanceHint:
+      "One generation at a time. A 1K five-second clip took about 6 min 39 s on an M4 Pro with 24 GiB; your time and memory use will vary.",
+    generate: "Generate {{seconds}} s video",
+    attempts: "Earlier attempts ({{count}})",
+    runtimeSettings: "Runtime settings",
+    python: "Video: Python with LTX MLX",
+    pythonHint:
+      "Separate environment: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. See docs/ltx-video.md.",
+    modelFolder: "LTX Q4 model folder",
+    modelFolderHint:
+      "Optional external split pack. Verified Model Manager installations are also offered.",
+    encoderFolder: "Gemma text encoder folder",
+    encoderFolderHint:
+      "Optional external Gemma 3 12B Q4 folder. Leave empty to use its verified Model Manager installation.",
+    choosePython: "Choose the LTX Python interpreter",
+    chooseModelFolder: "Choose the local model folder",
+    choose: "Choose",
+    notChosen: "Not selected · managed models can also be used",
+    setupHint:
+      "Choose the runtime and local folders, or install the model files in Models. This panel never installs Python or downloads files automatically.",
+    manageModels: "Models & downloads",
+    refresh: "Check again",
+    uploadReference: "Upload a reference picture",
+    referenceImportFailed: "The reference picture could not be imported.",
+    referenceSeedHint:
+      "Optional shared seed. Reusing it does not guarantee the same character.",
+    stageComposing: "Decode & encode",
+  },
   common: {
     openingYourLibrary: "Opening your library",
     framebopStudioCouldNotStart: "Framebop Studio could not start",

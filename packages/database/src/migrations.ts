@@ -747,6 +747,37 @@ export const MIGRATIONS: readonly Migration[] = [
       CREATE INDEX inspections_by_date ON inspections(created_at);
     `,
   },
+
+  {
+    version: 14,
+    name: "text-to-video-production",
+    sql: `
+      CREATE TABLE scene_plans_next (
+        scene_id TEXT PRIMARY KEY REFERENCES scenes(id) ON DELETE CASCADE,
+        method TEXT NOT NULL CHECK (method IN ('static-image', 'layered-2d',
+          'video-clip', 'image-generation', 'image-to-video', 'text-to-video')),
+        engine_id TEXT,
+        model TEXT,
+        required_assets_json TEXT NOT NULL DEFAULT '[]',
+        claims_json TEXT NOT NULL DEFAULT '[]',
+        research_json TEXT NOT NULL DEFAULT '[]',
+        duration_source TEXT NOT NULL CHECK (duration_source IN ('estimate', 'manual', 'audio')),
+        notes TEXT NOT NULL DEFAULT '',
+        proposed_narration TEXT,
+        proposal_job_id TEXT,
+        story_draft_id TEXT,
+        draft_scene_id TEXT,
+        updated_at TEXT NOT NULL,
+        animation_json TEXT,
+        visual_reference_ids_json TEXT NOT NULL DEFAULT '[]',
+        assembly_json TEXT NOT NULL DEFAULT '{}'
+      ) STRICT;
+      INSERT INTO scene_plans_next (scene_id, method, engine_id, model, required_assets_json, claims_json, research_json, duration_source, notes, proposed_narration, proposal_job_id, story_draft_id, draft_scene_id, updated_at, animation_json, visual_reference_ids_json, assembly_json)
+        SELECT scene_id, method, engine_id, model, required_assets_json, claims_json, research_json, duration_source, notes, proposed_narration, proposal_job_id, story_draft_id, draft_scene_id, updated_at, animation_json, visual_reference_ids_json, assembly_json FROM scene_plans;
+      DROP TABLE scene_plans;
+      ALTER TABLE scene_plans_next RENAME TO scene_plans;
+    `,
+  },
 ];
 
 export const LATEST_SCHEMA_VERSION =

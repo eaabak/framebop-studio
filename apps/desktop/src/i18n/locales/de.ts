@@ -2,6 +2,63 @@
 import type { LocaleResources } from "../resources";
 
 const de: LocaleResources = {
+  video: {
+    expand: "Videostudio vergrößern",
+    pythonNotChosen: "Nicht ausgewählt",
+    title: "Videostudio",
+    local: "Lokale Erzeugung",
+    ready: "Bereit",
+    setup: "Einrichten",
+    previewEmpty: "Hier beginnt deine nächste Szene",
+    previewHint:
+      "Beschreibe einen Moment, wähle die Länge und erwecke ihn zum Leben.",
+    prompt: "Was passiert in dieser Einstellung?",
+    promptHint:
+      "Beschreibe Figur, Handlung, Umgebung und Kamera. Konzentriere kurze Clips auf einen klaren Moment.",
+    promptPlaceholder:
+      "Ein kleiner orangefarbener Fuchs entdeckt einen leuchtenden Schmetterling im Mondwald. Feste Kamera, handgezeichnete 2D-Animation.",
+    duration: "Cliplänge",
+    durationHint: "1–5 Sekunden · feste 24 fps",
+    resolution: "Bilddetails",
+    referenceTitle: "Figuren und erstes Bild",
+    referenceHint:
+      "Ein ausgewähltes Bild verankert das erste Bild. Figurenbeschreibungen ergänzen den Prompt; gleichbleibende Identität ist nicht garantiert.",
+    fromText: "Aus Text",
+    fromImage: "Aus einem Bild",
+    anchored: "Erstes Bild: {{name}}",
+    advanced: "Modell und erweiterte Einstellungen",
+    strength: "Stärke des ersten Bildes",
+    deadline: "Zeitlimit",
+    deadlineHint:
+      "Beim Erreichen des Limits stoppt die Erzeugung, ebenso bei anhaltendem kritischem Speicherdruck.",
+    performanceHint:
+      "Eine Erzeugung gleichzeitig. Ein fünfsekündiger 1K-Clip dauerte auf einem M4 Pro mit 24 GiB etwa 6 Min. 39 Sek.; Zeit und Speicherbedarf variieren.",
+    generate: "{{seconds}} s Video erzeugen",
+    attempts: "Frühere Versuche ({{count}})",
+    runtimeSettings: "Laufzeiteinstellungen",
+    python: "Video: Python mit LTX MLX",
+    pythonHint:
+      "Separate Umgebung: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. Siehe docs/ltx-video.md.",
+    modelFolder: "LTX-Q4-Modellordner",
+    modelFolderHint:
+      "Optionales externes Split-Pack. Verifizierte Model-Manager-Installationen stehen ebenfalls bereit.",
+    encoderFolder: "Gemma-Textencoder-Ordner",
+    encoderFolderHint:
+      "Optionaler Gemma-3-12B-Q4-Ordner. Ohne Auswahl wird die verifizierte Installation verwendet.",
+    choosePython: "LTX-Python-Interpreter wählen",
+    chooseModelFolder: "Lokalen Modellordner wählen",
+    choose: "Auswählen",
+    notChosen: "Nicht ausgewählt · verwaltete Modelle sind ebenfalls möglich",
+    setupHint:
+      "Wähle die Laufzeit und lokale Ordner oder installiere die Modelldateien unter Modelle. Kein automatischer Python-Installationsvorgang oder Download.",
+    manageModels: "Modelle und Downloads",
+    refresh: "Erneut prüfen",
+    uploadReference: "Referenzbild hochladen",
+    referenceImportFailed: "Das Referenzbild konnte nicht importiert werden.",
+    referenceSeedHint:
+      "Optionaler gemeinsamer Seed. Er garantiert keine identische Figur.",
+    stageComposing: "Dekodieren und kodieren",
+  },
   common: {
     openingYourLibrary: "Ihre Bibliothek wird geöffnet",
     framebopStudioCouldNotStart: "Framebop Studio konnte nicht starten",

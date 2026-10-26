@@ -727,6 +727,10 @@ export const rpcContract = {
     z.strictObject({ projectId: IdSchema }),
     z.array(VisualReferenceSchema),
   ),
+  "visualReferences.importImage": method(
+    z.strictObject({ referenceId: IdSchema, sourcePath: AbsolutePath }),
+    z.object({ reference: VisualReferenceSchema, asset: AssetSchema }),
+  ),
   "visualReferences.save": method(
     VisualReferenceSaveSchema,
     VisualReferenceSchema,

@@ -260,6 +260,9 @@ function ProgramSetting({
   setting:
     | "kokoroPython"
     | "qwenTtsPython"
+    | "ltxVideoPython"
+    | "ltxVideoModelDirectory"
+    | "ltxVideoTextEncoderDirectory"
     | "qwenVoicesDirectory"
     | "rendererBrowserPath"
     | "llamaServerPath";
@@ -503,6 +506,21 @@ function SettingsDialog() {
               setting="qwenTtsPython"
               label={t("dialogs:speechPythonWithQwen")}
               hint={t("dialogs:anInterpreterWhereMlxAudio")}
+            />
+            <ProgramSetting
+              setting="ltxVideoPython"
+              label={t("video:python")}
+              hint={t("video:pythonHint")}
+            />
+            <ProgramSetting
+              setting="ltxVideoModelDirectory"
+              label={t("video:modelFolder")}
+              hint={t("video:modelFolderHint")}
+            />
+            <ProgramSetting
+              setting="ltxVideoTextEncoderDirectory"
+              label={t("video:encoderFolder")}
+              hint={t("video:encoderFolderHint")}
             />
             <ProgramSetting
               setting="qwenVoicesDirectory"

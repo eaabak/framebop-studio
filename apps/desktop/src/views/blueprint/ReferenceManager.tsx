@@ -8,7 +8,7 @@ import {
   type VisualReference,
   type VisualReferenceKind,
 } from "@framebop/core";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Upload } from "lucide-react";
 import { useState } from "react";
 import { AssetThumb } from "../../components/media";
 import { Button, Field, cx } from "../../components/ui";
@@ -52,6 +52,7 @@ function Editor({
   onDone(): void;
 }) {
   const save = useReferences((state) => state.save);
+  const importImage = useReferences((state) => state.importImage);
   const [value, setValue] = useState(draft);
   const [saving, setSaving] = useState(false);
   const patch = (next: Partial<Draft>) =>
@@ -109,6 +110,43 @@ function Editor({
             maxLength={300}
             value={value.palette}
             onChange={(event) => patch({ palette: event.target.value })}
+          />
+        )}
+      </Field>
+      <Button
+        size="sm"
+        icon={Upload}
+        busy={saving}
+        disabled={!value.name.trim()}
+        onClick={async () => {
+          setSaving(true);
+          try {
+            const saved = await save({ ...value, name: value.name.trim() });
+            if (!saved) return;
+            patch({ id: saved.id });
+            const imported = await importImage(saved.id);
+            if (imported) patch({ assetIds: imported.assetIds });
+          } finally {
+            setSaving(false);
+          }
+        }}
+      >
+        {t("video:uploadReference")}
+      </Button>
+      <Field label={t("media:seed")} hint={t("video:referenceSeedHint")}>
+        {(id) => (
+          <input
+            id={id}
+            className="control"
+            type="number"
+            min={0}
+            max={4294967295}
+            value={value.seed ?? ""}
+            onChange={(e) =>
+              patch({
+                seed: e.target.value === "" ? null : Number(e.target.value),
+              })
+            }
           />
         )}
       </Field>
@@ -215,6 +253,17 @@ export function ReferenceManager({
                 on ? "border-accent/50 bg-accent/10" : "border-line",
               )}
             >
+              {reference.assetIds[0] &&
+                pictures.find(
+                  (asset) => asset.id === reference.assetIds[0],
+                ) && (
+                  <AssetThumb
+                    asset={pictures.find(
+                      (asset) => asset.id === reference.assetIds[0],
+                    )!}
+                    className="h-9 w-12 rounded object-cover"
+                  />
+                )}
               <label className="flex cursor-pointer items-center gap-1.5 py-1">
                 <input
                   type="checkbox"

@@ -413,6 +413,12 @@ const settingsFields = {
    * for Qwen3-TTS speech. Null until the user chooses one.
    */
   qwenTtsPython: z.string().max(4096).nullable(),
+  /** Python with the pinned LTX MLX pipeline, selected explicitly. */
+  ltxVideoPython: z.string().max(4096).nullable(),
+  /** Optional external LTX pack; managed downloads are also offered. */
+  ltxVideoModelDirectory: z.string().max(4096).nullable(),
+  /** Local Gemma encoder; null uses its verified Model Manager installation. */
+  ltxVideoTextEncoderDirectory: z.string().max(4096).nullable(),
   /**
    * A folder of Qwen3-TTS voice profiles (or one profile folder): each a
    * voice.json with a reference recording. Null until the user chooses one.
@@ -466,6 +472,9 @@ export const DEFAULT_SETTINGS: AppSettings = {
   exportCaptions: "none",
   kokoroPython: null,
   qwenTtsPython: null,
+  ltxVideoPython: null,
+  ltxVideoModelDirectory: null,
+  ltxVideoTextEncoderDirectory: null,
   qwenVoicesDirectory: null,
   rendererBrowserPath: null,
   llamaServerPath: null,

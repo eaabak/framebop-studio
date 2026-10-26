@@ -10,6 +10,7 @@ import {
 } from "@framebop/core";
 import type { EngineContext } from "../context";
 import { requireProject } from "./shared";
+import { importReferencePicture } from "./assets";
 
 export class VisualReferenceService {
   constructor(private readonly ctx: EngineContext) {}
@@ -52,6 +53,33 @@ export class VisualReferenceService {
     };
     db.visualReferences.put(reference);
     return reference;
+  }
+
+  async importImage(referenceId: string, sourcePath: string) {
+    const reference = this.ctx.db.visualReferences.get(referenceId);
+    if (!reference)
+      throw new AppError("NOT_FOUND", "That reference no longer exists.");
+    if (reference.assetIds.length >= 8)
+      throw new AppError(
+        "VALIDATION",
+        "A reference can hold up to eight pictures.",
+      );
+    const asset = await importReferencePicture(
+      this.ctx,
+      reference.projectId,
+      sourcePath,
+    );
+    const current = this.ctx.db.visualReferences.get(referenceId);
+    if (!current)
+      throw new AppError(
+        "NOT_FOUND",
+        "That reference was removed while importing.",
+      );
+    const saved = this.save({
+      ...current,
+      assetIds: [...new Set([...current.assetIds, asset.id])].slice(0, 8),
+    });
+    return { reference: saved, asset };
   }
 
   /**

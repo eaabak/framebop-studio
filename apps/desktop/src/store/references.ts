@@ -17,6 +17,7 @@ interface ReferenceState {
     input: Omit<RpcParams<"visualReferences.save">, "projectId">,
   ): Promise<VisualReference | null>;
   remove(id: string): Promise<void>;
+  importImage(id: string): Promise<VisualReference | null>;
 }
 
 function report(error: unknown, fallback: string): void {
@@ -33,7 +34,25 @@ export const useReferences = create<ReferenceState>((set, get) => ({
       const references = await bridge.call("visualReferences.list", {
         projectId,
       });
-      if (get().projectId === projectId) set({ references });
+      const ids = [...new Set(references.flatMap((item) => item.assetIds))];
+      const batches = [];
+      for (let offset = 0; offset < ids.length; offset += 200) {
+        batches.push(
+          bridge.call("assets.getMany", {
+            ids: ids.slice(offset, offset + 200),
+          }),
+        );
+      }
+      const pictures = (await Promise.all(batches)).flat();
+      if (get().projectId === projectId) {
+        useStudio.setState((state) => ({
+          assets: {
+            ...state.assets,
+            ...Object.fromEntries(pictures.map((asset) => [asset.id, asset])),
+          },
+        }));
+        set({ references });
+      }
     } catch (error) {
       report(error, t("media:referencesCouldNotBeLoaded"));
     }
@@ -56,6 +75,29 @@ export const useReferences = create<ReferenceState>((set, get) => ({
       return saved;
     } catch (error) {
       report(error, t("media:theReferenceCouldNotBeSaved"));
+      return null;
+    }
+  },
+
+  async importImage(id) {
+    const [sourcePath] = await bridge.chooseMediaFiles(["image"], false);
+    if (!sourcePath) return null;
+    try {
+      const result = await bridge.call("visualReferences.importImage", {
+        referenceId: id,
+        sourcePath,
+      });
+      useStudio.setState((state) => ({
+        assets: { ...state.assets, [result.asset.id]: result.asset },
+      }));
+      set((state) => ({
+        references: state.references.map((item) =>
+          item.id === id ? result.reference : item,
+        ),
+      }));
+      return result.reference;
+    } catch (error) {
+      report(error, t("video:referenceImportFailed"));
       return null;
     }
   },

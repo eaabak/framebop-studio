@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "registryVersion": "2026.10.20",
-  "publishedAt": "2026-10-20",
+  "registryVersion": "2026.10.26",
+  "publishedAt": "2026-10-26",
   "models": [
     {
       "id": "kokoro-82m",
@@ -1142,6 +1142,314 @@
       "origin": "registry",
       "presets": [],
       "inferenceTests": []
+    },
+    {
+      "id": "ltx-2.3-mlx-q4",
+      "name": "LTX-2.3 Distilled · MLX Q4",
+      "description": "Local Apple Silicon video using the MLX split pack. Requires a separately configured Python runtime and the shared Gemma text encoder. Low-memory streaming, silent clips, 24 fps, up to five seconds. The conservative file list is the one used for the independent benchmark.",
+      "source": "huggingface",
+      "repoId": "dgrauet/ltx-2.3-mlx-q4",
+      "revision": "56a5866d638ecfe37c54d348e88938235185c2d4",
+      "family": "LTX-2",
+      "task": "image_to_video",
+      "variant": "2.3 distilled",
+      "quantization": "int4",
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sizeBytes": 21399,
+          "sha256": null,
+          "gitBlobId": "42025e9a12c1da3c5dd5a88bb889c0aa012f3268"
+        },
+        {
+          "path": "config.json",
+          "sizeBytes": 951,
+          "sha256": null,
+          "gitBlobId": "9d926f4e17502b5ceacac6e7069231f8d616b14c"
+        },
+        {
+          "path": "embedded_config.json",
+          "sizeBytes": 7234,
+          "sha256": null,
+          "gitBlobId": "20f47c4ac3af471e3623d13fb2cb5b45b97ecfa4"
+        },
+        {
+          "path": "quantize_config.json",
+          "sizeBytes": 100,
+          "sha256": null,
+          "gitBlobId": "53bf35f5277aa3393248453b8343083a2f86aee5"
+        },
+        {
+          "path": "split_model.json",
+          "sizeBytes": 1835,
+          "sha256": null,
+          "gitBlobId": "bfbf540062eb52dcddf69b82ed609710e15c4e3e"
+        },
+        {
+          "path": "transformer-distilled.safetensors",
+          "sizeBytes": 11322002285,
+          "sha256": "8e17eec7f042aafde2c1d8824e16fa01d9c4be62bf1d36730e7e123080284196",
+          "gitBlobId": null
+        },
+        {
+          "path": "connector.safetensors",
+          "sizeBytes": 6344495512,
+          "sha256": "5885c2bd7af4e761b3257cf5b17bc1fdb2d187cea3ca520ea723b6a129b7029f",
+          "gitBlobId": null
+        },
+        {
+          "path": "vae_decoder.safetensors",
+          "sizeBytes": 814349531,
+          "sha256": "f404026fe0b59418eaec4a3fcdc474125c798f0b787dc390f6eb4e79934d4160",
+          "gitBlobId": null
+        },
+        {
+          "path": "vae_encoder.safetensors",
+          "sizeBytes": 637885319,
+          "sha256": "1512f5ef8387901db0baecb328690676e2667ddf2b63e28f8e6645188c1a8c06",
+          "gitBlobId": null
+        },
+        {
+          "path": "audio_vae.safetensors",
+          "sizeBytes": 106509048,
+          "sha256": "442119db8eaf976f83a105cc8c5f2c930e0f625062f9776b10adcdb7bc96c416",
+          "gitBlobId": null
+        },
+        {
+          "path": "vocoder.safetensors",
+          "sizeBytes": 258313851,
+          "sha256": "410cee86c14f76956bf487d153211ef15050fe8bf51f86d47a1d27ca6e3ba287",
+          "gitBlobId": null
+        },
+        {
+          "path": "spatial_upscaler_x2_v1_1.safetensors",
+          "sizeBytes": 995745061,
+          "sha256": "755f69dcb8a3f9589045925eb4a2237e9969f9c026a016393bc395e65ebd5788",
+          "gitBlobId": null
+        },
+        {
+          "path": "spatial_upscaler_x2_v1_1_config.json",
+          "sizeBytes": 275,
+          "sha256": null,
+          "gitBlobId": "b36a7304dd0e3cbc4afc3bad766ab5a897759238"
+        },
+        {
+          "path": "spatial_upscaler_x1_5_v1_0.safetensors",
+          "sizeBytes": 1090127476,
+          "sha256": "e186732be14a71b953efed15181cbb94595fa836555a07b3b7560d6cf5deeb15",
+          "gitBlobId": null
+        },
+        {
+          "path": "spatial_upscaler_x1_5_v1_0_config.json",
+          "sizeBytes": 274,
+          "sha256": null,
+          "gitBlobId": "2d0db42eaa4c168007aea3c277dc1a7aa4c02e84"
+        },
+        {
+          "path": "temporal_upscaler_x2_v1_0.safetensors",
+          "sizeBytes": 261945581,
+          "sha256": "982bc28b455ed22de1e39a9fcf5213299de4e15f948ae3bd2cee65550e019628",
+          "gitBlobId": null
+        },
+        {
+          "path": "temporal_upscaler_x2_v1_0_config.json",
+          "sizeBytes": 273,
+          "sha256": null,
+          "gitBlobId": "0412cb37d391e613ac44897ce35c562745481ae0"
+        }
+      ],
+      "runtime": {
+        "id": "ltx-2-mlx",
+        "name": "LTX MLX 0.18.0"
+      },
+      "hardware": {
+        "accelerators": ["apple-metal"],
+        "minimumMemoryBytes": null,
+        "source": "https://github.com/dgrauet/ltx-2-mlx",
+        "notes": [
+          "The independent M4 Pro 24 GiB run used low-memory streaming. System swap was already in use; a successful run is not a guarantee for every machine or workload."
+        ]
+      },
+      "license": {
+        "id": "other",
+        "name": "LTX-2 Community License Agreement",
+        "url": "https://huggingface.co/Lightricks/LTX-2.3/blob/main/LICENSE",
+        "summary": "Model weights retain their upstream terms; Framebop’s Apache-2.0 license does not relicense them. Review the linked terms before downloading or redistributing."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/dgrauet/ltx-2.3-mlx-q4",
+      "verifiedOn": "2026-10-25",
+      "provider": "dgrauet",
+      "group": "ltx-2.3-mlx",
+      "categories": ["text-to-video", "image-to-video"],
+      "platforms": ["macos"],
+      "presets": [
+        {
+          "id": "ltx-1k-distilled",
+          "kind": "quality",
+          "label": "1K · 24 fps · low-memory",
+          "description": "1024 × 576, distilled 8+3 steps. A five-second clip took about 6 minutes 39 seconds in the independent M4 Pro 24 GiB run.",
+          "adapterId": "ltx-2-mlx",
+          "task": "video_generation",
+          "parameters": {
+            "referenceStrength": 1,
+            "timeoutSeconds": 600
+          },
+          "size": {
+            "width": 1024,
+            "height": 576
+          },
+          "verified": false,
+          "note": "Text-to-video was checked independently. Adapter image conditioning is tested separately; character identity is not guaranteed."
+        }
+      ],
+      "inferenceTests": [],
+      "origin": "registry",
+      "parts": [
+        {
+          "role": "diffusion-model",
+          "file": "transformer-distilled.safetensors"
+        },
+        {
+          "role": "llm",
+          "model": "gemma-3-12b-ltx-q4"
+        }
+      ]
+    },
+    {
+      "id": "gemma-3-12b-ltx-q4",
+      "name": "Gemma 3 12B · LTX text encoder Q4",
+      "description": "Shared prompt encoder for the LTX MLX video engine. This is not a standalone video model or a llama.cpp GGUF model.",
+      "source": "huggingface",
+      "repoId": "mlx-community/gemma-3-12b-it-4bit",
+      "revision": "86cc6a8dedbc456dd0e4af01a9d09f396f77e558",
+      "family": "Gemma 3",
+      "task": "other",
+      "variant": "12B instruction",
+      "quantization": "int4",
+      "format": "safetensors",
+      "files": [
+        {
+          "path": "README.md",
+          "sizeBytes": 945,
+          "sha256": null,
+          "gitBlobId": "c7c3bbce3f2ef2adb55b1d950fcc9d68d8e90542"
+        },
+        {
+          "path": "added_tokens.json",
+          "sizeBytes": 35,
+          "sha256": null,
+          "gitBlobId": "e17bde03d42feda32d1abfca6d3b598b9a020df7"
+        },
+        {
+          "path": "chat_template.json",
+          "sizeBytes": 1615,
+          "sha256": null,
+          "gitBlobId": "719b0cd0d7a373a400b0c119ee0e051f41ea88d9"
+        },
+        {
+          "path": "config.json",
+          "sizeBytes": 1141,
+          "sha256": null,
+          "gitBlobId": "265a24198dc17dda6aae03afd99ad21d68e9c87a"
+        },
+        {
+          "path": "generation_config.json",
+          "sizeBytes": 192,
+          "sha256": null,
+          "gitBlobId": "f60a6730afb98517298b478873c3e7a250442fcc"
+        },
+        {
+          "path": "model-00001-of-00002.safetensors",
+          "sizeBytes": 5367455313,
+          "sha256": "995cbd05b7bfd8f5ab5307b476eb5496b5ec3f5256a9dd26366236ce8816c93f",
+          "gitBlobId": null
+        },
+        {
+          "path": "model-00002-of-00002.safetensors",
+          "sizeBytes": 2661219935,
+          "sha256": "8b7af7eb5ff32109fc65cbcd0af5b8016ac0de46df17f40705f043f899495333",
+          "gitBlobId": null
+        },
+        {
+          "path": "model.safetensors.index.json",
+          "sizeBytes": 108605,
+          "sha256": null,
+          "gitBlobId": "c5eb054c21efb5496f4623aeb619a750c9ed9357"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "sizeBytes": 570,
+          "sha256": null,
+          "gitBlobId": "b1e00fc184f61b698181821169c6374cd5813e5c"
+        },
+        {
+          "path": "processor_config.json",
+          "sizeBytes": 70,
+          "sha256": null,
+          "gitBlobId": "453c7966d4b5d0b4a317c585989f64c58c2a6bf0"
+        },
+        {
+          "path": "special_tokens_map.json",
+          "sizeBytes": 662,
+          "sha256": null,
+          "gitBlobId": "1a6193244714d3d78be48666cb02cdbfac62ad86"
+        },
+        {
+          "path": "tokenizer.json",
+          "sizeBytes": 33384568,
+          "sha256": "4667f2089529e8e7657cfb6d1c19910ae71ff5f28aa7ab2ff2763330affad795",
+          "gitBlobId": null
+        },
+        {
+          "path": "tokenizer.model",
+          "sizeBytes": 4689074,
+          "sha256": "1299c11d7cf632ef3b4e11937501358ada021bbdf7c47638d13c0ee982f2e79c",
+          "gitBlobId": null
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sizeBytes": 1157007,
+          "sha256": null,
+          "gitBlobId": "c4748060f36c42626828bf029e03a47beebbd65e"
+        }
+      ],
+      "runtime": {
+        "id": "ltx-gemma-mlx",
+        "name": "LTX MLX prompt encoder"
+      },
+      "hardware": {
+        "accelerators": ["apple-metal"],
+        "minimumMemoryBytes": null,
+        "source": "https://github.com/dgrauet/ltx-2-mlx",
+        "notes": [
+          "The independent M4 Pro 24 GiB run used low-memory streaming. System swap was already in use; a successful run is not a guarantee for every machine or workload."
+        ]
+      },
+      "license": {
+        "id": "other",
+        "name": "Gemma Terms of Use",
+        "url": "https://ai.google.dev/gemma/terms",
+        "summary": "Model weights retain their upstream terms; Framebop’s Apache-2.0 license does not relicense them. Review the linked terms before downloading or redistributing."
+      },
+      "access": {
+        "gated": false,
+        "requirements": null
+      },
+      "pageUrl": "https://huggingface.co/mlx-community/gemma-3-12b-it-4bit",
+      "verifiedOn": "2026-10-25",
+      "provider": "mlx-community",
+      "group": "gemma3-ltx",
+      "categories": [],
+      "platforms": ["macos"],
+      "presets": [],
+      "inferenceTests": [],
+      "origin": "registry",
+      "parts": []
     }
   ]
 }

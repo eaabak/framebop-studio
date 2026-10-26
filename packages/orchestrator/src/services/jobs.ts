@@ -120,6 +120,7 @@ export class JobQueue {
   private readonly running = new Map<string, RunningJob>();
   private idleWaiters: (() => void)[] = [];
   private stopping = false;
+  private externalWake: ReturnType<typeof setTimeout> | null = null;
   private paused = false;
   private pausedReason: QueueStatus["pausedReason"] = null;
 
@@ -323,6 +324,7 @@ export class JobQueue {
    */
   async shutdown(): Promise<void> {
     this.stopping = true;
+    if (this.externalWake) clearTimeout(this.externalWake);
     const active = [...this.running.values()];
     for (const entry of active) entry.abort.abort();
     await Promise.all(active.map((entry) => entry.settled));
@@ -345,7 +347,21 @@ export class JobQueue {
   private pump(): void {
     for (const lane of Object.keys(LANES) as Lane[]) {
       const { types, concurrency } = LANES[lane];
-      const held = lane === "production" && this.paused;
+      const externalBusy =
+        lane === "production" && this.ctx.modelBusy?.() === true;
+      const held = lane === "production" && (this.paused || externalBusy);
+      if (
+        externalBusy &&
+        !this.stopping &&
+        !this.paused &&
+        !this.externalWake &&
+        this.ctx.db.jobs.countByStatus(types, "pending") > 0
+      ) {
+        this.externalWake = setTimeout(() => {
+          this.externalWake = null;
+          this.pump();
+        }, 250);
+      }
       while (!this.stopping && !held && this.countRunning(lane) < concurrency) {
         const next = this.ctx.db.jobs.claimNextPending(types, this.ctx.now());
         if (!next) break;

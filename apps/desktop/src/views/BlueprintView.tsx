@@ -244,7 +244,9 @@ function SceneRow({
                     value !== plan.method
                   }
                 >
-                  {PRODUCTION_METHOD_LABELS[value]}
+                  {value === "text-to-video"
+                    ? t("media:textToVideo")
+                    : PRODUCTION_METHOD_LABELS[value]}
                   {availability?.available
                     ? ""
                     : settable
@@ -265,7 +267,9 @@ function SceneRow({
         </label>
         {method &&
         method.engines.length > 0 &&
-        ["image-generation", "image-to-video"].includes(plan.method) ? (
+        ["image-generation", "image-to-video", "text-to-video"].includes(
+          plan.method,
+        ) ? (
           <label className="flex flex-col gap-1 text-2xs text-fg-dim">
             {t("blueprint:engine")}
             <select

@@ -18,6 +18,8 @@ export interface EngineContext {
   readonly env: NodeJS.ProcessEnv;
   /** Last detected state of optional external tools. Replaced on rescan. */
   tools: DetectedTools;
+  /** External model calls (writer/director/voice preview) hold the production lane. */
+  modelBusy?: () => boolean;
   emit(event: CoreEvent): void;
   now(): string;
   newId(): string;

@@ -1,3 +1,7 @@
+import {
+  LtxVideoAdapter,
+  type LtxVideoEnvironment,
+} from "./adapters/ltx-video";
 import type { ToolStatus } from "@framebop/core";
 import {
   DrawThingsCliImageAdapter,
@@ -39,6 +43,7 @@ export interface RegistryEnvironment {
   qwenTtsPython: () => string | null;
   /** The folder of Qwen3-TTS voice profiles chosen in settings, if any. */
   qwenVoicesDirectory: () => string | null;
+  ltxVideo: Omit<LtxVideoEnvironment, "host" | "env" | "ffmpeg">;
   /** Where the render worker and its composition are. */
   remotion: RemotionEnvironment;
   /** Framebop's own image runtime, installed and pinned by the engine. */
@@ -73,6 +78,14 @@ export function createDefaultRegistry(
       }),
     )
     .register(new TestPatternVideoAdapter(ffmpegPath))
+    .register(
+      new LtxVideoAdapter({
+        ...environment.ltxVideo,
+        host,
+        env,
+        ffmpeg: ffmpegPath,
+      }),
+    )
     .register(
       new StableDiffusionCppVideoAdapter({
         runtime: environment.stableDiffusionCpp,

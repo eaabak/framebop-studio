@@ -478,6 +478,34 @@ export async function adoptGeneratedFile(
  * Copies a PNG into a project's library without attaching it to a scene,
  * for pictures an animation uses. An identical file already there is reused.
  */
+export async function importReferencePicture(
+  ctx: EngineContext,
+  projectId: string,
+  sourcePath: string,
+): Promise<Asset> {
+  if (!isAbsolute(sourcePath))
+    throw new AppError("VALIDATION", "Choose a picture by its full path.");
+  const format = mediaFormatFor(sourcePath);
+  if (!format || format.kind !== "image")
+    throw new AppError(
+      "VALIDATION",
+      "Choose a supported PNG, JPEG or WebP picture.",
+    );
+  const source = await describeSource(sourcePath);
+  if (source.sizeBytes > 25 * 1024 * 1024)
+    throw new AppError(
+      "VALIDATION",
+      "Reference pictures must be at most 25 MiB.",
+    );
+  const extension = extensionOf(sourcePath);
+  await assertContentMatchesExtension(source.resolved, extension);
+  return importLibraryFile(ctx, projectId, source.resolved, {
+    kind: "image",
+    mimeType: format.mimeType,
+    extension,
+  });
+}
+
 export async function importLibraryPicture(
   ctx: EngineContext,
   projectId: string,

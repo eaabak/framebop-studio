@@ -32,9 +32,10 @@ pnpm test
 pnpm build
 ```
 
-The repository has no automated tests at the moment; `pnpm test` passes when
-there are none. New tests are welcome: use stand-ins for models and programs
-so they need no network and no GPU.
+Tests use Vitest. Use stand-ins for models and programs so the routine suite
+needs no network and no GPU. Some packages still have no test files;
+`--passWithNoTests` is not evidence of coverage. Run real model checks only
+when explicitly authorized. See [local LTX video](docs/ltx-video.md).
 
 ## Where things are
 

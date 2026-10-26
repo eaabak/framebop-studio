@@ -250,6 +250,9 @@ interface StudioState {
     setting:
       | "kokoroPython"
       | "qwenTtsPython"
+      | "ltxVideoPython"
+      | "ltxVideoModelDirectory"
+      | "ltxVideoTextEncoderDirectory"
       | "qwenVoicesDirectory"
       | "rendererBrowserPath"
       | "llamaServerPath",
@@ -729,6 +732,9 @@ export const useStudio = create<StudioState>((set, get) => {
           "registryUrl" in patch ||
           "kokoroPython" in patch ||
           "qwenTtsPython" in patch ||
+          "ltxVideoPython" in patch ||
+          "ltxVideoModelDirectory" in patch ||
+          "ltxVideoTextEncoderDirectory" in patch ||
           "qwenVoicesDirectory" in patch ||
           "rendererBrowserPath" in patch ||
           "llamaServerPath" in patch
@@ -1497,20 +1503,27 @@ export const useStudio = create<StudioState>((set, get) => {
     },
 
     async chooseProgram(setting) {
-      const path =
-        setting === "qwenVoicesDirectory"
-          ? await bridge.chooseFolder(
-              t("studio:chooseTheFolderOfVoiceProfiles"),
-            )
-          : await bridge.chooseFile(
-              setting === "kokoroPython"
+      const path = [
+        "qwenVoicesDirectory",
+        "ltxVideoModelDirectory",
+        "ltxVideoTextEncoderDirectory",
+      ].includes(setting)
+        ? await bridge.chooseFolder(
+            setting === "qwenVoicesDirectory"
+              ? t("studio:chooseTheFolderOfVoiceProfiles")
+              : t("video:chooseModelFolder"),
+          )
+        : await bridge.chooseFile(
+            setting === "ltxVideoPython"
+              ? t("video:choosePython")
+              : setting === "kokoroPython"
                 ? t("studio:chooseAPythonInterpreterThatHas")
                 : setting === "qwenTtsPython"
                   ? t("studio:chooseAPythonInterpreterWithMlxAudio")
                   : setting === "llamaServerPath"
                     ? t("studio:chooseLlamaServerFromALlama")
                     : t("studio:chooseAChromeBuildForRendering"),
-            );
+          );
       if (!path) return;
       await get().updateSettings({ [setting]: path });
       void get().refreshEngines();

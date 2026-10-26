@@ -525,6 +525,20 @@ export class VoiceService {
         "No Qwen3-TTS Base model was found. Add the folder that holds it (for example the Hugging Face cache) under Models → Sources.",
       );
     }
+    if (
+      this.ctx.modelBusy?.() ||
+      this.ctx.db.jobs
+        .listByStatus("running")
+        .some(
+          (job) =>
+            job.type !== "media_import" && job.type !== "video_inspection",
+        )
+    ) {
+      throw new AppError(
+        "CONFLICT",
+        "Another production model is running. Wait for it before previewing a voice.",
+      );
+    }
     this.preview = {
       state: "running",
       profileId: id,

@@ -375,6 +375,15 @@ export class ModelService {
 
   // ------------------------------------------------------------ storage
 
+  /** Only verified managed models may supply an inference dependency. */
+  installedDirectory(modelId: string): string | null {
+    const installation = this.ctx.db.models.getInstallation(modelId);
+    return installation?.state === "installed" &&
+      installation.verification === "verified"
+      ? installation.directory
+      : null;
+  }
+
   modelsRoot(): string {
     return (
       getSettings(this.ctx).modelsDirectory ??

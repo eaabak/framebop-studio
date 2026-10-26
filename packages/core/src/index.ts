@@ -19,3 +19,5 @@ export * from "./rpc";
 export * from "./script";
 export * from "./story";
 export * from "./voice-clone";
+
+export * from "./video";

@@ -93,3 +93,5 @@ export {
 } from "./host/secrets";
 export { locateExecutable, probeFfmpegTool } from "./host/tools";
 export { AdapterRegistry } from "./registry";
+
+export * from "./adapters/ltx-video";

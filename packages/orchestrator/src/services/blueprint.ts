@@ -46,6 +46,7 @@ const METHOD_TASK: Partial<
 > = {
   "image-generation": "image_generation",
   "image-to-video": "video_generation",
+  "text-to-video": "video_generation",
 };
 
 /** The media a scene needs in the end, by method. */
@@ -56,6 +57,7 @@ const METHOD_MEDIA: Record<ProductionMethod, "image" | "video" | "animation"> =
     "video-clip": "video",
     "image-generation": "image",
     "image-to-video": "video",
+    "text-to-video": "video",
   };
 
 export function defaultPlan(scene: Scene, now: string): ScenePlan {
@@ -177,7 +179,15 @@ export class BlueprintService {
         .filter((engine) => !engine.isTest)
         .flatMap((engine) =>
           engine.capabilities
-            .filter((capability) => capability.task === task)
+            .filter(
+              (capability) =>
+                capability.task === task &&
+                (method !== "text-to-video" ||
+                  !capability.requiresInputImage) &&
+                (method !== "image-to-video" ||
+                  capability.acceptsInputImage ||
+                  capability.requiresInputImage),
+            )
             .map((capability) => ({ engine, capability })),
         );
       const usable = candidates.filter((item) => item.capability.available);

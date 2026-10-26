@@ -2,6 +2,62 @@
 import type { LocaleResources } from "../resources";
 
 const es: LocaleResources = {
+  video: {
+    expand: "Ampliar estudio de vídeo",
+    pythonNotChosen: "Sin seleccionar",
+    title: "Estudio de vídeo",
+    local: "Generación local",
+    ready: "Listo",
+    setup: "Configurar",
+    previewEmpty: "Tu próxima escena empieza aquí",
+    previewHint: "Describe un momento, elige su duración y dale vida.",
+    prompt: "¿Qué ocurre en este plano?",
+    promptHint:
+      "Describe personaje, acción, entorno y cámara. Centra un clip corto en un solo momento.",
+    promptPlaceholder:
+      "Un pequeño zorro naranja descubre una mariposa luminosa en un bosque iluminado por la luna. Cámara fija, animación 2D dibujada a mano.",
+    duration: "Duración del clip",
+    durationHint: "1–5 segundos · 24 fps fijos",
+    resolution: "Detalle de imagen",
+    referenceTitle: "Personajes y primer fotograma",
+    referenceHint:
+      "La imagen elegida fija el primer fotograma. Las descripciones se añaden al prompt; no se garantiza la identidad entre fotogramas.",
+    fromText: "Desde texto",
+    fromImage: "Desde una imagen",
+    anchored: "Primer fotograma: {{name}}",
+    advanced: "Modelo y controles avanzados",
+    strength: "Influencia del primer fotograma",
+    deadline: "Límite de generación",
+    deadlineHint:
+      "La generación se detiene al alcanzar este límite o ante presión de memoria crítica sostenida.",
+    performanceHint:
+      "Una generación a la vez. Un clip 1K de cinco segundos tardó unos 6 min 39 s en un M4 Pro con 24 GiB; el tiempo y la memoria varían.",
+    generate: "Generar vídeo de {{seconds}} s",
+    attempts: "Intentos anteriores ({{count}})",
+    runtimeSettings: "Configuración del motor",
+    python: "Vídeo: Python con LTX MLX",
+    pythonHint:
+      "Entorno separado: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. Consulta docs/ltx-video.md.",
+    modelFolder: "Carpeta del modelo LTX Q4",
+    modelFolderHint:
+      "Split pack externo opcional. También se ofrecen instalaciones verificadas de Model Manager.",
+    encoderFolder: "Carpeta del codificador Gemma",
+    encoderFolderHint:
+      "Carpeta externa opcional de Gemma 3 12B Q4. Sin selección se usa la instalación verificada.",
+    choosePython: "Elegir el intérprete Python de LTX",
+    chooseModelFolder: "Elegir la carpeta local del modelo",
+    choose: "Elegir",
+    notChosen: "Sin seleccionar · también se admiten modelos administrados",
+    setupHint:
+      "Elige el entorno y las carpetas locales, o instala los archivos en Modelos. No se instala Python ni se descargan archivos automáticamente.",
+    manageModels: "Modelos y descargas",
+    refresh: "Volver a comprobar",
+    uploadReference: "Subir imagen de referencia",
+    referenceImportFailed: "No se pudo importar la imagen de referencia.",
+    referenceSeedHint:
+      "Seed compartido opcional. Reutilizarlo no garantiza el mismo personaje.",
+    stageComposing: "Decodificar y codificar",
+  },
   common: {
     openingYourLibrary: "Abriendo tu biblioteca",
     framebopStudioCouldNotStart: "Framebop Studio no pudo iniciarse",

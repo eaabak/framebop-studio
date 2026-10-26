@@ -42,13 +42,19 @@ type Slot = "image" | "video";
 
 /** The phases of a generation, as the panel shows them. */
 type GenerationStage =
-  "queued" | "preparing" | "loading_model" | "generating" | "validating";
+  | "queued"
+  | "preparing"
+  | "loading_model"
+  | "generating"
+  | "composing"
+  | "validating";
 
 const STAGES: readonly GenerationStage[] = [
   "queued",
   "preparing",
   "loading_model",
   "generating",
+  "composing",
   "validating",
 ];
 
@@ -58,6 +64,7 @@ const stageLabel = (stage: GenerationStage) =>
     preparing: t("media:stagePreparing"),
     loading_model: t("media:stageLoadingModel"),
     generating: t("media:stageGenerating"),
+    composing: t("video:stageComposing"),
     validating: t("media:stageValidating"),
   })[stage];
 
@@ -233,7 +240,7 @@ function ResultDetails({ job, asset }: { job: Job; asset: Asset | null }) {
   );
 }
 
-function ResultCard({
+export function ResultCard({
   job,
   scene,
   slot,
@@ -335,7 +342,7 @@ function ResultCard({
 }
 
 /** A short clip is held on its last frame by the renderer, never stretched. */
-function DurationMismatch({ scene }: { scene: Scene }) {
+export function DurationMismatch({ scene }: { scene: Scene }) {
   const clip = useStudio((state) =>
     scene.videoAssetId ? (state.assets[scene.videoAssetId] ?? null) : null,
   );
@@ -1002,7 +1009,7 @@ export function MediaProduction({
           blueprintScene={blueprintScene}
           scene={scene}
           task={
-            method === "image-to-video"
+            ["image-to-video", "text-to-video"].includes(method)
               ? "video_generation"
               : "image_generation"
           }

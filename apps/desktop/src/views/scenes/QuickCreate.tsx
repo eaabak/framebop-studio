@@ -14,13 +14,7 @@ import {
   type VoiceSetupStatus,
   isActiveJob,
 } from "@framebop/core";
-import {
-  AudioLines,
-  Film,
-  Image as ImageIcon,
-  Sparkles,
-  Upload,
-} from "lucide-react";
+import { AudioLines, Image as ImageIcon, Sparkles, Upload } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { AssetThumb } from "../../components/media";
 import { Button, ProgressBar, cx } from "../../components/ui";
@@ -31,18 +25,15 @@ import { errorMessage } from "../../lib/errors";
 import { useStudio } from "../../store/studio";
 import { ActiveRun } from "../blueprint/MediaProduction";
 import { Section } from "./Section";
+import { VideoStudio } from "./VideoStudio";
 
 type Task = "image_generation" | "audio_generation" | "video_generation";
 
 /** The engines the easy path uses, and the models it recommends. */
 const IMAGE_ENGINE = "stable-diffusion-cpp";
 const VOICE_ENGINE = "sherpa-onnx";
-const MOTION_ENGINE = "stable-diffusion-cpp-video";
+
 const IMAGE_MODEL = "sd-1.5-q8-gguf";
-/** Wan 2.2 TI2V 5B; its text encoder comes with it from the catalog. */
-const MOTION_MODEL = "wan2.2-ti2v-5b-q4km";
-/** A short clip: every second more takes several minutes longer. */
-const MOTION_SECONDS = 2;
 
 /** Two buttons share one row, on one line, in every language. */
 const PAIR = "w-full min-w-0 px-2! text-xs!";
@@ -370,14 +361,10 @@ export function QuickCreate({ scene }: { scene: Scene }) {
   );
   const voiceSetup = useVoiceSetup(language);
   const voice = useAi("audio_generation", VOICE_ENGINE, voiceSetup.pack);
-  const motion = useAi("video_generation", MOTION_ENGINE);
+
   const setup = useModelSetup([IMAGE_MODEL], {
     title: t("create:prepareTitle"),
     message: (size) => t("create:prepareMessage", { size }),
-  });
-  const motionSetup = useModelSetup([MOTION_MODEL], {
-    title: t("create:motionPrepareTitle"),
-    message: (size) => t("create:motionPrepareMessage", { size }),
   });
 
   const running = (task: Task) =>
@@ -401,14 +388,6 @@ export function QuickCreate({ scene }: { scene: Scene }) {
       ...(task === "audio_generation" || !size
         ? {}
         : { width: size.width, height: size.height }),
-      ...(task === "video_generation"
-        ? {
-            clipSeconds: Math.min(
-              MOTION_SECONDS,
-              option.capability.maxClipSeconds ?? MOTION_SECONDS,
-            ),
-          }
-        : {}),
       parameters: { ...defaults(option.capability), ...preset?.parameters },
       // The button says what happens and roughly how long it takes.
       confirmed: true,
@@ -418,14 +397,9 @@ export function QuickCreate({ scene }: { scene: Scene }) {
   const image = scene.imageAssetId
     ? (assets[scene.imageAssetId] ?? null)
     : null;
-  const clip = scene.videoAssetId ? (assets[scene.videoAssetId] ?? null) : null;
+
   const pictureJob = running("image_generation");
   const voiceJob = running("audio_generation");
-  const motionJob = running("video_generation");
-  const motionReady = Boolean(
-    motion.option?.capability.available && motion.choice,
-  );
-  const motionText = (scene.motionPrompt || scene.imagePrompt).trim();
   const pictureReady = Boolean(
     picture.option?.capability.available && picture.choice,
   );
@@ -600,99 +574,7 @@ export function QuickCreate({ scene }: { scene: Scene }) {
         </div>
       </Row>
 
-      <Row
-        icon={Film}
-        title={t("create:motion")}
-        thumb={
-          clip ? (
-            <AssetThumb
-              asset={clip}
-              className="aspect-video w-full rounded-lg border border-line"
-            />
-          ) : undefined
-        }
-      >
-        <textarea
-          rows={2}
-          aria-label={t("create:motionAsk")}
-          placeholder={t("create:motionAsk")}
-          className="control resize-y text-xs"
-          value={scene.motionPrompt}
-          onChange={(event) =>
-            editScene(scene.id, { motionPrompt: event.target.value })
-          }
-        />
-        {motionJob ? (
-          <ActiveRun job={motionJob} />
-        ) : motionReady ? (
-          <Status tone="ok">
-            {t(image ? "create:motionReady" : "create:motionReadyNoPicture", {
-              seconds: MOTION_SECONDS,
-            })}
-          </Status>
-        ) : motionSetup.unsupported || !motionSetup.needed ? (
-          <Status tone="no">{t("create:motionNotReady")}</Status>
-        ) : motionSetup.downloading ? (
-          <div className="flex flex-col gap-1">
-            <Status tone="wait">
-              {t("create:preparing", {
-                percent:
-                  motionSetup.progress === null
-                    ? 0
-                    : Math.floor(motionSetup.progress * 100),
-              })}
-            </Status>
-            <ProgressBar value={motionSetup.progress} />
-          </div>
-        ) : (
-          <Status tone="wait">
-            {t("create:motionNeedsSetup", {
-              size: formatBytes(motionSetup.size),
-            })}
-          </Status>
-        )}
-        <div className="grid grid-cols-2 gap-1.5">
-          {motionReady && motion.option && motion.choice ? (
-            <Button
-              variant="primary"
-              icon={Sparkles}
-              className={PAIR}
-              disabled={Boolean(motionJob) || !motionText}
-              title={motionText ? undefined : t("create:motionAskFirst")}
-              onClick={() =>
-                motion.option &&
-                motion.choice &&
-                void make("video_generation", motion.option, motion.choice)
-              }
-            >
-              {clip ? t("create:motionAgain") : t("create:motionMake")}
-            </Button>
-          ) : (
-            !motionSetup.unsupported &&
-            motionSetup.needed &&
-            !motionSetup.downloading && (
-              <Button
-                variant="primary"
-                icon={Sparkles}
-                className={PAIR}
-                busy={motionSetup.busy}
-                onClick={() => void motionSetup.prepare()}
-              >
-                {t("create:prepareButton", {
-                  size: formatBytes(motionSetup.size),
-                })}
-              </Button>
-            )
-          )}
-          <Button
-            className={PAIR}
-            icon={Upload}
-            onClick={() => void importMedia(scene.id, "video")}
-          >
-            {t("create:addOwnClip")}
-          </Button>
-        </div>
-      </Row>
+      <VideoStudio key={scene.id} scene={scene} />
     </Section>
   );
 }

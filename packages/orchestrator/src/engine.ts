@@ -207,6 +207,13 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
       drawThingsHttpPort: () => getSettings(ctx).drawThingsHttpPort,
       kokoroPython: () => getSettings(ctx).kokoroPython,
       qwenTtsPython: () => getSettings(ctx).qwenTtsPython,
+      ltxVideo: {
+        python: () => getSettings(ctx).ltxVideoPython,
+        modelDirectory: () => getSettings(ctx).ltxVideoModelDirectory,
+        textEncoderDirectory: () =>
+          getSettings(ctx).ltxVideoTextEncoderDirectory ??
+          models.installedDirectory("gemma-3-12b-ltx-q4"),
+      },
       qwenVoicesDirectory: () => getSettings(ctx).qwenVoicesDirectory,
       stableDiffusionCpp: () => imageRuntime.locate(),
       // Read when a model is run; the model service exists by then.
@@ -313,6 +320,9 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
       return found.sort((a, b) => a.rank - b.rank)[0]?.reference ?? null;
     },
   });
+
+  ctx.modelBusy = () =>
+    (llm?.inUse() ?? false) || voices.previewStatus().state === "running";
 
   const research = new ResearchService(
     ctx,
@@ -620,6 +630,8 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
     },
     "visualReferences.list": ({ projectId }) => references.list(projectId),
     "visualReferences.save": (input) => references.save(input),
+    "visualReferences.importImage": ({ referenceId, sourcePath }) =>
+      references.importImage(referenceId, sourcePath),
     "visualReferences.delete": ({ id }) => {
       references.delete(id);
       return DELETED;

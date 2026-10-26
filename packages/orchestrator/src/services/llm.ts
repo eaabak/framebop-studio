@@ -359,6 +359,24 @@ export class LocalLlmService implements ModelEvaluator {
     work: (provider: ManagedProvider, runtime: LlamaRuntimeInfo) => Promise<T>,
     onLoaded?: () => void,
   ): Promise<T> {
+    if (
+      (this.active === 0 && this.ctx.modelBusy?.()) ||
+      this.ctx.db.jobs
+        .listByStatus("running")
+        .some((job) =>
+          [
+            "image_generation",
+            "video_generation",
+            "audio_generation",
+            "video_render",
+          ].includes(job.type),
+        )
+    ) {
+      throw new AppError(
+        "CONFLICT",
+        "Another production model is running. Wait for it to finish or stop it first.",
+      );
+    }
     this.active += 1;
     try {
       const prepared = await this.prepare(modelId);
