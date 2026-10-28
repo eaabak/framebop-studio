@@ -1,5 +1,6 @@
+import { createHash } from "node:crypto";
 import { spawn } from "node:child_process";
-import { readFile, readdir, stat, writeFile } from "node:fs/promises";
+import { readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join } from "node:path";
 import {
   LTX_MAX_SECONDS,
@@ -20,6 +21,7 @@ import {
 } from "../contracts";
 import { runCommand } from "../host/exec";
 import type { HostPlatform } from "../host/platform";
+import { LTX_VIDEO_UPSCALE } from "./ltx-video-upscale";
 import { LTX_VIDEO_SCRIPT } from "./ltx-video-script";
 
 export interface LtxVideoEnvironment {
@@ -27,7 +29,9 @@ export interface LtxVideoEnvironment {
   env: NodeJS.ProcessEnv;
   python(): string | null;
   modelDirectory(): string | null;
-  textEncoderDirectory(): string | null;
+  upscalerDirectory?(): string | null;
+  /** Legacy setting; LTX-2.5 carries its own Gemma 4 encoder. */
+  textEncoderDirectory?(): string | null;
   ffmpeg(): string | null;
 }
 
@@ -40,11 +44,16 @@ const PIN = {
 const PACK_FILES = [
   "transformer-distilled.safetensors",
   "connector.safetensors",
-  "vae_encoder.safetensors",
-  "vae_decoder.safetensors",
-  "spatial_upscaler_x2_v1_1.safetensors",
-  "spatial_upscaler_x2_v1_1_config.json",
+  "vae_encoder_conv.safetensors",
+  "vae_decoder_conv.safetensors",
+  "spatial_upscaler_x2_v1_0.safetensors",
+  "spatial_upscaler_x2_v1_0_config.json",
   "embedded_config.json",
+  "split_model.json",
+  "text_encoder.safetensors",
+  "text_encoder_config.json",
+  "tokenizer.json",
+  "tokenizer_config.json",
 ];
 const fileExists = async (path: string) =>
   (await stat(path).catch(() => null))?.isFile() === true;
@@ -56,12 +65,12 @@ export async function ltxPackDirectory(path: string): Promise<string | null> {
   const directory = info.isDirectory() ? path : dirname(path);
   try {
     const config = JSON.parse(
-      await readFile(join(directory, "config.json"), "utf8"),
+      await readFile(join(directory, "embedded_config.json"), "utf8"),
     );
     const quant = JSON.parse(
       await readFile(join(directory, "quantize_config.json"), "utf8"),
     );
-    if (config.model_version !== "2.3.0" || quant.quantization?.bits !== 4)
+    if (config.model_version !== "2.5.0" || quant.quantization?.bits !== 4)
       return null;
     if (
       !(
@@ -71,72 +80,36 @@ export async function ltxPackDirectory(path: string): Promise<string | null> {
       ).every(Boolean)
     )
       return null;
+    if (!(await ltxEncoderReady(directory))) return null;
     return directory;
   } catch {
     return null;
   }
 }
 
+/** The 2.5 text tower is bundled; an external Gemma 3 cannot substitute it. */
 export async function ltxEncoderReady(path: string | null): Promise<boolean> {
   if (!path || !isAbsolute(path)) return false;
   try {
     const config = JSON.parse(
-      await readFile(join(path, "config.json"), "utf8"),
+      await readFile(join(path, "text_encoder_config.json"), "utf8"),
     );
-    if (config.model_type !== "gemma3" || config.quantization?.bits !== 4)
-      return false;
-    const index = JSON.parse(
-      await readFile(join(path, "model.safetensors.index.json"), "utf8"),
+    const quant = JSON.parse(
+      await readFile(join(path, "quantize_config.json"), "utf8"),
     );
-    const shards = [...new Set(Object.values(index.weight_map ?? {}))];
     if (
-      !shards.length ||
-      shards.some(
-        (s) =>
-          typeof s !== "string" ||
-          s.includes("/") ||
-          s.includes("\\") ||
-          s.startsWith("."),
-      )
+      config.gemma_version !== "gemma4-12b-ltx-v1" ||
+      config.model_type !== "gemma4_unified" ||
+      quant.quantization?.bits !== 4
     )
       return false;
-    // The pinned MLX conversion has a stale upstream five-shard index,
-    // while its actual weights are a complete two-shard MLX layout. mlx-lm
-    // loads those files directly. Validate the real layout, not that stale list.
-    const entries = await readdir(path);
-    const weights = entries.filter((name) =>
-      /^model-\d+-of-\d+\.safetensors$/.test(name),
-    );
-    let actual: string[];
-    if (entries.includes("model.safetensors")) actual = ["model.safetensors"];
-    else {
-      const parsed = weights.map((name) =>
-        /^model-(\d+)-of-(\d+)\.safetensors$/.exec(name)!,
-      );
-      const total = Number(parsed[0]?.[2]);
-      if (
-        !Number.isInteger(total) ||
-        total < 1 ||
-        total > 100 ||
-        weights.length !== total ||
-        parsed.some((m) => Number(m[2]) !== total)
-      )
-        return false;
-      const indices = new Set(parsed.map((m) => Number(m[1])));
-      if (
-        indices.size !== total ||
-        !Array.from({ length: total }, (_, i) => i + 1).every((i) =>
-          indices.has(i),
-        )
-      )
-        return false;
-      actual = weights;
-    }
     return (
       await Promise.all(
-        ["tokenizer.json", "tokenizer_config.json", ...actual].map((name) =>
-          fileExists(join(path, name)),
-        ),
+        [
+          "text_encoder.safetensors",
+          "tokenizer.json",
+          "tokenizer_config.json",
+        ].map((name) => fileExists(join(path, name))),
       )
     ).every(Boolean);
   } catch {
@@ -146,7 +119,7 @@ export async function ltxEncoderReady(path: string | null): Promise<boolean> {
 
 export class LtxVideoAdapter implements VideoGenerationAdapter {
   readonly id = LTX_VIDEO_ENGINE;
-  readonly name = "LTX-2.3 MLX Q4";
+  readonly name = "LTX-2.5 MLX Q4";
   readonly task = "video_generation";
   readonly isTest = false;
   readonly supportedPlatforms = ["macos"] as const;
@@ -198,10 +171,6 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       );
     if (!this.environment.ffmpeg())
       return missing("Install FFmpeg before generating an LTX video.");
-    if (!(await ltxEncoderReady(this.environment.textEncoderDirectory())))
-      return missing(
-        "Install the Gemma 3 12B Q4 encoder in Models, or choose its local folder in Settings.",
-      );
     if (
       this.detection?.python === python &&
       Date.now() - this.detection.at < 30_000
@@ -253,7 +222,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
     return {
       maturity: "experimental",
       models: model
-        ? [{ id: model, name: "LTX-2.3 distilled Q4 · local files" }]
+        ? [{ id: model, name: "LTX-2.5 distilled Q4 · local files" }]
         : [],
       requiresModel: true,
       parameters: [
@@ -269,6 +238,22 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
             "Strength of the first-frame image anchor. Does not guarantee character identity.",
         },
         {
+          key: "enhance1080p",
+          label: "AI enhancement to 1080p",
+          type: "boolean",
+          defaultValue: false,
+          description:
+            "Requires a separate local Real-ESRGAN MLX runtime and weights. May smooth textures or cause flicker.",
+        },
+        {
+          key: "interpolate60fps",
+          label: "60 FPS motion interpolation",
+          type: "boolean",
+          defaultValue: false,
+          description:
+            "Synthesizes intermediate frames after generation. Does not increase drawing detail.",
+        },
+        {
           key: "timeoutSeconds",
           label: "Optional generation deadline (seconds; 0 = unlimited)",
           type: "integer",
@@ -277,7 +262,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
           step: 60,
           defaultValue: 0,
           description:
-            "Zero disables the generation deadline. A positive limit stops the model process; encoding may take up to another minute.",
+            "Zero disables the generation deadline. A positive limit stops the model process; decoding and encoding are included. Enhancement has its own deadline.",
         },
       ],
       resolutions: [...LTX_VIDEO_SIZES],
@@ -292,9 +277,9 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       reportsProgress: true,
       expensive: true,
       notes: [
-        "24 fps, silent MP4, 1–10 seconds. Seven seconds at 1280×704 with a reference image completed on 24 GiB; ten-second clips and 1408×768 remain unverified. Distilled 8+3 steps and low-memory streaming.",
-        "A 1024×576 five-second clip took about 6 minutes 39 seconds on an M4 Pro with 24 GiB. This is a recorded run, not a time estimate for every clip.",
+        "24 fps, silent MP4, 1–10 seconds. Distilled 8+3 steps and low-memory streaming. High resolutions and long clips require more processing and are not guaranteed on every Mac.",
         "One starting image anchors the first frame. Character identity and exact actions are not guaranteed.",
+        "The LTX-2.5 Q4 pack includes its Gemma 4 text encoder. No separate Gemma 3 installation is used.",
         "Models stay local; sustained critical memory pressure stops the generation.",
       ],
     };
@@ -307,7 +292,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
     )
       return {
         usable: false,
-        reason: "This adapter requires the MLX LTX-2.3 Q4 split pack.",
+        reason: "This adapter requires the MLX LTX-2.5 Q4 split pack.",
       };
     if (
       candidate.runtime === LTX_VIDEO_ENGINE &&
@@ -317,7 +302,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       return {
         usable: availability.available,
         reason:
-          availability.reason ?? "LTX-2.3 MLX Q4 is supported by this adapter.",
+          availability.reason ?? "LTX-2.5 MLX Q4 is supported by this adapter.",
         kind: availability.available ? undefined : "runtime-missing",
       };
     }
@@ -325,7 +310,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
     if (!directory)
       return {
         usable: false,
-        reason: "Not a complete LTX-2.3 MLX Q4 split pack.",
+        reason: "Not a complete LTX-2.5 MLX Q4 split pack.",
       };
     const availability = await this.detect();
     return {
@@ -375,7 +360,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
     if (!model)
       throw new AdapterError(
         "INVALID_REQUEST",
-        "Choose a complete local LTX-2.3 MLX Q4 pack.",
+        "Choose a complete local LTX-2.5 MLX Q4 pack.",
       );
     const strength = request.parameters.referenceStrength ?? 1;
     const timeout = request.parameters.timeoutSeconds ?? 0;
@@ -393,10 +378,72 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
         "INVALID_REQUEST",
         "Invalid LTX reference strength or deadline.",
       );
+    const enhance = request.parameters.enhance1080p ?? false;
+    const interpolate = request.parameters.interpolate60fps ?? false;
+    if (typeof enhance !== "boolean" || typeof interpolate !== "boolean")
+      throw new AdapterError(
+        "INVALID_REQUEST",
+        "Invalid video enhancement options.",
+      );
+    if (interpolate) {
+      const filter = await runCommand(
+        this.environment.ffmpeg()!,
+        ["-hide_banner", "-h", "filter=minterpolate"],
+        { env: this.pythonEnv(), timeoutMs: 15_000, signal: context.signal },
+      );
+      if (!filter.ok || !filter.stdout.includes("Filter minterpolate"))
+        throw new AdapterError(
+          "UNAVAILABLE",
+          "This FFmpeg build does not provide motion interpolation.",
+        );
+    }
+    const weights = this.environment.upscalerDirectory?.() ?? null;
+    if (enhance) {
+      if (
+        !weights ||
+        !isAbsolute(weights) ||
+        !(await fileExists(join(weights, "model.safetensors")))
+      )
+        throw new AdapterError(
+          "UNAVAILABLE",
+          "Choose the Real-ESRGAN MLX weights folder in Settings → Engines before enabling 1080p enhancement.",
+        );
+      if ((await stat(join(weights, "model.safetensors"))).size !== 1_247_050)
+        throw new AdapterError(
+          "UNAVAILABLE",
+          "Enhancement requires the small verified animevideov3 MLX model; this file has the wrong size.",
+        );
+      const digest = createHash("sha256")
+        .update(await readFile(join(weights, "model.safetensors")))
+        .digest("hex");
+      if (
+        digest !==
+        "c023b38444ac2b54642126c75054abb5e0b27d0a460eca563757d974fe18e089"
+      )
+        throw new AdapterError(
+          "UNAVAILABLE",
+          "Enhancement requires the verified Real-ESRGAN animevideov3 MLX weights. See docs/ltx-video.md.",
+        );
+      const check = await runCommand(
+        this.environment.python()!,
+        [
+          "-I",
+          "-B",
+          "-c",
+          "from importlib.metadata import version; assert version('realesrgan-mlx') == '0.1.0'; from realesrgan_mlx.pipeline_mlx import make_upsampler",
+        ],
+        { env: this.pythonEnv(), timeoutMs: 15_000, signal: context.signal },
+      );
+      if (!check.ok)
+        throw new AdapterError(
+          "UNAVAILABLE",
+          "Install the documented realesrgan-mlx 0.1.0 runtime in the selected Python before enabling enhancement.",
+        );
+    }
     const python = this.environment.python()!;
     const script = join(context.outputDirectory, "ltx-video.py");
-    const raw = join(context.outputDirectory, "ltx-raw.mp4");
     const output = join(context.outputDirectory, "clip.mp4");
+    let finalOutput = output;
     await writeFile(script, LTX_VIDEO_SCRIPT);
     context.signal.throwIfAborted();
     const details = await this.run(
@@ -404,67 +451,140 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
       script,
       {
         model,
-        textEncoder: this.environment.textEncoderDirectory(),
         prompt: request.prompt,
         width: request.width,
         height: request.height,
         seed: request.seed,
         frames: frames.generatedFrames,
-        output: raw,
+        output,
+        outputFrames: frames.outputFrames,
         inputImage: request.inputImage?.path ?? null,
         referenceStrength: strength,
       },
       timeout * 1000,
       context,
     );
-    context.reportProgress({
-      fraction: null,
-      stage: "composing",
-      message: "Encoding the requested clip length",
-    });
-    const encoded = await runCommand(
-      this.environment.ffmpeg()!,
-      [
-        "-hide_banner",
-        "-loglevel",
-        "error",
-        "-y",
-        "-i",
-        raw,
-        "-frames:v",
-        String(frames.outputFrames),
-        "-an",
-        "-c:v",
-        "libx264",
-        "-crf",
-        "16",
-        "-pix_fmt",
-        "yuv420p",
-        "-movflags",
-        "+faststart",
-        output,
-      ],
-      { timeoutMs: 60_000, signal: context.signal, env: this.pythonEnv() },
-    );
     if (context.signal.aborted)
       throw new AdapterError("CANCELLED", "LTX generation was stopped.");
-    if (!encoded.ok || !(await fileExists(output)))
+    if (!(await fileExists(output)))
+      throw new AdapterError("ENGINE_FAILURE", "LTX did not produce a video.");
+    const target = enhance
+      ? request.height > request.width
+        ? { width: 1080, height: 1920 }
+        : { width: 1920, height: 1080 }
+      : { width: request.width, height: request.height };
+    let enhancementDetails: Record<string, unknown> | null = null;
+    if (enhance) {
+      context.signal.throwIfAborted();
+      context.reportProgress({
+        fraction: null,
+        stage: "composing",
+        message: "Enhancing video to 1080p",
+      });
+      const upscaleScript = join(context.outputDirectory, "ltx-upscale.py");
+      const enhancedOutput = join(context.outputDirectory, "clip-1080p.mp4");
+      await writeFile(upscaleScript, LTX_VIDEO_UPSCALE);
+      // The LTX child has exited before the enhancement child starts.
+      enhancementDetails = await this.run(
+        python,
+        upscaleScript,
+        {
+          input: output,
+          output: enhancedOutput,
+          weights,
+          width: request.width,
+          height: request.height,
+          targetWidth: target.width,
+          targetHeight: target.height,
+          frames: frames.outputFrames,
+        },
+        1_200_000,
+        context,
+      );
+      finalOutput = enhancedOutput;
+    }
+    if (interpolate) {
+      context.signal.throwIfAborted();
+      context.reportProgress({
+        fraction: null,
+        stage: "composing",
+        message: "Creating intermediate frames for 60 FPS",
+      });
+      const interpolated = join(context.outputDirectory, "clip-60fps.mp4");
+      const encoded = await runCommand(
+        this.environment.ffmpeg()!,
+        [
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-nostdin",
+          "-n",
+          "-threads",
+          "4",
+          "-i",
+          finalOutput,
+          "-vf",
+          `tpad=stop_mode=clone:stop_duration=0.125,minterpolate=fps=60:mi_mode=mci:mc_mode=aobmc:me_mode=bilat:me=epzs:vsbmc=1,trim=duration=${frames.actualSeconds},setpts=PTS-STARTPTS`,
+          "-an",
+          "-c:v",
+          "libx264",
+          "-threads",
+          "4",
+          "-preset",
+          "medium",
+          "-crf",
+          "18",
+          "-pix_fmt",
+          "yuv420p",
+          "-movflags",
+          "+faststart",
+          interpolated,
+        ],
+        { timeoutMs: 1_200_000, signal: context.signal, env: this.pythonEnv() },
+      );
+      if (context.signal.aborted)
+        throw new AdapterError("CANCELLED", "Video interpolation was stopped.");
+      if (!encoded.ok)
+        throw new AdapterError(
+          "ENGINE_FAILURE",
+          "FFmpeg could not interpolate the video. No scene media was replaced.",
+        );
+      finalOutput = interpolated;
+    }
+    context.signal.throwIfAborted();
+    if (!(await fileExists(finalOutput)))
       throw new AdapterError(
         "ENGINE_FAILURE",
-        "FFmpeg could not encode the LTX clip.",
+        "Video finishing did not produce an output.",
       );
     return {
-      artifact: { path: output, kind: "video" },
+      artifact: { path: finalOutput, kind: "video" },
+      expectedVideo: {
+        ...target,
+        fps: interpolate ? 60 : 24,
+        frames: interpolate
+          ? Math.round(frames.actualSeconds * 60)
+          : frames.outputFrames,
+      },
       model,
       details: {
         ...details,
         runtime: this.id,
         runtimeVersion: "0.18.0",
-        fps: 24,
+        fps: interpolate ? 60 : 24,
+        sourceFps: 24,
+        width: target.width,
+        height: target.height,
+        enhanced1080p: enhance,
+        interpolated60fps: interpolate,
+        enhancementDetails,
         generatedFrames: frames.generatedFrames,
-        outputFrames: frames.outputFrames,
+        outputFrames: interpolate
+          ? Math.round(frames.actualSeconds * 60)
+          : frames.outputFrames,
         durationSeconds: frames.actualSeconds,
         lowRam: true,
+        encodingPasses: 1 + Number(enhance) + Number(interpolate),
       },
     };
   }
@@ -555,7 +675,7 @@ export class LtxVideoAdapter implements VideoGenerationAdapter {
             )
               context.reportProgress({
                 fraction: event.done / event.total,
-                stage: "generating",
+                stage: event.stage === "composing" ? "composing" : "generating",
                 message: String(event.message),
               });
           } catch {

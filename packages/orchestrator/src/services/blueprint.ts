@@ -627,7 +627,7 @@ export class BlueprintService {
       !["1920x1080", "1280x720", "1080x1920"].includes(
         settings.exportResolution,
       ) ||
-      ![24, 25, 30].includes(settings.exportFps)
+      ![24, 25, 30, 60].includes(settings.exportFps)
     ) {
       add(
         "blocking",

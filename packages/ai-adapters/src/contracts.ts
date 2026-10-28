@@ -251,6 +251,13 @@ interface GenerationRequest {
 
 interface GenerationResult {
   artifact: OutputArtifact;
+  /** Optional measured-output contract, enforced before library adoption. */
+  expectedVideo?: {
+    width: number;
+    height: number;
+    fps: number;
+    frames: number;
+  };
   /** The model that actually ran, when the backend reports it. */
   model: string | null;
   /** Backend-specific facts worth keeping with the job. */

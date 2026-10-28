@@ -587,6 +587,22 @@ export function createGenerationExecutor(
         );
       }
 
+      if (result.expectedVideo && slot === "video") {
+        const expected = result.expectedVideo;
+        if (
+          verification?.status !== "passed" ||
+          verification.width !== expected.width ||
+          verification.height !== expected.height ||
+          verification.frames !== expected.frames ||
+          verification.fps === null ||
+          Math.abs(verification.fps - expected.fps) > 0.01
+        )
+          throw new AppError(
+            "ENGINE_FAILURE",
+            "The generated video did not match its promised size, frame rate or frame count. No scene media was replaced.",
+          );
+      }
+
       const { asset, reused } = await adoptGeneratedFile(ctx, {
         projectId,
         filePath: artifactPath,

@@ -3,6 +3,17 @@ import type { LocaleResources } from "../resources";
 
 const de: LocaleResources = {
   video: {
+    export60Hint:
+      "60-FPS-Export erhält interpolierte Clips, erzeugt aber keine Zwischenbilder in anderen Clips.",
+    finishing: "Video verbessern",
+    enhance1080p: "KI-Verbesserung auf 1080p",
+    interpolate60fps: "Bewegungsinterpolation mit 60 FPS",
+    upscalerFolder: "Real-ESRGAN MLX-Modellordner",
+    upscalerSetup:
+      "Optional: geprüfte animevideov3 MLX-Gewichte wählen und die dokumentierte Real-ESRGAN-Laufzeit im Video-Python installieren. Kein automatischer Download.",
+    finishingHint:
+      "Nach der Generierung, jeweils ein Schritt. KI skaliert auf 16:9 oder 9:16 und kann Texturen glätten oder Flimmern erzeugen. 60 FPS erzeugt Zwischenbilder und wählt den 60-FPS-Export; Zeichnungsdetails bleiben gleich.",
+
     format: "Videoformat",
     landscape: "YouTube · Querformat · 16:9",
     portrait: "Instagram / Shorts · Hochformat · 9:16",
@@ -67,7 +78,7 @@ const de: LocaleResources = {
     choose: "Auswählen",
     notChosen: "Nicht ausgewählt · verwaltete Modelle sind ebenfalls möglich",
     setupHint:
-      "Wähle die Laufzeit und lokale Ordner oder installiere die Modelldateien unter Modelle. Kein automatischer Python-Installationsvorgang oder Download.",
+      "LTX-2.5-Q4-Ordner einschließlich Gemma-4-Encoder wählen. Der Download erfordert eine Hugging-Face-Zugangsfreigabe; dieses Panel installiert weder Python noch Modelldateien.",
     manageModels: "Modelle und Downloads",
     refresh: "Erneut prüfen",
     uploadReference: "Referenzbild hochladen",

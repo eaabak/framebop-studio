@@ -1,6 +1,17 @@
 // The source language. Every other locale has exactly these keys.
 const en = {
   video: {
+    export60Hint:
+      "Exporting at 60 FPS preserves interpolated clips; it does not create intermediate frames in other clips.",
+    finishing: "Finish the video",
+    enhance1080p: "AI enhancement to 1080p",
+    interpolate60fps: "60 FPS motion interpolation",
+    upscalerFolder: "Real-ESRGAN MLX weights folder",
+    upscalerSetup:
+      "Optional: choose verified animevideov3 MLX weights and install the documented Real-ESRGAN runtime in the video Python. Nothing is downloaded automatically.",
+    finishingHint:
+      "Runs after generation, one stage at a time. AI enhancement crops to 16:9 or 9:16 and may smooth textures or flicker. 60 FPS creates intermediate frames and selects 60 FPS export; drawing detail is unchanged.",
+
     format: "Video format",
     landscape: "YouTube · Landscape · 16:9",
     portrait: "Instagram / Shorts · Portrait · 9:16",
@@ -53,7 +64,7 @@ const en = {
     python: "Video: Python with LTX MLX",
     pythonHint:
       "Separate environment: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. See docs/ltx-video.md.",
-    modelFolder: "LTX Q4 model folder",
+    modelFolder: "LTX-2.5 Q4 model folder",
     modelFolderHint:
       "Optional external split pack. Verified Model Manager installations are also offered.",
     encoderFolder: "Gemma text encoder folder",
@@ -64,7 +75,7 @@ const en = {
     choose: "Choose",
     notChosen: "Not selected · managed models can also be used",
     setupHint:
-      "Choose the runtime and local folders, or install the model files in Models. This panel never installs Python or downloads files automatically.",
+      "Choose the LTX-2.5 Q4 folder, including its Gemma 4 encoder. The gated download requires Hugging Face access approval; this panel does not install Python or download files.",
     manageModels: "Models & downloads",
     refresh: "Check again",
     uploadReference: "Upload a reference picture",

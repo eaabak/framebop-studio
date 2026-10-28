@@ -1,7 +1,8 @@
-import { formatDuration } from "@framebop/core";
+import { formatDuration, isActiveJob } from "@framebop/core";
 import { AudioLines, FolderInput, Plus } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { AssetThumb, sceneLabel, visualAssetOf } from "../../components/media";
+import { GenerationPreview } from "../../components/GenerationPreview";
 import { Button, cx } from "../../components/ui";
 import { useStudio } from "../../store/studio";
 import { useReorder } from "./useReorder";
@@ -10,6 +11,7 @@ import { t } from "../../i18n";
 export function Storyboard() {
   const scenes = useStudio((state) => state.scenes);
   const assets = useStudio((state) => state.assets);
+  const jobs = useStudio((state) => state.jobs);
   const selectedSceneId = useStudio((state) => state.selectedSceneId);
   const selectScene = useStudio((state) => state.selectScene);
   const addScene = useStudio((state) => state.addScene);
@@ -63,6 +65,12 @@ export function Storyboard() {
       >
         {scenes.map((scene, index) => {
           const selected = scene.id === selectedSceneId;
+          const active = jobs.find(
+            (job) =>
+              job.sceneId === scene.id &&
+              job.type === "video_generation" &&
+              isActiveJob(job),
+          );
           return (
             <button
               key={scene.id}
@@ -84,22 +92,28 @@ export function Storyboard() {
                     : "shadow-[0_0_0_1px_var(--color-line)] group-hover:shadow-[0_0_0_1px_var(--color-line-strong)]",
                 )}
               >
-                <AssetThumb
-                  asset={visualAssetOf(scene, assets)}
-                  className="aspect-video w-full"
-                />
+                {active ? (
+                  <GenerationPreview compact className="aspect-video w-full" />
+                ) : (
+                  <AssetThumb
+                    asset={visualAssetOf(scene, assets)}
+                    className="aspect-video w-full"
+                  />
+                )}
                 <span className="timecode absolute top-1 left-1 rounded bg-black/65 px-1 text-2xs font-semibold text-fg">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="timecode absolute right-1 bottom-1 flex items-center gap-1 rounded bg-black/65 px-1 text-2xs text-fg-muted">
-                  {scene.audioAssetId && (
-                    <AudioLines
-                      className="size-2.5 text-accent"
-                      aria-label={t("editor:hasAudio")}
-                    />
-                  )}
-                  {formatDuration(scene.durationSeconds)}
-                </span>
+                {!active && (
+                  <span className="timecode absolute right-1 bottom-1 flex items-center gap-1 rounded bg-black/65 px-1 text-2xs text-fg-muted">
+                    {scene.audioAssetId && (
+                      <AudioLines
+                        className="size-2.5 text-accent"
+                        aria-label={t("editor:hasAudio")}
+                      />
+                    )}
+                    {formatDuration(scene.durationSeconds)}
+                  </span>
+                )}
               </div>
               <span
                 className={cx(

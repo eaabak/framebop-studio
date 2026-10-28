@@ -252,6 +252,7 @@ interface StudioState {
       | "qwenTtsPython"
       | "ltxVideoPython"
       | "ltxVideoModelDirectory"
+      | "videoUpscalerDirectory"
       | "ltxVideoTextEncoderDirectory"
       | "qwenVoicesDirectory"
       | "rendererBrowserPath"
@@ -734,6 +735,7 @@ export const useStudio = create<StudioState>((set, get) => {
           "qwenTtsPython" in patch ||
           "ltxVideoPython" in patch ||
           "ltxVideoModelDirectory" in patch ||
+          "videoUpscalerDirectory" in patch ||
           "ltxVideoTextEncoderDirectory" in patch ||
           "qwenVoicesDirectory" in patch ||
           "rendererBrowserPath" in patch ||
@@ -1506,6 +1508,7 @@ export const useStudio = create<StudioState>((set, get) => {
       const path = [
         "qwenVoicesDirectory",
         "ltxVideoModelDirectory",
+        "videoUpscalerDirectory",
         "ltxVideoTextEncoderDirectory",
       ].includes(setting)
         ? await bridge.chooseFolder(

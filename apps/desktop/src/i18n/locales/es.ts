@@ -3,6 +3,17 @@ import type { LocaleResources } from "../resources";
 
 const es: LocaleResources = {
   video: {
+    export60Hint:
+      "Exportar a 60 FPS conserva los clips interpolados; no crea fotogramas intermedios en otros clips.",
+    finishing: "Mejorar el vídeo",
+    enhance1080p: "Mejora con IA a 1080p",
+    interpolate60fps: "Interpolación de movimiento a 60 FPS",
+    upscalerFolder: "Carpeta de pesos Real-ESRGAN MLX",
+    upscalerSetup:
+      "Opcional: selecciona los pesos verificados animevideov3 MLX e instala el entorno Real-ESRGAN documentado en el Python de vídeo. Sin descargas automáticas.",
+    finishingHint:
+      "Se ejecuta después de generar, por etapas. La IA recorta a 16:9 o 9:16 y puede suavizar texturas o causar parpadeo. 60 FPS crea fotogramas intermedios y selecciona la exportación a 60 FPS; no añade detalle al dibujo.",
+
     format: "Formato de vídeo",
     landscape: "YouTube · Horizontal · 16:9",
     portrait: "Instagram / Shorts · Vertical · 9:16",
@@ -55,7 +66,7 @@ const es: LocaleResources = {
     python: "Vídeo: Python con LTX MLX",
     pythonHint:
       "Entorno separado: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. Consulta docs/ltx-video.md.",
-    modelFolder: "Carpeta del modelo LTX Q4",
+    modelFolder: "Carpeta del modelo LTX-2.5 Q4",
     modelFolderHint:
       "Split pack externo opcional. También se ofrecen instalaciones verificadas de Model Manager.",
     encoderFolder: "Carpeta del codificador Gemma",
@@ -66,7 +77,7 @@ const es: LocaleResources = {
     choose: "Elegir",
     notChosen: "Sin seleccionar · también se admiten modelos administrados",
     setupHint:
-      "Elige el entorno y las carpetas locales, o instala los archivos en Modelos. No se instala Python ni se descargan archivos automáticamente.",
+      "Elige la carpeta LTX-2.5 Q4 con su codificador Gemma 4. La descarga requiere aprobación de acceso en Hugging Face; este panel no instala Python ni descarga archivos.",
     manageModels: "Modelos y descargas",
     refresh: "Volver a comprobar",
     uploadReference: "Subir imagen de referencia",

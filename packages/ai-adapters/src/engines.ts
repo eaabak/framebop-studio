@@ -9,7 +9,7 @@ import type { AdapterRegistry } from "./registry";
 /** Text shown for a backend, keyed by adapter id. */
 const DESCRIPTIONS: Readonly<Record<string, string>> = {
   "ltx-2-mlx":
-    "Local LTX-2.3 Q4 video on Apple Silicon, through a Python environment you choose. Fixed 24 fps, 1–5 seconds, low-memory streaming; models are loaded only from local files.",
+    "Local LTX-2.5 Q4 video on Apple Silicon, through a Python environment you choose. Fixed 24 fps, 1–10 seconds, low-memory streaming; models are loaded only from local files.",
   "test-pattern":
     "A built-in adapter that draws a test pattern. It loads no AI model and exists to try queueing, progress, cancelling, failure and retry.",
   "draw-things":

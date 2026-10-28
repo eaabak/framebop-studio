@@ -262,6 +262,7 @@ function ProgramSetting({
     | "qwenTtsPython"
     | "ltxVideoPython"
     | "ltxVideoModelDirectory"
+    | "videoUpscalerDirectory"
     | "ltxVideoTextEncoderDirectory"
     | "qwenVoicesDirectory"
     | "rendererBrowserPath"
@@ -518,9 +519,9 @@ function SettingsDialog() {
               hint={t("video:modelFolderHint")}
             />
             <ProgramSetting
-              setting="ltxVideoTextEncoderDirectory"
-              label={t("video:encoderFolder")}
-              hint={t("video:encoderFolderHint")}
+              setting="videoUpscalerDirectory"
+              label={t("video:upscalerFolder")}
+              hint={t("video:upscalerSetup")}
             />
             <ProgramSetting
               setting="qwenVoicesDirectory"

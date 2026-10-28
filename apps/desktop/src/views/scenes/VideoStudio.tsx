@@ -18,6 +18,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { VideoFormatPicker } from "../../components/VideoFormatPicker";
+import { GenerationPreview } from "../../components/GenerationPreview";
 import { ModelPicker } from "../../components/ModelPicker";
 import { AssetThumb } from "../../components/media";
 import { Badge, Button, Field, Modal, cx } from "../../components/ui";
@@ -43,6 +44,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
   const models = useStudio((s) => s.models);
   const assets = useStudio((s) => s.assets);
   const jobs = useStudio((s) => s.jobs);
+  const updateSettings = useStudio((s) => s.updateSettings);
   const editScene = useStudio((s) => s.editScene);
   const createJob = useStudio((s) => s.createGenerationJob);
   const importMedia = useStudio((s) => s.importMedia);
@@ -67,6 +69,8 @@ export function VideoStudio({ scene }: { scene: Scene }) {
   const [seed, setSeed] = useState("");
   const [startId, setStartId] = useState<string | null>(null);
   const [strength, setStrength] = useState(1);
+  const [enhance1080p, setEnhance1080p] = useState(false);
+  const [interpolate60fps, setInterpolate60fps] = useState(false);
   const [deadline, setDeadline] = useState(0);
   const [starting, setStarting] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -155,6 +159,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
   const valid = Boolean(
     engine &&
     capability?.available &&
+    (!enhance1080p || settings.videoUpscalerDirectory) &&
     model &&
     size &&
     prompt.trim() &&
@@ -165,16 +170,16 @@ export function VideoStudio({ scene }: { scene: Scene }) {
     seconds <= LTX_MAX_SECONDS,
   );
   const setupFields = [
+    [
+      "videoUpscalerDirectory",
+      t("video:upscalerFolder"),
+      settings.videoUpscalerDirectory,
+    ],
     ["ltxVideoPython", t("video:python"), settings.ltxVideoPython],
     [
       "ltxVideoModelDirectory",
       t("video:modelFolder"),
       settings.ltxVideoModelDirectory,
-    ],
-    [
-      "ltxVideoTextEncoderDirectory",
-      t("video:encoderFolder"),
-      settings.ltxVideoTextEncoderDirectory,
     ],
   ] as const;
 
@@ -193,7 +198,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
               {t("video:title")}
             </h4>
             <p className="text-2xs text-fg-muted">
-              LTX-2.3 Q4 · {t("video:local")}
+              LTX-2.5 Q4 · {t("video:local")}
             </p>
           </div>
         </div>
@@ -213,7 +218,9 @@ export function VideoStudio({ scene }: { scene: Scene }) {
         </div>
       </header>
       <div className="flex flex-col gap-3 p-3">
-        {clip ? (
+        {active ? (
+          <GenerationPreview className="aspect-video w-full rounded-lg" />
+        ) : clip ? (
           <video
             key={clip.id}
             controls
@@ -351,6 +358,42 @@ export function VideoStudio({ scene }: { scene: Scene }) {
           </Field>
         </div>
 
+        <fieldset
+          className="flex flex-col gap-2 rounded-lg border border-line p-3"
+          disabled={Boolean(active)}
+        >
+          <legend className="px-1 text-xs font-medium">
+            {t("video:finishing")}
+          </legend>
+          <label className="flex items-center gap-2 text-xs">
+            <input
+              type="checkbox"
+              checked={enhance1080p}
+              onChange={(e) => setEnhance1080p(e.target.checked)}
+            />
+            {t("video:enhance1080p")}
+          </label>
+          <label className="flex items-center gap-2 text-xs">
+            <input
+              type="checkbox"
+              checked={interpolate60fps}
+              onChange={(e) => {
+                setInterpolate60fps(e.target.checked);
+                if (e.target.checked) void updateSettings({ exportFps: 60 });
+              }}
+            />
+            {t("video:interpolate60fps")}
+          </label>
+          <p className="text-2xs leading-4 text-fg-dim">
+            {t("video:finishingHint")}
+          </p>
+          {enhance1080p && (
+            <p className="text-2xs leading-4 text-fg-dim">
+              {t("video:upscalerSetup")}
+            </p>
+          )}
+        </fieldset>
+
         <fieldset className="flex flex-col gap-2">
           <legend className="mb-2 text-xs font-medium text-fg">
             {t("video:referenceTitle")}
@@ -453,7 +496,7 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                     id={id}
                     task="video_generation"
                     adapterId={LTX_VIDEO_ENGINE}
-                    engineName="LTX-2.3 MLX Q4"
+                    engineName="LTX-2.5 MLX Q4"
                     capability={capability}
                     value={model}
                     onChange={setModel}
@@ -546,6 +589,8 @@ export function VideoStudio({ scene }: { scene: Scene }) {
                   clipSeconds: seconds,
                   visualReferenceIds: linked,
                   parameters: {
+                    enhance1080p,
+                    interpolate60fps,
                     referenceStrength: strength,
                     timeoutSeconds: deadline,
                   },

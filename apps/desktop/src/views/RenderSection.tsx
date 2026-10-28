@@ -83,7 +83,10 @@ function SettingsCard() {
             </select>
           )}
         </Field>
-        <Field label={t("production:frameRate")}>
+        <Field
+          label={t("production:frameRate")}
+          hint={settings.exportFps === 60 ? t("video:export60Hint") : undefined}
+        >
           {(id) => (
             <select
               id={id}
@@ -100,6 +103,7 @@ function SettingsCard() {
               <option value={24}>{t("production:n24Fps")}</option>
               <option value={25}>{t("production:n25Fps")}</option>
               <option value={30}>{t("production:n30Fps")}</option>
+              <option value={60}>60 FPS</option>
             </select>
           )}
         </Field>

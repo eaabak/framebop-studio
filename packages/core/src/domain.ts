@@ -397,7 +397,12 @@ const settingsFields = {
    */
   exportDirectory: z.string().max(4096).nullable(),
   exportResolution: z.enum(["1920x1080", "1280x720", "1080x1920"]),
-  exportFps: z.union([z.literal(24), z.literal(25), z.literal(30)]),
+  exportFps: z.union([
+    z.literal(24),
+    z.literal(25),
+    z.literal(30),
+    z.literal(60),
+  ]),
   /**
    * "approximate" shows each scene's narration text as captions, timed by
    * sentence length rather than by the speech itself.
@@ -417,6 +422,8 @@ const settingsFields = {
   ltxVideoPython: z.string().max(4096).nullable(),
   /** Optional external LTX pack; managed downloads are also offered. */
   ltxVideoModelDirectory: z.string().max(4096).nullable(),
+  /** Optional local Real-ESRGAN animevideov3 MLX weights. */
+  videoUpscalerDirectory: z.string().max(4096).nullable().default(null),
   /** Local Gemma encoder; null uses its verified Model Manager installation. */
   ltxVideoTextEncoderDirectory: z.string().max(4096).nullable(),
   /**
@@ -474,6 +481,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   qwenTtsPython: null,
   ltxVideoPython: null,
   ltxVideoModelDirectory: null,
+  videoUpscalerDirectory: null,
   ltxVideoTextEncoderDirectory: null,
   qwenVoicesDirectory: null,
   rendererBrowserPath: null,

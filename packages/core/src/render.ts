@@ -38,7 +38,7 @@ export type RenderResolution = keyof typeof RENDER_RESOLUTIONS;
 export const RenderSettingsSchema = z.object({
   width: z.number().int().min(160).max(3840),
   height: z.number().int().min(90).max(2160),
-  fps: z.union([z.literal(24), z.literal(25), z.literal(30)]),
+  fps: z.union([z.literal(24), z.literal(25), z.literal(30), z.literal(60)]),
   captions: z.enum(["none", "approximate"]),
 });
 export type RenderSettings = z.infer<typeof RenderSettingsSchema>;

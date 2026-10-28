@@ -451,3 +451,57 @@
   width: min(100cqw, calc(100cqh * 16 / 9));
   aspect-ratio: 16 / 9;
 }
+
+/* Ember mist: wisps cross and dissolve while a clip is being produced. */
+.generation-preview {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 80%, #302018, #101319 75%);
+}
+
+.generation-mist {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
+}
+
+.generation-wisp {
+  transform-origin: center;
+  animation: generation-drift 11s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+.generation-wisp-b {
+  animation-duration: 15s;
+  animation-delay: -7s;
+  animation-direction: reverse;
+}
+
+.generation-wisp-c {
+  animation-duration: 9s;
+  animation-delay: -4s;
+}
+
+@keyframes generation-drift {
+  0%,
+  100% {
+    transform: translate(-65px, 35px) rotate(-12deg) scale(0.85);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate(65px, -40px) rotate(18deg) scale(1.25);
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .generation-preview *,
+  .generation-preview *::before,
+  .generation-preview *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

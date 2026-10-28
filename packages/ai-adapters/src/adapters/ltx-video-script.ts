@@ -1,3 +1,6 @@
+import { LTX_VIDEO_MEMORY } from "./ltx-video-memory";
+import { LTX_VIDEO_ENCODING } from "./ltx-video-encoding";
+
 /** Version-bound, offline bridge to ltx-pipelines-mlx 0.18.0. */
 export const LTX_VIDEO_SCRIPT = String.raw`
 import json, os, resource, socket, subprocess, sys, threading, time, traceback
@@ -13,23 +16,9 @@ socket.socket.connect = deny_network
 socket.socket.connect_ex = deny_network
 socket.create_connection = deny_network
 
-def memory_guard():
-    critical_since = None
-    while True:
-        time.sleep(5)
-        try:
-            result = subprocess.run(["/usr/sbin/sysctl", "-n", "kern.memorystatus_vm_pressure_level"], capture_output=True, text=True, timeout=3)
-            if result.returncode != 0:
-                continue
-            if result.stdout.strip() == "4":
-                critical_since = critical_since or time.monotonic()
-                if time.monotonic() - critical_since >= 10:
-                    emit({"type": "error", "message": "Stopped after sustained critical system memory pressure. Close other model jobs before retrying."})
-                    os._exit(77)
-            else:
-                critical_since = None
-        except (OSError, subprocess.TimeoutExpired):
-            pass
+${LTX_VIDEO_MEMORY}
+
+${LTX_VIDEO_ENCODING}
 
 def main():
     request = json.loads(sys.stdin.readline())
@@ -46,7 +35,8 @@ def main():
         peaks.append(mx.get_peak_memory())
         return reset_peak()
     mx.reset_peak_memory = record_peak
-    pipe = DistilledPipeline(model_dir=request["model"], gemma_model_id=request["textEncoder"], low_memory=True, low_ram_streaming=True)
+    encoding = configure_video_encoding(request["outputFrames"])
+    pipe = DistilledPipeline(model_dir=request["model"], low_memory=True, low_ram_streaming=True)
     pipe.verbose = False
     pipe.generate_audio = False
     # This hook is version-bound, and reports completed, materialized sampler
@@ -72,6 +62,8 @@ def main():
     started = time.monotonic()
     pipe.generate_and_save(prompt=request["prompt"], output_path=request["output"], width=request["width"], height=request["height"], num_frames=request["frames"], frame_rate=24, seed=request["seed"], stage1_steps=8, stage2_steps=3, **options)
     mx.synchronize()
+    if encoding["commands"] != 1 or encoding["frames"] != request["outputFrames"]:
+        raise RuntimeError("The pinned LTX frame sink did not deliver the requested frame count.")
     emit({"type": "done", "seconds": time.monotonic() - started, "peakMetalBytes": max(peaks + [mx.get_peak_memory()]), "peakRssBytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss})
 
 try:

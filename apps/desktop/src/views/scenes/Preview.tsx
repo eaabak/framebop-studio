@@ -1,4 +1,4 @@
-import { formatTimecode } from "@framebop/core";
+import { formatTimecode, isActiveJob } from "@framebop/core";
 import {
   Film,
   ImageIcon,
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { sceneLabel, visualAssetOf } from "../../components/media";
+import { GenerationPreview } from "../../components/GenerationPreview";
 import { Button, IconButton, cx } from "../../components/ui";
 import { bridge } from "../../lib/bridge";
 import { usePlayback } from "../../store/playback";
@@ -140,7 +141,15 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
   const [broken, setBroken] = useState(false);
 
   const asset = scene ? visualAssetOf(scene, assets) : null;
-  const isVideo = asset?.kind === "video" && !broken;
+  const active = useStudio((state) =>
+    state.jobs.find(
+      (job) =>
+        job.sceneId === scene?.id &&
+        job.type === "video_generation" &&
+        isActiveJob(job),
+    ),
+  );
+  const isVideo = asset?.kind === "video" && !broken && !active;
   const sceneId = scene?.id ?? null;
   const assetId = asset?.id ?? null;
   // A clip plays for its own length; a still or an empty scene is held for
@@ -184,7 +193,7 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
 
   // Advance the clock every frame: read it from the clip, or count it for a still.
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || active) return;
     let frame = 0;
     let previous = performance.now();
     const tick = (now: number) => {
@@ -205,7 +214,7 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [playing, isVideo, duration, finish]);
+  }, [playing, isVideo, duration, finish, active?.id]);
 
   const seek = (time: number) => {
     if (isVideo && video.current) video.current.currentTime = time;
@@ -213,6 +222,7 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
   };
 
   const toggle = () => {
+    if (active) return;
     const { playing: isPlaying, time } = usePlayback.getState();
     // Pressing play at the end starts over rather than doing nothing.
     if (!isPlaying && time >= duration - 0.05) seek(0);
@@ -248,6 +258,8 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
               <Film className="size-7" strokeWidth={1.25} aria-hidden />
               <p className="text-xs">{t("editor:selectASceneToPreviewIt")}</p>
             </div>
+          ) : active ? (
+            <GenerationPreview className="size-full" />
           ) : !asset ? (
             <div className="flex size-full flex-col items-center justify-center gap-3 text-center">
               <ImageIcon
@@ -338,7 +350,7 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
             />
           )}
 
-          {scene && (
+          {scene && !active && (
             <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-3">
               <span className="timecode rounded bg-black/60 px-1.5 py-0.5 text-2xs font-semibold tracking-wider text-fg backdrop-blur">
                 {t("editor:scene4", {
@@ -349,7 +361,7 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
                   / {String(sceneCount).padStart(2, "0")}
                 </span>
               </span>
-              {asset && !broken && (
+              {asset && !broken && !active && (
                 <span className="timecode rounded bg-black/60 px-1.5 py-0.5 text-2xs text-fg-muted backdrop-blur">
                   {asset.kind === "video" ? "CLIP" : "STILL"}
                   {asset.width && asset.height
@@ -377,7 +389,7 @@ export function Preview({ dropActive }: { dropActive: boolean }) {
 
       <Transport
         duration={duration}
-        disabled={!scene}
+        disabled={!scene || Boolean(active)}
         muted={muted}
         hasSound={isVideo}
         onToggle={toggle}

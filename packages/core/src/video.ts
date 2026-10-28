@@ -1,7 +1,6 @@
 /** The bounded LTX preset for Apple Silicon; no automatic downloads. */
 export const LTX_VIDEO_ENGINE = "ltx-2-mlx";
-export const LTX_VIDEO_MODEL = "ltx-2.3-mlx-q4";
-export const LTX_TEXT_ENCODER_MODEL = "gemma-3-12b-ltx-q4";
+export const LTX_VIDEO_MODEL = "ltx-2.5-mlx-q4";
 export const LTX_VIDEO_FPS = 24;
 export const LTX_MAX_SECONDS = 10;
 export const LTX_LANDSCAPE_SIZES = [

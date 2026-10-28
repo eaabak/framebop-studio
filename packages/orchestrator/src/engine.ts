@@ -210,9 +210,7 @@ export async function createEngine(options: EngineOptions): Promise<Engine> {
       ltxVideo: {
         python: () => getSettings(ctx).ltxVideoPython,
         modelDirectory: () => getSettings(ctx).ltxVideoModelDirectory,
-        textEncoderDirectory: () =>
-          getSettings(ctx).ltxVideoTextEncoderDirectory ??
-          models.installedDirectory("gemma-3-12b-ltx-q4"),
+        upscalerDirectory: () => getSettings(ctx).videoUpscalerDirectory,
       },
       qwenVoicesDirectory: () => getSettings(ctx).qwenVoicesDirectory,
       stableDiffusionCpp: () => imageRuntime.locate(),

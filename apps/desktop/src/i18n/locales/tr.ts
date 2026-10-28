@@ -3,6 +3,17 @@ import type { LocaleResources } from "../resources";
 
 const tr: LocaleResources = {
   video: {
+    export60Hint:
+      "60 FPS dışa aktarma, ara kareli kliplerin akıcılığını korur; diğer kliplerde yeni ara kare oluşturmaz.",
+    finishing: "Videoyu iyileştir",
+    enhance1080p: "AI ile 1080p’ye iyileştir",
+    interpolate60fps: "60 FPS akıcılık",
+    upscalerFolder: "Real-ESRGAN MLX ağırlık klasörü",
+    upscalerSetup:
+      "İsteğe bağlı: doğrulanmış animevideov3 MLX ağırlıklarını seçin ve belgelenen Real-ESRGAN ortamını video Python’una kurun. Otomatik indirme yapılmaz.",
+    finishingHint:
+      "Üretimden sonra aşamalar sırayla çalışır. AI iyileştirme 16:9 veya 9:16’ya kırpar; dokuları düzleştirebilir veya titreşim oluşturabilir. 60 FPS ara kare üretir ve dışa aktarmayı 60 FPS seçer; çizim ayrıntısını artırmaz.",
+
     format: "Video formatı",
     landscape: "YouTube · Yatay · 16:9",
     portrait: "Instagram / Shorts · Dikey · 9:16",
@@ -55,7 +66,7 @@ const tr: LocaleResources = {
     python: "Video: LTX MLX içeren Python",
     pythonHint:
       "Ayrı ortam: LTX core/pipelines 0.18.0, MLX 0.32.2, mlx-lm 0.31.1. Kurulum: docs/ltx-video.md.",
-    modelFolder: "LTX Q4 model klasörü",
+    modelFolder: "LTX-2.5 Q4 model klasörü",
     modelFolderHint:
       "İsteğe bağlı harici split pack. Model Manager’ın doğrulanmış kurulumları da seçilebilir.",
     encoderFolder: "Gemma metin kodlayıcı klasörü",
@@ -66,7 +77,7 @@ const tr: LocaleResources = {
     choose: "Seç",
     notChosen: "Seçilmedi · yönetilen modeller de kullanılabilir",
     setupHint:
-      "Çalıştırma ortamını ve yerel klasörleri seç veya model dosyalarını Modeller’den kur. Bu panel otomatik Python kurulumu ya da indirme yapmaz.",
+      "Gemma 4 kodlayıcısı dahil LTX-2.5 Q4 klasörünü seç. İndirme için Hugging Face erişim onayı gerekir; bu panel Python kurmaz veya dosya indirmez.",
     manageModels: "Modeller ve indirmeler",
     refresh: "Tekrar kontrol et",
     uploadReference: "Referans görseli yükle",

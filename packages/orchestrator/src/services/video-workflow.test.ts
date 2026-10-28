@@ -151,7 +151,7 @@ describe("social export formats", () => {
         { resolution: "1080x1920" as const, width: 1080, height: 1920 },
       ]) {
         await call(engine, "settings.update", {
-          patch: { exportResolution: format.resolution },
+          patch: { exportResolution: format.resolution, exportFps: 60 },
         });
         const preview = await call(engine, "render.preview", {
           episodeId: episode.id,
@@ -159,6 +159,7 @@ describe("social export formats", () => {
         expect(preview.plan).toMatchObject({
           width: format.width,
           height: format.height,
+          fps: 60,
         });
       }
     } finally {
