@@ -284,16 +284,17 @@ The production engine depends only on these interfaces and on the
 
 Adapters in this build:
 
-| Adapter            | Tasks        | State                                                                                  |
-| ------------------ | ------------ | -------------------------------------------------------------------------------------- |
-| Test pattern       | Image, video | Works. Draws a test pattern, runs no model. Labelled as a test everywhere.             |
-| Draw Things (HTTP) | Image        | Experimental. Written from the published server source; not run against a live app.    |
-| Draw Things CLI    | Image, video | Experimental. Written from the published tool source; the tool has not been installed. |
-| Qwen3-TTS          | Narration    | Experimental. mlx-audio in a Python you choose, Apple Silicon only; see Speech below.  |
+| Adapter            | Tasks        | State                                                                                                                       |
+| ------------------ | ------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| Test pattern       | Image, video | Works. Draws a test pattern, runs no model. Labelled as a test everywhere.                                                  |
+| Draw Things (HTTP) | Image        | Experimental. Written from the published server source; not run against a live app.                                         |
+| Draw Things CLI    | Image, video | Experimental. Written from the published tool source; the tool has not been installed.                                      |
+| LTX-2.5 MLX Q4     | Video        | Experimental: pinned Python, bundled Gemma 4, optional sequential 1080p/60 FPS finishing. See [ltx-video.md](ltx-video.md). |
+| Qwen3-TTS          | Narration    | Experimental. mlx-audio in a Python you choose, Apple Silicon only; see Speech below.                                       |
 
 See [draw-things.md](draw-things.md) for what each Draw Things route can and
-cannot do. ComfyUI, an MLX runtime, Kokoro and a renderer are planned and have
-no code.
+cannot do. ComfyUI remains planned. Local LTX MLX, Kokoro, sherpa-onnx and Remotion
+adapters now exist; some runtime setup and renderer distribution remain manual.
 
 **Expensive runs need consent.** An adapter that declares `expensive` cannot
 be queued without `approvedExpensive: true`. This is enforced in the engine,

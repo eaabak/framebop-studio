@@ -1,6 +1,6 @@
 {
   "name": "framebop-studio",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "license": "Apache-2.0",
   "private": true,
   "description": "Local-first AI video production studio.",
@@ -17,7 +17,9 @@
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm --filter @framebop/renderer build && pnpm -r test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "version:check": "node scripts/version.mjs --check",
+    "version:set": "node scripts/version.mjs"
   },
   "devDependencies": {
     "prettier": "^3.9.10"

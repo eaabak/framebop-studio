@@ -6,9 +6,9 @@
 
 **Make animated videos with AI that runs on your own computer.**<br>
 From an idea to a finished MP4: script, scenes, pictures, voice and render, in one app.
-No account, no subscription, no cloud.
+No Framebop account or subscription. AI inference runs locally; some model downloads require a publisher account and access approval.
 
-[![Version](https://img.shields.io/badge/version-0.1.0%20alpha-f97316)](docs/roadmap.md)
+[![Version](https://img.shields.io/badge/version-0.2.0--alpha.1-f97316)](CHANGELOG.md)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 [![Platform: macOS today, Windows and Linux planned](https://img.shields.io/badge/platform-macOS%20today%20·%20Windows%20%26%20Linux%20planned-lightgrey)](#platform-support)
 [![Local-first](https://img.shields.io/badge/local--first-yes-22c55e)](#privacy-and-security)
@@ -39,14 +39,15 @@ machine:
 Idea → Script → Scenes → Pictures → Animation → Narration → Timeline → Final MP4
 ```
 
-- **Simple enough for a child.** Three steps (Script, Scenes, Video), and one
-  button to get each AI part ready, with the download size shown first.
+- **Simple enough for a child.** Three steps (Script, Scenes, Video), and
+  guided setup for managed engines, with the download size shown first.
+  Experimental video runtimes currently require manual setup.
 - **Private by design.** Your projects, prompts and media never leave your
   computer. No telemetry, no account, works offline once set up.
-- **Nothing hidden.** Every AI program and model is pinned to an exact
-  version and checked against its published SHA-256 before it is used, and
-  downloaded only after you agree. The app says plainly what works and what
-  does not.
+- **Nothing hidden.** Managed AI downloads are pinned to exact versions
+  and checked against their published hashes, and downloaded only after you
+  agree. External runtimes and model folders have separate setup requirements.
+  The app says plainly what works and what does not.
 - **Open.** Apache 2.0, with engines behind small adapters, so new models and
   backends can be added without touching the rest.
 
@@ -84,9 +85,21 @@ from the audio, and a scene is never cut short of its narration.
 
 ### 🎞️ Moving clips _(experimental)_
 
-**Make it move** turns a scene's picture into a short clip with Wan 2.2 TI2V
-5B. Sampling works on Apple silicon, but decoding the frames is still far too
-slow to be useful. Uploading your own clips works today.
+**Video studio** generates silent 1–10 second clips with **LTX-2.5 distilled
+MLX Q4**, from a prompt or a starting image. Choose landscape or portrait,
+duration, native resolution, seed and first-frame reference strength. Saved
+character references help organize shots; consistent anatomy is not guaranteed.
+
+Optional finishing adds **AI enhancement to 1080p** with Real-ESRGAN MLX and
+**60 FPS motion interpolation** with FFmpeg. Models run sequentially. Generation
+remains 24 FPS; enhancement and interpolation do not make it native 1080p60
+inference. They can smooth textures or distort motion, so inspect results.
+
+This route needs Apple Silicon, the pinned user-managed Python environment,
+FFmpeg and a separately obtained LTX pack (about 30.24 GB). Gated model access
+must be approved on Hugging Face; the app does not download gated weights.
+See [local LTX setup and measured limits](docs/ltx-video.md). Importing your own
+clips remains available without an AI runtime.
 
 ### 🕺 2D animation _(prototype)_
 
@@ -96,7 +109,8 @@ SVG or PixiJS. Demo scenes with test art only, for now.
 ### 🎬 Render and check
 
 The final video is rendered with [Remotion](https://www.remotion.dev) at
-1080p or 720p (H.264/AAC): stills with slow camera moves, clips, cuts and
+landscape 1080p/720p or portrait 1080×1920, at 24, 25, 30 or 60 FPS
+(H.264/AAC): stills with slow camera moves, clips, cuts and
 fades, text, narration, background music and captions. FFmpeg then checks
 every file before it is listed: duration, frame rate, codecs, that every
 frame decodes and that each narration can be heard where it was placed.
@@ -131,27 +145,27 @@ restarted on its own.
 
 ## Status
 
-| Step                  | State        | What you can do today                                                                                                 |
-| --------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------- |
-| Projects and episodes | Works        | Create, edit, delete. Stored in a local SQLite database.                                                              |
-| Script                | Works\*      | Write or paste, split into scenes, or draft one with llama.cpp and Qwen3 4B.                                          |
-| Scenes                | Works        | Add, edit, duplicate, delete, drag to reorder. Edits save automatically.                                              |
-| Pictures              | Works\*      | One-click setup of stable-diffusion.cpp and a model; about 24 s per 512 px picture on an M4 Pro.                      |
-| Moving clips          | Experimental | Wan 2.2 TI2V 5B. Sampling works; decoding the frames is far too slow on Apple silicon so far.                         |
-| Narration             | Works\*      | sherpa-onnx with a voice per interface language, or Kokoro through a Python you choose.                               |
-| Imports               | Works        | PNG, JPEG, WebP, MP4, MOV, M4V, WebM, WAV, MP3, M4A, FLAC. Files are copied into a library.                           |
-| Preview               | Works        | Play clips and stills scene by scene, or straight through the episode.                                                |
-| Production jobs       | Works        | Queue, progress, cancel, retry, hold and resume. History and safe recovery across restarts.                           |
-| 2D animation          | Prototype\*  | Vector or sprite characters, camera, SVG or PixiJS. Demo scenes with test art only.                                   |
-| Final MP4 render      | Works\*      | Remotion renders 1080p or 720p H.264/AAC; FFmpeg then checks the file.                                                |
-| Models                | Works        | Pinned catalog, or any Hugging Face repository of separate weights by choosing its parts. Hash-checked and removable. |
+| Step                  | State        | What you can do today                                                                                                            |
+| --------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Projects and episodes | Works        | Create, edit, delete. Stored in a local SQLite database.                                                                         |
+| Script                | Works\*      | Write or paste, split into scenes, or draft one with llama.cpp and Qwen3 4B.                                                     |
+| Scenes                | Works        | Add, edit, duplicate, delete, drag to reorder. Edits save automatically.                                                         |
+| Pictures              | Works\*      | One-click setup of stable-diffusion.cpp and a model; about 24 s per 512 px picture on an M4 Pro.                                 |
+| Moving clips          | Experimental | LTX-2.5 MLX Q4, text/image input, 1–10 seconds; optional 1080p enhancement and 60 FPS interpolation. Manual runtime/model setup. |
+| Narration             | Works\*      | sherpa-onnx with a voice per interface language, or Kokoro through a Python you choose.                                          |
+| Imports               | Works        | PNG, JPEG, WebP, MP4, MOV, M4V, WebM, WAV, MP3, M4A, FLAC. Files are copied into a library.                                      |
+| Preview               | Works        | Play clips and stills scene by scene, or straight through the episode.                                                           |
+| Production jobs       | Works        | Queue, progress, cancel, retry, hold and resume. History and safe recovery across restarts.                                      |
+| 2D animation          | Prototype\*  | Vector or sprite characters, camera, SVG or PixiJS. Demo scenes with test art only.                                              |
+| Final MP4 render      | Works*       | Remotion renders landscape 1080p/720p or portrait 1080p, up to 60 FPS; FFmpeg checks the file.                                   |
+| Models                | Works        | Pinned catalog, or any Hugging Face repository of separate weights by choosing its parts. Hash-checked and removable.            |
 
 \* In the development build (`pnpm dev`, `pnpm dev:web`) on macOS with Apple
 silicon, the only platform Framebop's own runtimes are pinned for so far.
 The installed app does not contain the renderer yet.
 
-Known gaps: clips made with AI are not usable yet; the preview plays each
-clip at its own length; WebM may not play in the macOS webview (H.264 MP4
+Known gaps: local AI video is experimental and can be slow or swap heavily;
+the preview plays each clip at its own length; WebM may not play in the macOS webview (H.264 MP4
 plays everywhere); Windows and Linux builds and signed installers are planned.
 What comes next is in the [roadmap](docs/roadmap.md).
 
@@ -169,7 +183,8 @@ What comes next is in the [roadmap](docs/roadmap.md).
   Rendering**. Framebop never downloads one.
 
 No AI model is needed to build or run the app. Models and engines are
-downloaded from inside the app, only when you ask.
+downloaded only when you ask. Some managed engines can be installed inside
+the app; LTX and optional AI enhancement need manual runtime/model setup.
 
 ### Run it
 
@@ -251,15 +266,15 @@ Everything that depends on the operating system sits behind one interface
 
 ## System requirements
 
-|                 | Minimum                                                         | Recommended                     |
-| --------------- | --------------------------------------------------------------- | ------------------------------- |
-| Computer        | Today, a Mac with Apple silicon (Windows and Linux are planned) | A Mac with Apple silicon        |
-| macOS           | 13.3 or newer; pictures need 26                                 | 26 Tahoe or newer               |
-| Memory          | 8 GB (expected, not tested yet)                                 | 16 GB or more                   |
-| Free disk space | 5 GB for the engines and their models                           | 15 GB, to also try moving clips |
+|                 | Minimum                                                         | Recommended                                                          |
+| --------------- | --------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Computer        | Today, a Mac with Apple silicon (Windows and Linux are planned) | A Mac with Apple silicon                                             |
+| macOS           | 13.3 or newer; pinned image/LTX runtimes need 26                | 26 Tahoe or newer                                                    |
+| Memory          | 8 GB (expected, not tested yet)                                 | 16 GB for basic workflows; video has separate limits                 |
+| Free disk space | 5 GB for the engines and their models                           | 15 GB for basic engines; 40 GB extra for LTX setup and working files |
 
 The pinned stable-diffusion.cpp build needs macOS 26, so on macOS 13.3 to 15
-pictures can be imported but not made with AI; script drafts (llama.cpp,
+pictures can be imported but not made with this pinned runtime; script drafts (llama.cpp,
 macOS 13.3) and voice (sherpa-onnx, macOS 11) run there.
 
 Only an Apple M4 Pro with 24 GB has been tested so far. Building from
@@ -272,25 +287,30 @@ Each AI engine runs on its own and stops when its job is done, so what
 counts is the heaviest single step, not the sum. Measured on the M4 Pro with
 the default models:
 
-| Feature                      | Engine and model                               | Peak memory | Time on an M4 Pro                       |
-| ---------------------------- | ---------------------------------------------- | ----------- | --------------------------------------- |
-| Script draft                 | llama.cpp, Qwen3 4B (2.3 GB)                   | 3.7 GB      | 6 s for a one-minute, three-scene draft |
-| Picture                      | stable-diffusion.cpp, SD 1.5 Q8 (1.6 GB)       | 4.2 GB      | 25 s per 512 × 512 picture              |
-| Voice                        | sherpa-onnx, Kokoro (English)                  | 0.6 GB      | 7 to 9 s per scene                      |
-| Final video                  | Remotion and FFmpeg                            | 1.6 GB      | 21 s for a 61-second 1080p video        |
-| Moving clip _(experimental)_ | stable-diffusion.cpp, Wan 2.2 TI2V 5B (7.9 GB) | 9.8 GB      | Not usable yet: decoding is too slow    |
+| Feature                    | Engine and model                         | Peak memory                     | Time on an M4 Pro                            |
+| -------------------------- | ---------------------------------------- | ------------------------------- | -------------------------------------------- |
+| Script draft               | llama.cpp, Qwen3 4B (2.3 GB)             | 3.7 GB                          | 6 s for a one-minute, three-scene draft      |
+| Picture                    | stable-diffusion.cpp, SD 1.5 Q8 (1.6 GB) | 4.2 GB                          | 25 s per 512 × 512 picture                   |
+| Voice                      | sherpa-onnx, Kokoro (English)            | 0.6 GB                          | 7 to 9 s per scene                           |
+| Final video                | Remotion and FFmpeg                      | 1.6 GB                          | 21 s for a 61-second 1080p video             |
+| Moving clip (experimental) | LTX-2.5 distilled MLX Q4 (30.24 GB pack) | 16.22 GB peak Metal allocation† | 418 s for 3 s at 704×1280; 487 s at 768×1408 |
 
 Peak memory is how much the computer's used memory (app memory, wired and
 compressed) grew while the step ran, including the model the engine loads.
-The window of the app itself is not included. Smaller chips will be slower.
+The window of the app itself is not included.
+
+† The LTX row uses **Metal allocation**, a different metric from the earlier
+system-memory deltas. It is not total memory use. The three-second Ultra run
+increased system swap from about 3.3 to 7.6 GiB; 24 GB is a tested configuration,
+not a promise of comfortable fit. See [full measurements](docs/ltx-video.md).
 
 ### By amount of memory
 
-| Memory | Tested  | What to expect                                                                                                                                        |
-| ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 8 GB   | Not yet | Script drafts, pictures, voice and the final video should each fit, one at a time. Close other apps while making pictures. Moving clips will not fit. |
-| 16 GB  | Not yet | Everything except moving clips, with room for other apps.                                                                                             |
-| 24 GB  | Yes     | Everything in the table above; the measurements come from this machine.                                                                               |
+| Memory | Tested                  | What to expect                                                                                       |
+| ------ | ----------------------- | ---------------------------------------------------------------------------------------------------- |
+| 8 GB   | Not yet                 | Editing/imports expected; AI depends on the runtime. LTX has not been validated.                     |
+| 16 GB  | Not yet                 | Smaller image/voice workflows may be suitable; LTX has not been validated.                           |
+| 24 GB  | Yes, selected workloads | Short LTX clips completed, with substantial swap. Longer/higher-resolution clips are not guaranteed. |
 
 The 8 GB and 16 GB rows are worked out from the measurements, not tested on
 such a Mac. If you have one, please
@@ -344,15 +364,18 @@ docs/                    Architecture, roadmap, models, licensing, research
 
 ## Documentation
 
-| Document                             | About                                               |
-| ------------------------------------ | --------------------------------------------------- |
-| [Architecture](docs/architecture.md) | Processes, the engine, adapters, the security model |
-| [Roadmap](docs/roadmap.md)           | What is done, measured and next, phase by phase     |
-| [Models](docs/models.md)             | The model manager, downloads, storage, sources      |
-| [Registry](docs/registry.md)         | The catalog format and how entries are reviewed     |
-| [Video DNA Lab](docs/video-dna.md)   | Research tools and their limits                     |
-| [Draw Things](docs/draw-things.md)   | What the optional Draw Things engines can do        |
-| [Licensing](docs/licensing.md)       | Licences of everything Framebop works with          |
+| Document                             | About                                                   |
+| ------------------------------------ | ------------------------------------------------------- |
+| [Architecture](docs/architecture.md) | Processes, the engine, adapters, the security model     |
+| [Roadmap](docs/roadmap.md)           | What is done, measured and next, phase by phase         |
+| [Models](docs/models.md)             | The model manager, downloads, storage, sources          |
+| [Registry](docs/registry.md)         | The catalog format and how entries are reviewed         |
+| [Video DNA Lab](docs/video-dna.md)   | Research tools and their limits                         |
+| [Draw Things](docs/draw-things.md)   | What the optional Draw Things engines can do            |
+| [Local LTX video](docs/ltx-video.md) | Setup, references, 1080p enhancement, 60 FPS and limits |
+| [Changelog](CHANGELOG.md)            | Changes prepared for each version                       |
+| [Versioning](docs/releases.md)       | Version synchronization and release checklist           |
+| [Licensing](docs/licensing.md)       | Licences of everything Framebop works with              |
 
 ## Contributing
 

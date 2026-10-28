@@ -1,6 +1,6 @@
 {
   "name": "@framebop/orchestrator",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "license": "Apache-2.0",
   "private": true,
   "description": "The headless production engine: library services, background jobs and the RPC server. Runs as a child process of the desktop shell.",

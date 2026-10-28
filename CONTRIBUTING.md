@@ -71,3 +71,12 @@ licence allows it, and state the licence accurately.
 
 Users can also add models from Hugging Face themselves, without a catalog
 entry, by choosing the parts in the **Models** tab.
+
+## Versions and release notes
+
+Application packages use one synchronized version. Run `pnpm version:check`
+before a pull request; CI checks it too. Maintainers can use
+`pnpm version:set <version>` instead of editing individual manifests. Keep
+user-facing changes in [CHANGELOG.md](CHANGELOG.md), including setup requirements
+and what remains unverified. See [versioning and releases](docs/releases.md).
+The version command never commits, tags, pushes or publishes anything.

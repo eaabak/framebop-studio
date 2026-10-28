@@ -114,11 +114,11 @@ yet; packaging them is a release task (see the roadmap).
 
 ## Downloaded on request, never bundled
 
-| Component                         | Licence                                 | Notes                                                        |
-| --------------------------------- | --------------------------------------- | ------------------------------------------------------------ |
-| Kokoro 82M (both catalog entries) | Apache-2.0, per the repository metadata | Downloaded only when the user approves.                      |
-| LTX-2.3 22B Distilled 1.1         | LTX-2 Community License Agreement       | Downloaded only when the user approves. See open question 4. |
-| Qwen2.5 1.5B Instruct (Q4_K_M)    | Apache-2.0                              | Downloaded only when the user approves.                      |
+| Component                         | Licence                                 | Notes                                                                                     |
+| --------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Kokoro 82M (both catalog entries) | Apache-2.0, per the repository metadata | Downloaded only when the user approves.                                                   |
+| LTX-2.5 distilled MLX Q4          | LTX-2.x Community License Agreement     | Gated weights obtained separately with publisher approval; see [LTX setup](ltx-video.md). |
+| Qwen2.5 1.5B Instruct (Q4_K_M)    | Apache-2.0                              | Downloaded only when the user approves.                                                   |
 
 Hugging Face is used without an account: the engine calls its public REST
 endpoints for a repository's file list and for the files themselves. No access
@@ -145,3 +145,17 @@ user's responsibility; Framebop records the statement but cannot verify it.
 | ------------ | ------- | --------------------------------------------------------------------------------------------------- |
 | ONNX Runtime | MIT     | Planned runtime for Kokoro. Its bundled dependencies' licences must be checked too.                 |
 | ComfyUI      | GPL-3.0 | To be driven as a separate program over its API, not linked or bundled. Confirm that is sufficient. |
+
+## Optional local video finishing
+
+The LTX MLX runtime and model pack are user-managed; their licenses remain
+separate from Framebop. The pack includes its Gemma 4 text tower; the adapter
+uses the pack's declared configuration rather than substituting another encoder.
+
+Optional enhancement calls the separately installed
+[Real-ESRGAN MLX runtime](https://github.com/xocialize/realesrgan-mlx) and
+[animevideov3 MLX weights](https://huggingface.co/mlx-community/Real-ESRGAN-animevideov3),
+whose publishers declare BSD-3-Clause terms. Neither the runtime nor those
+weights are redistributed in this repository. FFmpeg's motion interpolation
+uses the user's FFmpeg installation and its existing license obligations.
+See [the pinned setup](ltx-video.md#optional-1080p--60-fps-finishing).

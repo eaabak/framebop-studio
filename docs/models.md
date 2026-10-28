@@ -89,15 +89,15 @@ files that variant needs, with their sizes and hashes, so the files you get are
 the ones that were checked. Entries record when they were last compared with
 Hugging Face.
 
-| Model                      | Task           | Download | Format      | Licence                 | Runnable in this version |
-| -------------------------- | -------------- | -------- | ----------- | ----------------------- | ------------------------ |
-| Kokoro 82M, ONNX 8-bit     | Speech         | 92.9 MB  | ONNX        | Apache-2.0              | No                       |
-| Kokoro 82M                 | Speech         | 327.7 MB | PyTorch     | Apache-2.0              | Yes, with Kokoro\*       |
-| LTX-2.3 22B Distilled 1.1  | Image to video | 46.1 GB  | safetensors | LTX-2 Community License | No                       |
-| Qwen3-TTS 1.7B Base        | Speech         | 4.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
-| Qwen3-TTS 1.7B VoiceDesign | Speech         | 4.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
-| Qwen3-TTS 1.7B CustomVoice | Speech         | 4.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
-| Qwen3-TTS 0.6B Base        | Speech         | 2.5 GB   | safetensors | Apache-2.0              | Yes, with Qwen3-TTS†     |
+| Model                      | Task                | Download | Format      | Licence                   | Runnable in this version        |
+| -------------------------- | ------------------- | -------- | ----------- | ------------------------- | ------------------------------- |
+| Kokoro 82M, ONNX 8-bit     | Speech              | 92.9 MB  | ONNX        | Apache-2.0                | No                              |
+| Kokoro 82M                 | Speech              | 327.7 MB | PyTorch     | Apache-2.0                | Yes, with Kokoro\*              |
+| LTX-2.5 distilled MLX Q4   | Text/image to video | 30.24 GB | safetensors | LTX-2.x Community License | Yes, with pinned LTX MLX setup‡ |
+| Qwen3-TTS 1.7B Base        | Speech              | 4.5 GB   | safetensors | Apache-2.0                | Yes, with Qwen3-TTS†            |
+| Qwen3-TTS 1.7B VoiceDesign | Speech              | 4.5 GB   | safetensors | Apache-2.0                | Yes, with Qwen3-TTS†            |
+| Qwen3-TTS 1.7B CustomVoice | Speech              | 4.5 GB   | safetensors | Apache-2.0                | Yes, with Qwen3-TTS†            |
+| Qwen3-TTS 0.6B Base        | Speech              | 2.5 GB   | safetensors | Apache-2.0                | Yes, with Qwen3-TTS†            |
 
 \* When a Python interpreter with the `kokoro` package is chosen in Settings.
 The same model already in your Hugging Face cache works too: add the cache in
@@ -113,14 +113,15 @@ profile folder (**Speech: Qwen3-TTS voice profiles**); see
 cache: the engine reads what a model is from its `config.json`. Only the
 1.7B Base model has been run through the engine; the others have not.
 
-Sizes here are decimal megabytes and gigabytes. The application counts in
-binary units (1 MB = 1,048,576 bytes), so it shows 88.6 MB for the first model
-and 43.0 GB for the last.
+Sizes here use decimal megabytes and gigabytes. The 30.24 GB LTX pack is
+approximately 28.16 GiB in binary units.
 
-The LTX-2 licence requires organisations with annual revenue of US$10 million
-or more to obtain a separate commercial licence from Lightricks. The app shows
-each model's licence, with a link to the full text, before it downloads
-anything. Read the full text before using a model.
+‡ LTX uses a user-managed Apple Silicon Python runtime and its bundled Gemma 4
+encoder. Gated access approval and authenticated downloading happen outside the
+app; select the resulting local folder. Optional 1080p enhancement uses separate
+Real-ESRGAN weights, not included in the LTX pack. See [LTX setup](ltx-video.md).
+The LTX weights retain their [upstream license terms](https://huggingface.co/dgrauet/ltx-2.5-mlx-q4);
+Framebop's Apache-2.0 license does not relicense them.
 
 ## Using a model
 
@@ -240,10 +241,10 @@ systems.
 
 ## What is not done yet
 
-- **Only the PyTorch release of Kokoro can be used**, by the Kokoro engine,
-  through a Python you provide. The ONNX release has no engine yet; LTX-2
-  needs a runtime of its own. The Draw Things command-line engine only loads
-  Draw Things' own `.ckpt` files, so it does not accept these downloads.
+- Runtime support is specific to each adapter, not every file on Hugging Face.
+  LTX-2.5 needs the exact MLX Q4 pack and pinned runtime; Qwen3-TTS and Kokoro
+  Python variants have their own layouts. Draw Things CLI accepts its own
+  `.ckpt` files, rather than arbitrary downloaded safetensors.
 - **Gated models** (those that need a Hugging Face account and the publisher's
   approval) are shown but cannot be downloaded. Supporting them needs an
   access token kept in the operating system's secure storage, which is not

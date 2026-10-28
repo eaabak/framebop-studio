@@ -1,6 +1,6 @@
 {
   "name": "@framebop/research",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "license": "Apache-2.0",
   "private": true,
   "description": "Video DNA Lab research: the YouTube Data API client, transcript parsing and transparent, rule-based analysis of collected data.",

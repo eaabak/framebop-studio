@@ -1,6 +1,6 @@
 {
   "name": "@framebop/renderer",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "license": "Apache-2.0",
   "private": true,
   "description": "Turns an episode's scenes into a deterministic render plan, and renders it to MP4 with Remotion in a separate process.",

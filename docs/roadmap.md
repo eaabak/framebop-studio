@@ -4,6 +4,10 @@ Framebop Studio is built in phases. Each phase should leave the application in
 a usable, honest state: features that do not work yet are labelled as planned
 in the interface, never shown as if they worked.
 
+Earlier phase notes preserve the evidence and gaps at that point in development.
+For the latest local video status, see **Current: LTX video studio** below and
+[the changelog](../CHANGELOG.md).
+
 ## Phase 1: desktop foundation (done)
 
 - pnpm monorepo, Tauri 2 shell, React interface
@@ -403,7 +407,7 @@ Not covered, and carried forward:
 - Moving clips with AI (now in Phase 5D.3) and shipping the runtimes with
   the installers (Phase 6)
 
-## Phase 5D.3: moving clips with AI (in development)
+## Phase 5D.3: Wan clip experiment (historical; superseded by LTX below)
 
 - A clip engine on the same stable-diffusion.cpp runtime (`-M vid_gen`):
   Wan 2.2 TI2V 5B (Apache 2.0) animates the scene's picture, or makes a
@@ -445,6 +449,27 @@ Not covered yet:
   9.8 GB. The clip engine is not usable until decoding is fast: next to try
   are `--vae-conv-direct`, VAE tiling and the TAEHV decoder (a separate
   23 MB download).
+
+## Current: LTX video studio (0.2.0-alpha.1 preparation)
+
+- LTX-2.5 distilled MLX Q4 with bundled Gemma 4, text-to-video and one first-frame image anchor.
+- Scene controls for 1–10 seconds, native quality presets, landscape/portrait,
+  seed, reference strength and optional generation deadline.
+- Named project references with imported images, palette/description and seed.
+- Streamed single-pass H.264 encoding, real progress, cancellation, memory-pressure
+  guard and existing queue serialization; output checked before library adoption.
+- Optional sequential Real-ESRGAN 1080p enhancement and FFmpeg 60 FPS interpolation.
+- Export plans accept 24/25/30/60 FPS and portrait 1080p alongside landscape formats.
+
+Verified: short reference-conditioned LTX jobs; a three-second Ultra run; and
+1080×1920 / 60 FPS finishing through the actual adapter using an existing clip.
+This is not validation of every duration, device or a fresh complete generation
+at every setting. See [LTX setup and evidence](ltx-video.md).
+
+Still missing: automatic memory-budget planning, interrupted inference checkpoint
+resume, reliable identity/anatomy guarantees, gated downloads in the app, and
+validated low-memory/cross-platform generative video support. Version preparation
+is not an installer release; see [versioning](releases.md).
 
 ## Phase 5: automated episode workflow
 

@@ -21,6 +21,9 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm version:check
+      - run: node --test scripts/version.test.mjs
+      - run: python3 packages/ai-adapters/tests/test_ltx_encoding.py
       - run: pnpm typecheck
       - run: pnpm format:check
       - run: pnpm test
